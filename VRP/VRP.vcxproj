@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>16.0</VCProjectVersion>
+    <Keyword>Win32Proj</Keyword>
+    <ProjectGuid>{2271059e-8748-4829-b702-074971f483f7}</ProjectGuid>
+    <RootNamespace>VRP</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+    <LibraryPath>$(LibraryPath)</LibraryPath>
+    <ExecutablePath>$(ExecutablePath)</ExecutablePath>
+    <ReferencePath>$(ReferencePath)</ReferencePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+    <ReferencePath>C:\Program Files\MySQL\MySQL Server 8.0\include;$(ReferencePath)</ReferencePath>
+    <LibraryPath>C:\Program Files\MySQL\MySQL Server 8.0\lib;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>C:\Users\ln\source\repos\VRP\VRP;C:\Users\ln\source\repos\VRP\VRP\ALNS;C:\Users\ln\source\repos\VRP\VRP\lib\jsoncpp;C:\Users\ln\source\repos\VRP\VRP\lib\tinyXML;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\Users\ln\source\repos\VRP\VRP\ALNS\Manager;C:\Users\ln\source\repos\VRP\VRP\lib\jsoncpp;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>false</ConformanceMode>
+      <AdditionalIncludeDirectories>D:\VS\IDE\Common7\IDE\VC\vcpackages</AdditionalIncludeDirectories>
+      <CompileAsWinRT>true</CompileAsWinRT>
+      <AdditionalUsingDirectories>D:\VS\IDE\Common7\IDE\VC\vcpackages</AdditionalUsingDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>libmysql.dll;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <CompileAsWinRT>true</CompileAsWinRT>
+      <AdditionalIncludeDirectories>D:\VS\IDE\Common7\IDE\VC\vcpackages</AdditionalIncludeDirectories>
+      <AdditionalUsingDirectories>D:\VS\IDE\Common7\IDE\VC\vcpackages</AdditionalUsingDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="ALNS\ALNS.cpp" />
+    <ClCompile Include="ALNS\BasicClass\ALNSNode.cpp" />
+    <ClCompile Include="ALNS\BasicClass\IInformation.cpp" />
+    <ClCompile Include="ALNS\Component\IConstraint.cpp" />
+    <ClCompile Include="ALNS\Component\IObject.ive.cpp" />
+    <ClCompile Include="ALNS\Component\IOperator.cpp" />
+    <ClCompile Include="ALNS\Component\IRemovedList.cpp" />
+    <ClCompile Include="ALNS\Component\ISolution.cpp" />
+    <ClCompile Include="ALNS\Component\ParetoFrontier.cpp" />
+    <ClCompile Include="ALNS\Manager\IConstraintManager.cpp" />
+    <ClCompile Include="ALNS\Manager\IObjectiveManager.cpp" />
+    <ClCompile Include="ALNS\Manager\IOperatorManager.cpp" />
+    <ClCompile Include="ALNS\Manager\ISolutionManager.cpp" />
+    <ClCompile Include="ALNS\Util\Roulette.cpp" />
+    <ClCompile Include="Configuration.cpp" />
+    <ClCompile Include="DeoptNode.cpp" />
+    <ClCompile Include="Entrance.cpp" />
+    <ClCompile Include="FerryVehicleTask.cpp" />
+    <ClCompile Include="ILocation.cpp" />
+    <ClCompile Include="INode.cpp" />
+    <ClCompile Include="lib\jsoncpp\json_reader.cpp" />
+    <ClCompile Include="lib\jsoncpp\json_value.cpp" />
+    <ClCompile Include="lib\jsoncpp\json_writer.cpp" />
+    <ClCompile Include="lib\tinyXML\tinystr.cpp" />
+    <ClCompile Include="lib\tinyXML\tinyxml.cpp" />
+    <ClCompile Include="lib\tinyXML\tinyxmlerror.cpp" />
+    <ClCompile Include="lib\tinyXML\tinyxmlparser.cpp" />
+    <ClCompile Include="LoadConfiguration.cpp" />
+    <ClCompile Include="LoadData.cpp" />
+    <ClCompile Include="LoadJSON.cpp" />
+    <ClCompile Include="loadXML.cpp" />
+    <ClCompile Include="MultiDepot.cpp" />
+    <ClCompile Include="MultiTrip.cpp" />
+    <ClCompile Include="MultiVehicle.cpp" />
+    <ClCompile Include="MySQL.cpp" />
+    <ClCompile Include="Flight.cpp" />
+    <ClCompile Include="Node.cpp" />
+    <ClCompile Include="Parallel.cpp" />
+    <ClCompile Include="process.cpp" />
+    <ClCompile Include="RollingCycle.cpp" />
+    <ClCompile Include="Segment.cpp" />
+    <ClCompile Include="SegmentNode.cpp" />
+    <ClCompile Include="StringUtil.cpp" />
+    <ClCompile Include="test.cpp" />
+    <ClCompile Include="TimeUtil.cpp" />
+    <ClCompile Include="Trip.cpp" />
+    <ClCompile Include="TripNode.cpp" />
+    <ClCompile Include="Vehicle.cpp" />
+    <ClCompile Include="VehicleList.cpp" />
+    <ClCompile Include="VehicleNode.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="ALNS\ALNS.h" />
+    <ClInclude Include="ALNS\BasicClass\ALNSNode.h" />
+    <ClInclude Include="ALNS\BasicClass\IInformation.h" />
+    <ClInclude Include="ALNS\Component\IConstraint.h" />
+    <ClInclude Include="ALNS\Component\IObjective.h" />
+    <ClInclude Include="ALNS\Component\IOperator.h" />
+    <ClInclude Include="ALNS\Component\IRemovedList.h" />
+    <ClInclude Include="ALNS\Component\ISolution.h" />
+    <ClInclude Include="ALNS\Component\ParetoFrontier.h" />
+    <ClInclude Include="ALNS\Manager\IConstraintManager.h" />
+    <ClInclude Include="ALNS\Manager\IObjectiveManager.h" />
+    <ClInclude Include="ALNS\Manager\IOperatorManager.h" />
+    <ClInclude Include="ALNS\Manager\ISolutionManager.h" />
+    <ClInclude Include="ALNS\setting\ALNS_Setting.h" />
+    <ClInclude Include="ALNS\Util\Roulette.h" />
+    <ClInclude Include="Configuration.h" />
+    <ClInclude Include="DeoptNode.h" />
+    <ClInclude Include="FerryTaskSetting.h" />
+    <ClInclude Include="FerryVehicleTask.h" />
+    <ClInclude Include="ILocation.h" />
+    <ClInclude Include="IFlightNode.h" />
+    <ClInclude Include="INode.h" />
+    <ClInclude Include="Node.h" />
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="Segment.h" />
+    <ClInclude Include="SegmentNode.h" />
+    <ClInclude Include="Trip.h" />
+    <ClInclude Include="TripNode.h" />
+    <ClInclude Include="lib\jsoncpp\autolink.h" />
+    <ClInclude Include="lib\jsoncpp\config.h" />
+    <ClInclude Include="lib\jsoncpp\features.h" />
+    <ClInclude Include="lib\jsoncpp\forwards.h" />
+    <ClInclude Include="lib\jsoncpp\json.h" />
+    <ClInclude Include="lib\jsoncpp\json_batchallocator.h" />
+    <ClInclude Include="lib\jsoncpp\reader.h" />
+    <ClInclude Include="lib\jsoncpp\value.h" />
+    <ClInclude Include="lib\jsoncpp\writer.h" />
+    <ClInclude Include="lib\tinyXML\tinystr.h" />
+    <ClInclude Include="lib\tinyXML\tinyxml.h" />
+    <ClInclude Include="MultiDepot.h" />
+    <ClInclude Include="MultiTrip.h" />
+    <ClInclude Include="MultiVehicle.h" />
+    <ClInclude Include="Flight.h" />
+    <ClInclude Include="Parallel.h" />
+    <ClInclude Include="RollingCycle.h" />
+    <ClInclude Include="unistd.h" />
+    <ClInclude Include="Vehicle.h" />
+    <ClInclude Include="VehicleList.h" />
+    <ClInclude Include="VehicleNode.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="finalTasks80.csv" />
+    <None Include="lib\jsoncpp\json_internalarray.inl" />
+    <None Include="lib\jsoncpp\json_internalmap.inl" />
+    <None Include="lib\jsoncpp\json_valueiterator.inl" />
+    <None Include="lib\MySQL\lib\libmysql.dll" />
+    <None Include="lib\tinyXML\tinyxml.sln" />
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="database.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="comparationTable2.txt" />
+    <Text Include="distance.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="VRP.rc" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

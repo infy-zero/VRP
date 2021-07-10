@@ -1,0 +1,87 @@
+select distinct departureflightnumber,  flightcompany,
+case 
+	when flightcompany in ('CN','JD','GS') or ( length(departureflightnumber) >5 and  flightcompany = 'HU' ) then 'T1' 
+	when ( length(departureflightnumber) <=5 and  flightcompany = 'HU' )  or flightcompany in ('MU','ZH','CZ','EU','MF','KE','SU','KL','JS','ET','E3','GA','MH','FV','T5','HY','H8','HZ','CO','AF','NW','KC','PK','PR','XF','7B','OM','UL','VV','IR','VN0') then 'T2' 
+	when (length(departureflightnumber) <=5 and  flightcompany != 'HU')  and departureflightnumber in ('QF','QR','BA','LY','SK','OS','LH','OZ','AC','UA','NH','TG','SQ','AY','CX','JL','KA','TK','EK','NX','S7','MS') then 'T3E' 
+	when flightcompany in ('CA','SC','FM','3U') then 'T3C'
+	when flightcompany in ('HU') then 'T3D' 
+end as terminal 
+from flights
+
+select rownum, flightnumber,  flightcompany,
+case 
+	when flightcompany in ('CN','JD','GS') or ( length(flightnumber) >5 and  flightcompany = 'HU' ) then 'T1' 
+	when ( length(flightnumber) <=5 and  flightcompany = 'HU' )  or flightcompany in ('MU','ZH','CZ','EU','MF','KE','SU','KL','JS','ET','E3','GA','MH','FV','T5','HY','H8','HZ','CO','AF','NW','KC','PK','PR','XF','7B','OM','UL','VV','IR','VN0') then 'T2' 
+	when (length(flightnumber) <=5 and  flightcompany != 'HU')  or flightnumber in ('AA','QF','QR','BA','LY','SK','OS','LH','OZ','AC','UA','NH','TG','SQ','AY','CX','JL','KA','TK','EK','NX','S7','MS') then 'T3E' 
+	when flightcompany in ('TV','CA','SC','FM','3U') and length(flightnumber) > 5 then 'T3C'
+	when flightcompany in ('HU') then 'T3D' 
+end as terminal 
+from information
+order by terminal desc
+
+SELECT distinct flightnumber,  flightcompany,terminal                    from (select rownum, flightnumber,  flightcompany,
+case 
+	when flightcompany in ('CN','JD','GS') or ( length(flightnumber) >5 and  flightcompany = 'HU' ) 
+		then 'T1' 
+	when (length(flightnumber) <=5 and  flightcompany = 'HU')  or flightcompany in ('8L','MU','ZH','CZ','EU','MF','KE','SU','KL','JS','ET','E3','GA','MH','FV','T5','HY','H8','HZ','CO','AF','NW','KC','PK','PR','XF','7B','OM','UL','VV','IR','VN0') 
+		or flightcompany like '%HO%'
+		or flightcompany like '%HX%'
+		or flightcompany like '%KN%'
+		or flightcompany like '%OQ%'
+		or flightcompany like '%RY%'
+		or flightcompany like '%DL%'
+		or flightcompany like '%J2%'
+		or flightcompany like '%RU%'	
+		or flightcompany like '%VN%'
+		or flightcompany like '%Y7%'	
+		or flightcompany like '%ZA%'																	   
+		then 'T2' 
+	when flightcompany like '%BS%' 
+		or flightcompany like '%AA%' 
+		or flightcompany like '%7C%' 
+		or flightcompany like '%AH%' 
+		or flightcompany like '%BG%'
+		or flightcompany like '%CV%'
+		or flightcompany like '%TA%'
+		or flightcompany like '%AS%'
+		or flightcompany like '%JL%'
+		or flightcompany like '%LH%'
+		or flightcompany like '%NH%'
+		or flightcompany like '%AC%'	
+		or flightcompany like '%D7%'		
+		or flightcompany like '%HA%'	
+		or flightcompany like '%KA%'
+		or flightcompany like '%LO%'
+		or flightcompany like '%PS%'		
+		or flightcompany like '%QR%'
+		or flightcompany like '%S7%'
+		or flightcompany like '%U6%'
+		or flightcompany like '%UA%'		
+		or flightcompany like '%W5%'
+		or flightcompany like '%ZI%'																		   
+		or (flightcompany like '%NS%' and length(flightcompany)<=5)
+		or (flightcompany like '%CX%' and length(flightcompany)<=5)
+		or (flightcompany like '%CA%' and length(flightcompany)<=5)
+		or flightnumber in ('BS','AA','QF','QR','BA','LY','SK','OS','LH','OZ','AC','UA','NH','TG','SQ','AY','CX','JL','KA','TK','EK','NX','S7','MS') 
+		then 'T3E' 
+	when flightcompany in ('Y8','TV','CA','SC','FM','3U') and length(flightnumber) > 5 
+		or flightcompany like '%DZ%'
+		or flightcompany like '%GJ%'
+		then 'T3C'
+	when flightcompany like '%MS%' 
+		or flightcompany like '%NS%'
+		or flightcompany like '%NX%'
+		or flightcompany like '%TK%'																		   
+		then 'T3D'
+	when flightcompany like '%CF%' 
+		or flightcompany like '%O3%' 		
+		or flightcompany like '%FX%' 	
+		or flightcompany like '%LD%' 																			   
+		then 'delete'
+end as terminal 
+from information
+order by terminal desc) AS a
+where terminal is null 
+
+select flightnumber,  flightcompany FROM information
+WHERE flightcompany in ('CN','JD','GS','MU','ZH','CZ','EU','MF','KE','SU','KL','JS','ET','E3','GA','MH','FV','T5','HY','H8','HZ','CO','AF','NW','KC','PK','PR','XF','7B','OM','UL','VV','IR','VN0','QF','QR','BA','LY','SK','OS','LH','OZ','AC','UA','NH','TG','SQ','AY','CX','JL','KA','TK','EK','NX','S7','MS','TV','CA','SC','FM','3U') 

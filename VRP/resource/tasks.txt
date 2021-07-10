@@ -1,0 +1,12 @@
+select row_number()over(order by rdy) as rownum,* into information from 
+(
+	select flightcompany,flighttype,flightclass,departureflightnumber as flightnumber,departureapron as apron,departurestand as stand,std as rdy, 'depart' as direction, departurerunway as runway from flights
+	union all
+	select airlinecompany,model,modelcategories,arrivalflighnumber as flightnumber,arrivalapron as apron,arrivalstand as stand,sta as rdy, 'arrive' as direction, arrivalrunway as runway from flights
+) as a
+where rdy>='2018-09-01' and stand in
+(
+	select distinct id from points
+	where type='remote'
+)
+order by rdy

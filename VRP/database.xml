@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Database>
+  <Title ID="host" Name="localhost"/>
+  <Title ID="username" Name="root"/>
+  <Title ID="password" Name="123456"/>
+  <Title ID="tablename" Name="vrp"/>
+</Database>

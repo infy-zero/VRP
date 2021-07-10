@@ -1,0 +1,439 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="源文件">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="头文件">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="资源文件">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="源文件\DataPrepare">
+      <UniqueIdentifier>{8c2ed0d3-59bf-4e88-a5e1-ee40bd9b2547}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\Configuration">
+      <UniqueIdentifier>{bff67505-d149-456c-9af8-debdb070ed25}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\Configuration\tinyXML">
+      <UniqueIdentifier>{497aaae8-86e6-4943-9e16-ac9283e7c9e5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\Configuration">
+      <UniqueIdentifier>{00b80303-08e9-4e0f-ae95-215479cb671e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\Configuration\SubConfiguration">
+      <UniqueIdentifier>{efc2b37a-1b9f-47f6-9ff8-b6c42d8376e8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\Configuration\SubConfiguration">
+      <UniqueIdentifier>{c6ef4fa0-126b-45a8-961d-87366863d0c2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\Util">
+      <UniqueIdentifier>{51883da9-a8eb-4d8e-8182-b35b397bdfe4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\BasicClass">
+      <UniqueIdentifier>{ce137a4c-148d-4851-968a-c94a53502c2d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\BasicClass\AbstractClass">
+      <UniqueIdentifier>{f465d0ec-8f33-4ada-832c-5e445057fe05}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\BasicClass\ConcreteClass">
+      <UniqueIdentifier>{b3542173-4caf-4c52-8486-aa544be0a5ac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\Class">
+      <UniqueIdentifier>{a5e3723b-bdd6-4e29-bdb4-844f8a1b7024}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\Class\AbstractClass">
+      <UniqueIdentifier>{addc08e8-f149-4392-abaf-14d3112d004a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\Class\ConcreteClass">
+      <UniqueIdentifier>{48742d4b-ba52-4473-8f75-a74e8169af07}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\ALNS">
+      <UniqueIdentifier>{f6d1725c-85bc-4bbb-b423-94b177803f1d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\BasicClass\AbstractClass\Vehicle">
+      <UniqueIdentifier>{ef65f6a2-2f06-4530-a983-3da6e2e2fbfe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\Class\ConcreteClass\Vehicle">
+      <UniqueIdentifier>{d58a1a26-a777-47b8-87ba-1ed00bf47984}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\Lib">
+      <UniqueIdentifier>{a111b654-907e-4656-b903-f8b44e36798c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\Lib\json">
+      <UniqueIdentifier>{74206dce-5b77-4159-9f84-fa47d7f7c317}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="资源文件\resource">
+      <UniqueIdentifier>{d1a0a5be-3d39-4658-979c-c6463a25d5ae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\ALNS">
+      <UniqueIdentifier>{31565b24-9b74-480c-a382-65a6743eabbb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\ALNS\Manager">
+      <UniqueIdentifier>{b81ae2a4-141f-46fe-ab14-3951ee274d62}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\ALNS\Component">
+      <UniqueIdentifier>{dcfc643a-273b-4786-9d7f-32b692391c34}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\ALNS\Manager">
+      <UniqueIdentifier>{54330764-8670-4b9b-96d4-30968c0d077b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\ALNS\Component">
+      <UniqueIdentifier>{542c1038-5e64-4662-abb0-54adc7629267}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\ALNS\BasicClass">
+      <UniqueIdentifier>{962ff842-9e19-4884-9c9e-d6b7d2011370}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\ALNS\BasicClass">
+      <UniqueIdentifier>{929c80d3-d964-4d22-8953-0e85fb94f59c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\ALNS\Setting">
+      <UniqueIdentifier>{fec4c518-144e-4a2e-9ac9-81eaec037a8c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\ALNS\Util">
+      <UniqueIdentifier>{106cc45c-1955-4d11-8abe-d35e0db212d2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\ALNS\Util">
+      <UniqueIdentifier>{f5e6f758-97ca-4ef4-b771-4a6dd7f48068}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Entrance.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="LoadConfiguration.cpp">
+      <Filter>源文件\Configuration</Filter>
+    </ClCompile>
+    <ClCompile Include="LoadData.cpp">
+      <Filter>源文件\DataPrepare</Filter>
+    </ClCompile>
+    <ClCompile Include="loadXML.cpp">
+      <Filter>源文件\Configuration</Filter>
+    </ClCompile>
+    <ClCompile Include="lib\tinyXML\tinystr.cpp">
+      <Filter>源文件\Configuration\tinyXML</Filter>
+    </ClCompile>
+    <ClCompile Include="lib\tinyXML\tinyxml.cpp">
+      <Filter>源文件\Configuration\tinyXML</Filter>
+    </ClCompile>
+    <ClCompile Include="lib\tinyXML\tinyxmlerror.cpp">
+      <Filter>源文件\Configuration\tinyXML</Filter>
+    </ClCompile>
+    <ClCompile Include="lib\tinyXML\tinyxmlparser.cpp">
+      <Filter>源文件\Configuration\tinyXML</Filter>
+    </ClCompile>
+    <ClCompile Include="MySQL.cpp">
+      <Filter>源文件\DataPrepare</Filter>
+    </ClCompile>
+    <ClCompile Include="Configuration.cpp">
+      <Filter>源文件\Configuration</Filter>
+    </ClCompile>
+    <ClCompile Include="MultiDepot.cpp">
+      <Filter>源文件\Configuration\SubConfiguration</Filter>
+    </ClCompile>
+    <ClCompile Include="MultiTrip.cpp">
+      <Filter>源文件\Configuration\SubConfiguration</Filter>
+    </ClCompile>
+    <ClCompile Include="MultiVehicle.cpp">
+      <Filter>源文件\Configuration\SubConfiguration</Filter>
+    </ClCompile>
+    <ClCompile Include="Parallel.cpp">
+      <Filter>源文件\Configuration\SubConfiguration</Filter>
+    </ClCompile>
+    <ClCompile Include="RollingCycle.cpp">
+      <Filter>源文件\Configuration\SubConfiguration</Filter>
+    </ClCompile>
+    <ClCompile Include="StringUtil.cpp">
+      <Filter>源文件\Util</Filter>
+    </ClCompile>
+    <ClCompile Include="TimeUtil.cpp">
+      <Filter>源文件\Util</Filter>
+    </ClCompile>
+    <ClCompile Include="Flight.cpp">
+      <Filter>源文件\Class\ConcreteClass</Filter>
+    </ClCompile>
+    <ClCompile Include="FerryVehicleTask.cpp">
+      <Filter>源文件\Class\ConcreteClass</Filter>
+    </ClCompile>
+    <ClCompile Include="test.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="ILocation.cpp">
+      <Filter>源文件\Class\ConcreteClass</Filter>
+    </ClCompile>
+    <ClCompile Include="process.cpp">
+      <Filter>源文件\Util</Filter>
+    </ClCompile>
+    <ClCompile Include="Vehicle.cpp">
+      <Filter>源文件\Class\ConcreteClass\Vehicle</Filter>
+    </ClCompile>
+    <ClCompile Include="VehicleList.cpp">
+      <Filter>源文件\Class\ConcreteClass\Vehicle</Filter>
+    </ClCompile>
+    <ClCompile Include="lib\jsoncpp\json_reader.cpp">
+      <Filter>源文件\Lib\json</Filter>
+    </ClCompile>
+    <ClCompile Include="lib\jsoncpp\json_value.cpp">
+      <Filter>源文件\Lib\json</Filter>
+    </ClCompile>
+    <ClCompile Include="lib\jsoncpp\json_writer.cpp">
+      <Filter>源文件\Lib\json</Filter>
+    </ClCompile>
+    <ClCompile Include="Trip.cpp">
+      <Filter>源文件\Class\ConcreteClass\Vehicle</Filter>
+    </ClCompile>
+    <ClCompile Include="Node.cpp">
+      <Filter>源文件\Class\ConcreteClass\Vehicle</Filter>
+    </ClCompile>
+    <ClCompile Include="Segment.cpp">
+      <Filter>源文件\Class\ConcreteClass\Vehicle</Filter>
+    </ClCompile>
+    <ClCompile Include="INode.cpp">
+      <Filter>源文件\Class\AbstractClass</Filter>
+    </ClCompile>
+    <ClCompile Include="VehicleNode.cpp">
+      <Filter>源文件\Class\ConcreteClass\Vehicle</Filter>
+    </ClCompile>
+    <ClCompile Include="TripNode.cpp">
+      <Filter>源文件\Class\ConcreteClass\Vehicle</Filter>
+    </ClCompile>
+    <ClCompile Include="SegmentNode.cpp">
+      <Filter>源文件\Class\ConcreteClass\Vehicle</Filter>
+    </ClCompile>
+    <ClCompile Include="DeoptNode.cpp">
+      <Filter>源文件\Class\ConcreteClass\Vehicle</Filter>
+    </ClCompile>
+    <ClCompile Include="LoadJSON.cpp">
+      <Filter>源文件\DataPrepare</Filter>
+    </ClCompile>
+    <ClCompile Include="ALNS\BasicClass\ALNSNode.cpp">
+      <Filter>源文件\ALNS\BasicClass</Filter>
+    </ClCompile>
+    <ClCompile Include="ALNS\Manager\IOperatorManager.cpp">
+      <Filter>源文件\ALNS\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="ALNS\Manager\ISolutionManager.cpp">
+      <Filter>源文件\ALNS\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="ALNS\Manager\IConstraintManager.cpp">
+      <Filter>源文件\ALNS\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="ALNS\Manager\IObjectiveManager.cpp">
+      <Filter>源文件\ALNS\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="ALNS\Component\IConstraint.cpp">
+      <Filter>源文件\ALNS\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="ALNS\Component\IObject.ive.cpp">
+      <Filter>源文件\ALNS\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="ALNS\Component\IOperator.cpp">
+      <Filter>源文件\ALNS\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="ALNS\Component\IRemovedList.cpp">
+      <Filter>源文件\ALNS\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="ALNS\Component\ISolution.cpp">
+      <Filter>源文件\ALNS\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="ALNS\Component\ParetoFrontier.cpp">
+      <Filter>源文件\ALNS\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="ALNS\ALNS.cpp">
+      <Filter>源文件\ALNS</Filter>
+    </ClCompile>
+    <ClCompile Include="ALNS\BasicClass\IInformation.cpp">
+      <Filter>源文件\ALNS\BasicClass</Filter>
+    </ClCompile>
+    <ClCompile Include="ALNS\Util\Roulette.cpp">
+      <Filter>源文件\ALNS\Util</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="unistd.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\tinyXML\tinystr.h">
+      <Filter>源文件\Configuration\tinyXML</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\tinyXML\tinyxml.h">
+      <Filter>源文件\Configuration\tinyXML</Filter>
+    </ClInclude>
+    <ClInclude Include="Configuration.h">
+      <Filter>头文件\Configuration</Filter>
+    </ClInclude>
+    <ClInclude Include="MultiDepot.h">
+      <Filter>头文件\Configuration\SubConfiguration</Filter>
+    </ClInclude>
+    <ClInclude Include="MultiTrip.h">
+      <Filter>头文件\Configuration\SubConfiguration</Filter>
+    </ClInclude>
+    <ClInclude Include="MultiVehicle.h">
+      <Filter>头文件\Configuration\SubConfiguration</Filter>
+    </ClInclude>
+    <ClInclude Include="Parallel.h">
+      <Filter>头文件\Configuration\SubConfiguration</Filter>
+    </ClInclude>
+    <ClInclude Include="RollingCycle.h">
+      <Filter>头文件\Configuration\SubConfiguration</Filter>
+    </ClInclude>
+    <ClInclude Include="Flight.h">
+      <Filter>头文件\BasicClass\ConcreteClass</Filter>
+    </ClInclude>
+    <ClInclude Include="FerryVehicleTask.h">
+      <Filter>头文件\BasicClass\ConcreteClass</Filter>
+    </ClInclude>
+    <ClInclude Include="FerryTaskSetting.h">
+      <Filter>头文件\Configuration\SubConfiguration</Filter>
+    </ClInclude>
+    <ClInclude Include="ILocation.h">
+      <Filter>头文件\BasicClass\ConcreteClass</Filter>
+    </ClInclude>
+    <ClInclude Include="Vehicle.h">
+      <Filter>头文件\BasicClass\AbstractClass\Vehicle</Filter>
+    </ClInclude>
+    <ClInclude Include="VehicleList.h">
+      <Filter>头文件\BasicClass\AbstractClass\Vehicle</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\jsoncpp\autolink.h">
+      <Filter>源文件\Lib\json</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\jsoncpp\config.h">
+      <Filter>源文件\Lib\json</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\jsoncpp\features.h">
+      <Filter>源文件\Lib\json</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\jsoncpp\forwards.h">
+      <Filter>源文件\Lib\json</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\jsoncpp\json.h">
+      <Filter>源文件\Lib\json</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\jsoncpp\json_batchallocator.h">
+      <Filter>源文件\Lib\json</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\jsoncpp\reader.h">
+      <Filter>源文件\Lib\json</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\jsoncpp\value.h">
+      <Filter>源文件\Lib\json</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\jsoncpp\writer.h">
+      <Filter>源文件\Lib\json</Filter>
+    </ClInclude>
+    <ClInclude Include="Trip.h">
+      <Filter>头文件\BasicClass\AbstractClass\Vehicle</Filter>
+    </ClInclude>
+    <ClInclude Include="Segment.h">
+      <Filter>头文件\BasicClass\AbstractClass\Vehicle</Filter>
+    </ClInclude>
+    <ClInclude Include="Node.h">
+      <Filter>头文件\BasicClass\AbstractClass\Vehicle</Filter>
+    </ClInclude>
+    <ClInclude Include="DeoptNode.h">
+      <Filter>头文件\BasicClass\AbstractClass\Vehicle</Filter>
+    </ClInclude>
+    <ClInclude Include="SegmentNode.h">
+      <Filter>头文件\BasicClass\AbstractClass\Vehicle</Filter>
+    </ClInclude>
+    <ClInclude Include="TripNode.h">
+      <Filter>头文件\BasicClass\AbstractClass\Vehicle</Filter>
+    </ClInclude>
+    <ClInclude Include="VehicleNode.h">
+      <Filter>头文件\BasicClass\AbstractClass\Vehicle</Filter>
+    </ClInclude>
+    <ClInclude Include="IFlightNode.h">
+      <Filter>头文件\BasicClass\ConcreteClass</Filter>
+    </ClInclude>
+    <ClInclude Include="INode.h">
+      <Filter>头文件\BasicClass\ConcreteClass</Filter>
+    </ClInclude>
+    <ClInclude Include="ALNS\BasicClass\ALNSNode.h">
+      <Filter>头文件\ALNS\BasicClass</Filter>
+    </ClInclude>
+    <ClInclude Include="ALNS\Manager\IConstraintManager.h">
+      <Filter>头文件\ALNS\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="ALNS\Manager\IObjectiveManager.h">
+      <Filter>头文件\ALNS\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="ALNS\Manager\IOperatorManager.h">
+      <Filter>头文件\ALNS\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="ALNS\Manager\ISolutionManager.h">
+      <Filter>头文件\ALNS\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="ALNS\Component\IConstraint.h">
+      <Filter>头文件\ALNS\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="ALNS\Component\IObjective.h">
+      <Filter>头文件\ALNS\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="ALNS\Component\IOperator.h">
+      <Filter>头文件\ALNS\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="ALNS\Component\IRemovedList.h">
+      <Filter>头文件\ALNS\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="ALNS\Component\ISolution.h">
+      <Filter>头文件\ALNS\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="ALNS\Component\ParetoFrontier.h">
+      <Filter>头文件\ALNS\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="ALNS\ALNS.h">
+      <Filter>头文件\ALNS</Filter>
+    </ClInclude>
+    <ClInclude Include="ALNS\setting\ALNS_Setting.h">
+      <Filter>头文件\ALNS\Setting</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ALNS\BasicClass\IInformation.h">
+      <Filter>头文件\ALNS\BasicClass</Filter>
+    </ClInclude>
+    <ClInclude Include="ALNS\Util\Roulette.h">
+      <Filter>头文件\ALNS\Util</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="lib\tinyXML\tinyxml.sln" />
+    <None Include="lib\MySQL\lib\libmysql.dll" />
+    <None Include="lib\jsoncpp\json_internalarray.inl">
+      <Filter>源文件\Lib\json</Filter>
+    </None>
+    <None Include="lib\jsoncpp\json_internalmap.inl">
+      <Filter>源文件\Lib\json</Filter>
+    </None>
+    <None Include="lib\jsoncpp\json_valueiterator.inl">
+      <Filter>源文件\Lib\json</Filter>
+    </None>
+    <None Include="finalTasks80.csv">
+      <Filter>资源文件</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="database.xml">
+      <Filter>资源文件</Filter>
+    </Xml>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="comparationTable2.txt">
+      <Filter>资源文件</Filter>
+    </Text>
+    <Text Include="distance.txt">
+      <Filter>资源文件\resource</Filter>
+    </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="VRP.rc">
+      <Filter>资源文件</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+</Project>

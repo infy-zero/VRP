@@ -1,6 +1,8 @@
 #pragma once
 #include <iostream>
 #include <vector>
+#include <stdlib.h>
+#include <math.h>
 
 #include "ALNS/BasicClass/IInformation.h"
 
@@ -14,6 +16,9 @@
 #include "ALNS/Component/IConstraint.h"
 #include "ALNS/Component/IObjective.h"
 #include "ALNS/Component/IOperator.h"
+#include "ALNS/Util/ICriterion.h"
+
+using namespace std;
 class ALNS
 {
 private:
@@ -23,27 +28,21 @@ private:
 	IOperatorManager iopm;
 	ISolutionManager isom;
 	ISolution* curSol;
+	ICriterion criterion;
 
 public:
 	ALNS();
 	void start();
-	IConstraintManager*	getICOM()
-	{
-		return &icom;
-	}
-	IObjectiveManager* getIOBM()
-	{
-		return &iobm;
-	}
-	IOperatorManager* getIOPM()
-	{
-		return &iopm;
-	}
-	ISolutionManager* getISOM()
-	{
-		return &isom;
-	}
 	void generateInitialSolution();
-	void registerInformation(IInformation* _information);
+	void setInformation(IInformation* _information);
+	void setSolution(ISolution* _solution);
+	void initialize();
+	
+
+	// »ù±¾²Ù×÷
+	IConstraintManager* getICOM();
+	IObjectiveManager* getIOBM();
+	IOperatorManager* getIOPM();
+	ISolutionManager* getISOM();
 };
 

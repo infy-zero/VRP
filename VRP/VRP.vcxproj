@@ -167,6 +167,8 @@
     <ClCompile Include="ALNS\Manager\IObjectiveManager.cpp" />
     <ClCompile Include="ALNS\Manager\IOperatorManager.cpp" />
     <ClCompile Include="ALNS\Manager\ISolutionManager.cpp" />
+    <ClCompile Include="ALNS\setting\ALNS_Setting.cpp" />
+    <ClCompile Include="ALNS\Util\ICriterion.cpp" />
     <ClCompile Include="ALNS\Util\Roulette.cpp" />
     <ClCompile Include="Configuration.cpp" />
     <ClCompile Include="DeoptNode.cpp" />
@@ -220,6 +222,7 @@
     <ClInclude Include="ALNS\Manager\IOperatorManager.h" />
     <ClInclude Include="ALNS\Manager\ISolutionManager.h" />
     <ClInclude Include="ALNS\setting\ALNS_Setting.h" />
+    <ClInclude Include="ALNS\Util\ICriterion.h" />
     <ClInclude Include="ALNS\Util\Roulette.h" />
     <ClInclude Include="Configuration.h" />
     <ClInclude Include="DeoptNode.h" />

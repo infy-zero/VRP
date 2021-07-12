@@ -1,9 +1,10 @@
 #pragma once
 #include <iostream>
 #include "Flight.h"
+#include "ALNS/BasicClass/ALNSNode.h"
 
 using namespace std;
-class FerryVehicleTask
+class FerryVehicleTask:public ALNSNode
 {
 private:
     int id;

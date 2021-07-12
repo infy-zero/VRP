@@ -100,6 +100,9 @@
     <Filter Include="源文件\ALNS\Util">
       <UniqueIdentifier>{f5e6f758-97ca-4ef4-b771-4a6dd7f48068}</UniqueIdentifier>
     </Filter>
+    <Filter Include="源文件\ALNS\setting">
+      <UniqueIdentifier>{cceaa8f4-1b96-4e0e-8b34-a97eab8a2316}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Entrance.cpp">
@@ -252,6 +255,12 @@
     <ClCompile Include="ALNS\Util\Roulette.cpp">
       <Filter>源文件\ALNS\Util</Filter>
     </ClCompile>
+    <ClCompile Include="ALNS\Util\ICriterion.cpp">
+      <Filter>源文件\ALNS\Util</Filter>
+    </ClCompile>
+    <ClCompile Include="ALNS\setting\ALNS_Setting.cpp">
+      <Filter>源文件\ALNS\setting</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="unistd.h">
@@ -399,6 +408,9 @@
       <Filter>头文件\ALNS\BasicClass</Filter>
     </ClInclude>
     <ClInclude Include="ALNS\Util\Roulette.h">
+      <Filter>头文件\ALNS\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="ALNS\Util\ICriterion.h">
       <Filter>头文件\ALNS\Util</Filter>
     </ClInclude>
   </ItemGroup>

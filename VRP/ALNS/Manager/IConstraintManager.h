@@ -16,9 +16,9 @@ private:
 	IInformation* information;
 public:
 	IConstraintManager();
+	void initialize();
 	bool getFeasible();
 	void registerConstraint (IConstraint* constraint);
 	void registerConstraints(vector<IConstraint>* constraints);
-	void registerInformation(IInformation* _information);
-
+	void setInformation(IInformation* _information);
 };

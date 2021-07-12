@@ -6,6 +6,8 @@
 
 #include "ALNS/Component/IObjective.h"
 #include "ALNS/BasicClass/IInformation.h"
+#include "ALNS/Util/Roulette.h"
+#include "ALNS/Util/ICriterion.h"
 using namespace std;
 // 目标函数管理器的父类
 class IObjectiveManager
@@ -15,8 +17,10 @@ private:
 	IInformation* information;
 public:
 	IObjectiveManager();
-	vector<double> getObjectives();
+	void initialize();
+	vector<double> calObjectives(ISolution* solution);
 	void registerObjective(IObjective* objective);
 	void registerObjectives(vector<IObjective>* _objectives);
-	void registerInformation(IInformation* _information);
+	void setInformation(IInformation* _information);
+	ISolution* accept(double curT, ISolution* before, ISolution* after);
 };

@@ -14,27 +14,12 @@ private:
 	unordered_set<string> solutions;
 	IInformation* information;
 	ISolution* bestSol;
-	ISolution* initSol;
 public:
 	ISolutionManager();
-	enum SolutionFrequency push()
-	{
-		// 当前解比最优解更好
-		if (bestSol == nullptr || (bestSol != nullptr && initSol->compare(bestSol)))
-		{
-			solutions.insert(initSol->toString());
-			delete bestSol;
-			bestSol = new ISolution(*initSol);
-			return BEST;
-		}
-		else if (solutions.count(initSol->toString()))
-			return ALREADY;
-		else
-			return NEVER;
-		
-	}
-	ISolution* getInitSolution();
+	void initialize();
+	enum SolutionFrequency push(ISolution* curSol);
 	ISolution* getBestSolution();
-	void setInitSolution(ISolution* _initSol);
+
 	void setBestSolution(ISolution* _bestSol);
+	void setCurSol(ISolution* _curSol);
 };

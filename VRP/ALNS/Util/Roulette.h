@@ -9,6 +9,5 @@ static class Roulette
 private:
 	
 public:
-	static IOperator* getRouletteIOperator(vector<IOperator>* operators);
 	static double getRandom();
 };

@@ -4,11 +4,13 @@
 #include "Configuration.h"
 #include "ALNS.h"
 #include "ALNS/BasicClass/IInformation.h"
+#include "FerryVehicleTask.h"
 using namespace std;
 
 void welcomeInterface();
 Configuration loadConfiguration();
-void loadData();
+
+void loadData(unordered_map<char, int>* flight2FerryVehcle, vector<string>* index2flightName, unordered_map<string, int>* flightName2index, vector<Flight>* flightTasks, vector<FerryVehicleTask>* ferryVehicleTasks, vector<vector<int>>* consequence, vector<vector<double>>* matrix);
 
 bool loadXML();
 void csv2task();
@@ -18,11 +20,28 @@ void ALNS_Entrance();
 
 int main() {
     welcomeInterface();
-    IInformation* information = new IInformation;
     // Configuration configuration = loadConfiguration();
-    //loadData();
+    IInformation* information = new IInformation;
+    vector<FerryVehicleTask>* ferryVehicleTasks = information->getNodes();
+    // 距离矩阵
+    vector<vector<double>>* matrix = information->getMatrix();
+    // 类型-数量哈希表
+    unordered_map<char, int>* flight2FerryVehcle=information->getFlight2FerryVehcle();
+    // 角标-名称数组
+    vector<string>* index2flightName = information->getIndex2flightName();
+    // 名称-角标哈希表
+    unordered_map<string, int>* flightName2index = information->getFlightName2index();
+    // 飞机
+    vector<Flight>* flightTasks = information->getFlightTasks();
+    // 约束
+    vector<vector<int>>* consequence = information->getConsequence();
+    
+    loadData(flight2FerryVehcle, index2flightName, flightName2index, flightTasks, ferryVehicleTasks, consequence, matrix);
+    ISolution* curSol = new ISolution;
     ALNS alns;
-    alns.registerInformation(information);
+
+    alns.setInformation(information);
+    alns.setSolution(curSol);
     alns.start();
     return 0;
 }

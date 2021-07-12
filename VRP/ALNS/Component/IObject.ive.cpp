@@ -1,6 +1,6 @@
 #include "IObjective.h"
 
-double IObjective::getObjective()
+double IObjective::calObjective(ISolution* solution)
 {
 	return 0;
 }

@@ -1,17 +1,17 @@
 #include "IRemovedList.h"
 #include "stdlib.h"
-void IRemovedList::add(ALNSNode* node)
+void IRemovedList::add(ISolutionNode node)
 {
 	removedList.push_back(node);
 }
-ALNSNode* IRemovedList::get(int location)
+ISolutionNode IRemovedList::get(int location)
 {
 	auto iterator = removedList.begin();
 	for (int i = 0; i < location; i++)
 		iterator++;
 	return *iterator;
 }
-ALNSNode* IRemovedList::randomGet()
+ISolutionNode IRemovedList::randomGet()
 {
 	auto iterator = removedList.begin();
 	int location = rand() % removedList.size();
@@ -19,9 +19,9 @@ ALNSNode* IRemovedList::randomGet()
 		iterator++;
 	return *iterator;
 }
-ALNSNode* IRemovedList::poll()
+ISolutionNode IRemovedList::poll()
 {
-	ALNSNode* tmp = removedList.front();
+	ISolutionNode tmp = removedList.front();
 	removedList.pop_front();
 	return tmp;
 }

@@ -2,28 +2,29 @@
 IObjectiveManager::IObjectiveManager()
 {
 	cout << "创建目标管理器" << endl;
+	
+	VehicleCost* vCost = new VehicleCost;
+	objectives.push_back(vCost);
+	DistanceCost* dCost = new DistanceCost;
+	objectives.push_back(dCost);
 }
-void IObjectiveManager::initialize()
-{
-	cout << "\t初始化目标管理器" << endl;
-	objectives = information->getObjectives();
-}
-vector<double> IObjectiveManager::calObjectives(ISolution* solution)
+
+vector<double> IObjectiveManager::calObjectives(ISolution& solution)
 {
 	vector<double> objectiveValues;
-	for (int i = 0; i < objectives->size(); i++)
+	for (int i = 0; i < objectives.size(); i++)
 	{
 		while (objectiveValues.size() < i + 1)
 			objectiveValues.push_back(0);
-		objectiveValues.at(i) = objectives->at(i).calObjective(solution);
+		objectiveValues.at(i) = objectives.at(i)->calObjective(solution);
 	}
 	return objectiveValues;
 }
 void IObjectiveManager::registerObjective(IObjective* objective)
 {
-	objectives->push_back(*objective);
+	objectives.push_back(objective);
 }
-void IObjectiveManager::registerObjectives(vector<IObjective>* _objectives)
+void IObjectiveManager::registerObjectives(vector<IObjective*> _objectives)
 {
 	objectives = _objectives;
 }
@@ -32,17 +33,14 @@ void IObjectiveManager::setInformation(IInformation* _information)
 	cout << "\t目标管理器注入information" << endl;
 	information = _information;
 }
-ISolution* IObjectiveManager::accept(double curT, ISolution* before, ISolution* after)
+ISolution IObjectiveManager::accept(double curT, ISolution& before, ISolution& after)
 {
-	ISolution* result;
-	double delta = before->compare(after);
+	double delta = before.compare(after);
 	// 如果新解更好
 	if (delta < 0)
 	{
 		cout << "\t\t接受更优解，delta = " << delta << endl;
-		delete before;
-		result = after;
-		after = nullptr;
+		return after;
 	}
 	else
 	{
@@ -51,17 +49,13 @@ ISolution* IObjectiveManager::accept(double curT, ISolution* before, ISolution* 
 		if (random > value)
 		{
 			cout << "\t\t接受当前解，random = " << random << "，delta= " << delta << "，value = " << value << endl;
-			delete before;
-			result = after;
-			after = nullptr;
+			return after;
 		}
 		else
 		{
 			cout << "\t\t不接受当前解，random = " << random << "，delta= " << delta << "，value = " << value << endl;
-			delete after;
-			after = nullptr;
-			result = before;
+			return before;
 		}
 	}
-	return result;
+	return before;
 }

@@ -1,8 +1,12 @@
 #pragma once
 #include <vector>
-#include "ALNS/BasicClass/ALNSNode.h"
+#include "ALNS/BasicClass/ISolutionNode.h"
 #include "ALNS/Component/IConstraint.h"
+
 #include "ALNS/Component/IObjective.h"
+#include "ALNS/Component/Objective/VehicleCost.h"
+#include "ALNS/Component/Objective/DistanceCost.h"
+
 #include "ALNS/Component/IOperator.h"
 #include "ALNS/Component/ISolution.h"
 #include "FerryVehicleTask.h"
@@ -28,24 +32,14 @@ private:
 	// 约束
 	vector<vector<int>>* consequence;
 
-	vector<IConstraint>*	constraints;
-	vector<IObjective>*		objectives;
-	vector<IOperator>*		repairOperators;
-	vector<IOperator>*		destroyOperators;
 
 public:
 	IInformation(); 
+	~IInformation();
 	vector<FerryVehicleTask>*		getNodes();
 	void setNodes(vector<FerryVehicleTask>* _nodes);
 	vector<vector<double>>* getMatrix();
-	void setMatrix(vector<vector<double>>* _matrix);
-	vector<IConstraint>*	getConstraints();
-	void setConstraints(vector<IConstraint>* _constriants);
-	vector<IObjective>*		getObjectives();
-	void setObjectives(vector<IObjective>* _objectives);
-	vector<IOperator>*		getRepairOperators();
-	void setRepairOperators(vector<IOperator>* _repairOperators);
-	vector<IOperator>*		getDestroyOperators();
+
 	void setDestroyOperators(vector<IOperator>* _destoryOperators);
 	unordered_map<char, int>* getFlight2FerryVehcle();
 	// 角标-名称数组

@@ -4,6 +4,7 @@
 #include "Configuration.h"
 #include "ALNS.h"
 #include "ALNS/BasicClass/IInformation.h"
+#include "ALNS/BasicClass/ISolutionNode.h"
 #include "FerryVehicleTask.h"
 using namespace std;
 
@@ -35,11 +36,17 @@ int main() {
     vector<Flight>* flightTasks = information->getFlightTasks();
     // 约束
     vector<vector<int>>* consequence = information->getConsequence();
-    
+    // 读取数据
     loadData(flight2FerryVehcle, index2flightName, flightName2index, flightTasks, ferryVehicleTasks, consequence, matrix);
-    ISolution* curSol = new ISolution;
+    ISolution curSol;
+    // 将所有任务压入RemovedList
+    for (auto fvt : *ferryVehicleTasks)
+    {
+        ISolutionNode sn(&fvt);
+        curSol.addRemovedList(sn);
+    }
     ALNS alns;
-
+    
     alns.setInformation(information);
     alns.setSolution(curSol);
     alns.start();

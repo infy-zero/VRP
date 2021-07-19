@@ -9,19 +9,18 @@ using namespace std;
 class IOperatorManager
 {
 private:
-	vector<IOperator>* destroyOperators;
-	vector<IOperator>* repairOperators;
+	vector<IOperator*> destroyOperators;
+	vector<IOperator*> repairOperators;
 	IInformation* information;
 public:
 	IOperatorManager(); 
-	void initialize();
 	void registerOperator(IOperator* ioperator);
-	void registerOperators(vector<IOperator>* _ioperators);
+	void registerOperators(vector<IOperator*> _ioperators);
 	void setInformation(IInformation* _information);
 	IOperator* selectDestroyOperator();
 	IOperator* selectRepairOperator();
-	IOperator* getRouletteIOperator(vector<IOperator>* operators);
-	vector<IOperator>* getDestroyOperators();
-	vector<IOperator>* getRepairOperators();
+	IOperator* getRouletteIOperator(vector<IOperator*>& operators);
+	vector<IOperator*>& getDestroyOperators();
+	vector<IOperator*>& getRepairOperators();
 	void updateParameter();
 };

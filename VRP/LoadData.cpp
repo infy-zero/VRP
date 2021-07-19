@@ -25,7 +25,7 @@ void LoadComparationTable(string filename, vector<string>* index2flight, unorder
 void csv2task(string filename, unordered_map<char, int>& map, vector<Flight>*  flightTasks, unordered_map<string, int>* flight2index);
 void flight2FerryVehcleTasks(vector<FerryVehicleTask>* ferryVehicleTasks, vector<Flight>* flightTasks, vector<vector<int>>* consequence);
 void loadDisMatrix(string matrixPath, vector<vector<double>>* matrix, int size);
-void showDataInformation(unordered_map<char, int>& map, vector<Flight>& flightTasks, vector<FerryVehicleTask>& ferryVehicleTasks);
+void showDataInformation(unordered_map<char, int>* map, vector<Flight>* flightTasks, vector<FerryVehicleTask>* ferryVehicleTasks);
 // 以下为函数区域
 // 读入各个场站、远机位、航站楼、临时停车位置距离
 
@@ -68,6 +68,7 @@ void LoadComparationTable(string filename, vector<string>* index2flight, unorder
 			fields.push_back(field);
 		int index = atoi(Trim(fields[0]).c_str())-1;
 		string name = Trim(fields[1]);
+
 		index2flight->push_back(name);
 		flight2index->insert(pair<string,int> (name,index));
 	}
@@ -81,8 +82,7 @@ void csv2task(string filename, unordered_map<char, int>* map, vector<Flight>* fl
 		throw  "Fail to open the file:"+filename;
 	string line;
 	int count = -2;
-	FerryTaskSetting fts;
-	int relaxingTime = fts.relaxingTime;
+	int relaxingTime = FerryTaskSetting::relaxingTime;
 	time_t startTime;
 	while (getline(fin, line))
 	{
@@ -112,7 +112,8 @@ void csv2task(string filename, unordered_map<char, int>* map, vector<Flight>* fl
 			startTime = rdy;
 			//cout << "startTime=" << startTime << endl;
 		}
-
+		if (terminal.find("T3")==-1) 
+			continue;
 		rdy -= startTime - relaxingTime;
 		enum Direction direction = Trim(fields[8])._Equal("arrive")?arrive:depart;
 		Flight tmp(id, flightcompany, flighttype, flightclass, ferryVehicles, apron, stand,
@@ -184,16 +185,16 @@ void loadDisMatrix(string filePath, vector<vector<double>>* matrix, int size)
 	cout << "Distance matrix is load successfully!" << endl;
 }
 // 显示数据
-void showDataInformation(unordered_map<char, int>& map, vector<Flight>& flightTasks, vector<FerryVehicleTask>& ferryVehicleTasks)
+void showDataInformation(unordered_map<char, int>* map, vector<Flight>* flightTasks, vector<FerryVehicleTask>* ferryVehicleTasks)
 {
 	cout << "The Data is loaded!" << endl;
 	cout << "**********************" << endl;
 	cout << "  Data Information:" << endl;
-	for (auto node : map)
+	for (auto node : *map)
 		cout << "\t" << node.first << "\t" << node.second << endl;
-	cout << "\tflights:" << flightTasks.size() << endl;
-	cout << "\ttasks:" << ferryVehicleTasks.size() << endl;
-	for (auto ferryVehicleTask : ferryVehicleTasks)
+	cout << "\tflights:" << flightTasks->size() << endl;
+	cout << "\ttasks:" << ferryVehicleTasks->size() << endl;
+	for (auto ferryVehicleTask : *ferryVehicleTasks)
 		cout << ferryVehicleTask;
 	cout << "**********************" << endl;
 }
@@ -228,5 +229,5 @@ void loadData(unordered_map<char, int>* flight2FerryVehcle, vector<string>* inde
 
 
 	/* 打印数据*/
-	// showDataInformation(flight2FerryVehcle,flightTasks, ferryVehicleTasks);
+	showDataInformation(flight2FerryVehcle,flightTasks, ferryVehicleTasks);
 }

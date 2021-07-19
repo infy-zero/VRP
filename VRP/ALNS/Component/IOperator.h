@@ -14,7 +14,7 @@ private:
 	double scores	 = 0;
 	double weight    = 1;
 public:
-	virtual ISolution* run(ISolution* Input);
+	virtual ISolution run(ISolution& Input);
 	enum OperatorType getType();
 	void setType(enum OperatorType _type);
 	void setIndex(int _index);

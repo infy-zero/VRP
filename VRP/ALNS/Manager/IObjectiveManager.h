@@ -13,14 +13,13 @@ using namespace std;
 class IObjectiveManager
 {
 private:
-	vector<IObjective>* objectives;
+	vector<IObjective*> objectives;
 	IInformation* information;
 public:
 	IObjectiveManager();
-	void initialize();
-	vector<double> calObjectives(ISolution* solution);
+	vector<double> calObjectives(ISolution& solution);
 	void registerObjective(IObjective* objective);
-	void registerObjectives(vector<IObjective>* _objectives);
+	void registerObjectives(vector<IObjective*> _objectives);
 	void setInformation(IInformation* _information);
-	ISolution* accept(double curT, ISolution* before, ISolution* after);
+	ISolution accept(double curT, ISolution& before, ISolution& after);
 };

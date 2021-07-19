@@ -1,17 +1,10 @@
 #include "IOperator.h"
-ISolution* IOperator::run(ISolution* input)
+ISolution IOperator::run(ISolution& input)
 {
 	times++;
-	ISolution* result = nullptr;
-	if (type == DESTROY)
-	{
-		result = new ISolution;
-	}
+	ISolution result = input;
 	cout << "\t    当前使用算子 " << toString() << endl;
-	if (type == DESTROY)
-		return result;
-	else
-		return input;
+	return result;
 }
 enum OperatorType IOperator::getType()
 {

@@ -11,7 +11,7 @@
 #include "ALNS/Manager/IOperatorManager.h"
 #include "ALNS/Manager/ISolutionManager.h"
 
-#include "BasicClass/ALNSNode.h"
+#include "BasicClass/ISolutionNode.h"
 #include "ALNS/Component/ISolution.h"
 #include "ALNS/Component/IConstraint.h"
 #include "ALNS/Component/IObjective.h"
@@ -27,7 +27,7 @@ private:
 	IObjectiveManager iobm;
 	IOperatorManager iopm;
 	ISolutionManager isom;
-	ISolution* curSol;
+	ISolution curSol;
 	ICriterion criterion;
 
 public:
@@ -35,8 +35,7 @@ public:
 	void start();
 	void generateInitialSolution();
 	void setInformation(IInformation* _information);
-	void setSolution(ISolution* _solution);
-	void initialize();
+	void setSolution(ISolution _solution);
 	
 
 	// »ù±¾²Ù×÷

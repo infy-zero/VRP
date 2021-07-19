@@ -9,7 +9,9 @@ void ALNS::generateInitialSolution()
 	cout << "    开始生成初始解。" << endl;
 	cout << "\t随机选择恢复算子。" << endl;
 	IOperator* selectedOperator = iopm.selectRepairOperator();
-	curSol = selectedOperator->run(curSol);
+	selectedOperator->run(curSol);
+	vector<double> newVal = iobm.calObjectives(curSol);
+	curSol.setObjectives(newVal);
 	isom.push(curSol);
 	cout << "\t初始解生成结束。" << endl;
 }
@@ -17,8 +19,7 @@ void ALNS::start()
 {
 	/*自适应大领域搜索在大领域搜索的基础上增加了更多的破坏和恢复算子，同时为这些算子赋予权重和增加了一个适应层，在适应层中需要控制迭代：更新比例r、segment number 更新周期，抽选算子准则，算子计分方法*/
 	cout << "    开始ALNS算法" << endl;
-	/*初始化*/
-	initialize();
+
 	/*生成初始解——利用恢复算子+约束条件*/
 	generateInitialSolution();
 	/*开始迭代——达到停止标准之前*/
@@ -30,14 +31,22 @@ void ALNS::start()
 		IOperator* destroy = iopm.selectDestroyOperator();
 		IOperator* repair = iopm.selectRepairOperator();
 		/*破坏当前解*/
-		ISolution* destroyed = destroy->run(curSol);
+		ISolution destroyed = destroy->run(curSol);
 		/*恢复当前解*/
-		ISolution* repaired  = repair->run(destroyed);
+		ISolution repaired  = repair->run(destroyed);
 		/*利用模拟退火准则判断是否接受当前解*/
 		vector<double> newVal = iobm.calObjectives(repaired);
-		repaired->setObjectives(newVal);
+		repaired.setObjectives(newVal);
 		curSol = iobm.accept(criterion.getCurT(), curSol, repaired);
+		newVal.clear();
+		newVal = iobm.calObjectives(curSol);
+		curSol.setObjectives(newVal);
+		// 将当前解放入解空间
 		sf = isom.push(curSol);
+		if (sf == NEVER || sf == BEST)
+		{
+			isom.pushPF(curSol);
+		}
 		destroy->addScores(sf);
 		repair->addScores(sf);
 		/*更新 Adaptive layer 参数*/
@@ -55,20 +64,12 @@ void ALNS::setInformation(IInformation* _information)
 	iopm.setInformation(information);
 }
 // 每当改变当前解时，向下进行传播
-void ALNS::setSolution(ISolution* _curSol)
+void ALNS::setSolution(ISolution _curSol)
 {
 	cout << "    ALNS注入初始解" << endl;
-	delete curSol;
 	curSol = _curSol;
 }
-void ALNS::initialize()
-{
-	cout << "    开始初始化" << endl;
-	icom.initialize();
-	iobm.initialize();
-	iopm.initialize();
-	isom.initialize();
-}
+
 
 IConstraintManager* ALNS::getICOM()
 {

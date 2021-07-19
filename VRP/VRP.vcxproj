@@ -155,13 +155,17 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="ALNS\ALNS.cpp" />
-    <ClCompile Include="ALNS\BasicClass\ALNSNode.cpp" />
+    <ClCompile Include="ALNS\BasicClass\ISolutionNode.cpp" />
     <ClCompile Include="ALNS\BasicClass\IInformation.cpp" />
+    <ClCompile Include="ALNS\BasicClass\IVehicle.cpp" />
+    <ClCompile Include="ALNS\BasicClass\ValueRange.cpp" />
     <ClCompile Include="ALNS\Component\IConstraint.cpp" />
     <ClCompile Include="ALNS\Component\IObject.ive.cpp" />
     <ClCompile Include="ALNS\Component\IOperator.cpp" />
     <ClCompile Include="ALNS\Component\IRemovedList.cpp" />
     <ClCompile Include="ALNS\Component\ISolution.cpp" />
+    <ClCompile Include="ALNS\Component\Objective\DistanceCost.cpp" />
+    <ClCompile Include="ALNS\Component\Objective\VehicleCost.cpp" />
     <ClCompile Include="ALNS\Component\ParetoFrontier.cpp" />
     <ClCompile Include="ALNS\Manager\IConstraintManager.cpp" />
     <ClCompile Include="ALNS\Manager\IObjectiveManager.cpp" />
@@ -209,13 +213,17 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ALNS\ALNS.h" />
-    <ClInclude Include="ALNS\BasicClass\ALNSNode.h" />
+    <ClInclude Include="ALNS\BasicClass\ISolutionNode.h" />
     <ClInclude Include="ALNS\BasicClass\IInformation.h" />
+    <ClInclude Include="ALNS\BasicClass\IVehicle.h" />
+    <ClInclude Include="ALNS\BasicClass\ValueRange.h" />
     <ClInclude Include="ALNS\Component\IConstraint.h" />
     <ClInclude Include="ALNS\Component\IObjective.h" />
     <ClInclude Include="ALNS\Component\IOperator.h" />
     <ClInclude Include="ALNS\Component\IRemovedList.h" />
     <ClInclude Include="ALNS\Component\ISolution.h" />
+    <ClInclude Include="ALNS\Component\Objective\DistanceCost.h" />
+    <ClInclude Include="ALNS\Component\Objective\VehicleCost.h" />
     <ClInclude Include="ALNS\Component\ParetoFrontier.h" />
     <ClInclude Include="ALNS\Manager\IConstraintManager.h" />
     <ClInclude Include="ALNS\Manager\IObjectiveManager.h" />

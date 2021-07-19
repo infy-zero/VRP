@@ -2,7 +2,7 @@
 #include <iostream>
 #include <vector>
 #include "ALNS/Component/IConstraint.h"
-#include "ALNS/BasicClass/ALNSNode.h"
+#include "ALNS/BasicClass/ISolutionNode.h"
 #include "ALNS/BasicClass/IInformation.h"
 //#include "IConstraint.h"
 

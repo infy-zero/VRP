@@ -103,6 +103,18 @@
     <Filter Include="源文件\ALNS\setting">
       <UniqueIdentifier>{cceaa8f4-1b96-4e0e-8b34-a97eab8a2316}</UniqueIdentifier>
     </Filter>
+    <Filter Include="头文件\ALNS\Component\Objective">
+      <UniqueIdentifier>{d776fc7e-4861-4c2d-9e27-a1e704f4cf78}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\ALNS\Component\Objective">
+      <UniqueIdentifier>{4c932a5c-7b08-4900-8cf2-fb92e2b9a62c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\ALNS\Component\Operator">
+      <UniqueIdentifier>{91a7618b-c12c-45e3-8fa0-7ac2acedc744}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\ALNS\Component\Operator">
+      <UniqueIdentifier>{1cc1e193-ff46-44d0-8119-a89f9b8328af}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Entrance.cpp">
@@ -213,7 +225,7 @@
     <ClCompile Include="LoadJSON.cpp">
       <Filter>源文件\DataPrepare</Filter>
     </ClCompile>
-    <ClCompile Include="ALNS\BasicClass\ALNSNode.cpp">
+    <ClCompile Include="ALNS\BasicClass\ISolutionNode.cpp">
       <Filter>源文件\ALNS\BasicClass</Filter>
     </ClCompile>
     <ClCompile Include="ALNS\Manager\IOperatorManager.cpp">
@@ -260,6 +272,18 @@
     </ClCompile>
     <ClCompile Include="ALNS\setting\ALNS_Setting.cpp">
       <Filter>源文件\ALNS\setting</Filter>
+    </ClCompile>
+    <ClCompile Include="ALNS\BasicClass\ValueRange.cpp">
+      <Filter>源文件\ALNS\BasicClass</Filter>
+    </ClCompile>
+    <ClCompile Include="ALNS\BasicClass\IVehicle.cpp">
+      <Filter>源文件\ALNS\BasicClass</Filter>
+    </ClCompile>
+    <ClCompile Include="ALNS\Component\Objective\VehicleCost.cpp">
+      <Filter>源文件\ALNS\Component\Objective</Filter>
+    </ClCompile>
+    <ClCompile Include="ALNS\Component\Objective\DistanceCost.cpp">
+      <Filter>源文件\ALNS\Component\Objective</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -362,7 +386,7 @@
     <ClInclude Include="INode.h">
       <Filter>头文件\BasicClass\ConcreteClass</Filter>
     </ClInclude>
-    <ClInclude Include="ALNS\BasicClass\ALNSNode.h">
+    <ClInclude Include="ALNS\BasicClass\ISolutionNode.h">
       <Filter>头文件\ALNS\BasicClass</Filter>
     </ClInclude>
     <ClInclude Include="ALNS\Manager\IConstraintManager.h">
@@ -412,6 +436,18 @@
     </ClInclude>
     <ClInclude Include="ALNS\Util\ICriterion.h">
       <Filter>头文件\ALNS\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="ALNS\BasicClass\ValueRange.h">
+      <Filter>头文件\ALNS\BasicClass</Filter>
+    </ClInclude>
+    <ClInclude Include="ALNS\BasicClass\IVehicle.h">
+      <Filter>头文件\ALNS\BasicClass</Filter>
+    </ClInclude>
+    <ClInclude Include="ALNS\Component\Objective\VehicleCost.h">
+      <Filter>头文件\ALNS\Component\Objective</Filter>
+    </ClInclude>
+    <ClInclude Include="ALNS\Component\Objective\DistanceCost.h">
+      <Filter>头文件\ALNS\Component\Objective</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

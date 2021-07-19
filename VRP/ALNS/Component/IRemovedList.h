@@ -1,16 +1,16 @@
 #pragma once
 #include <list>
 #include <algorithm>
-#include "ALNS/BasicClass/ALNSNode.h"
+#include "ALNS/BasicClass/ISolutionNode.h"
 using namespace std;
 class IRemovedList
 {
 private:
-	list<ALNSNode*> removedList;
+	list<ISolutionNode> removedList;
 public:
-	void add(ALNSNode* node);
-	ALNSNode* get(int location);
-	ALNSNode* randomGet();
-	ALNSNode* poll();
+	void add(ISolutionNode node);
+	ISolutionNode get(int location);
+	ISolutionNode randomGet();
+	ISolutionNode poll();
 };
 

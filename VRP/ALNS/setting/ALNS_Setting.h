@@ -6,6 +6,11 @@ enum OperatorType { DESTROY, REPAIR };
 static class ALNS_Setting
 {
 public:
+	// 目标函数参数
+	static constexpr double vcost = 2000; // 车辆固定成本
+	static constexpr double pcost = 2; // 车辆行驶单位距离成本
+	
+
 	// 适应层参数
 	static constexpr double r = 0.2; // 更新速率
 	static constexpr int segment = 3; // 更新频率
@@ -13,6 +18,7 @@ public:
 	static constexpr double best = 1.2;
 	static constexpr double already = 0.8;
 	static constexpr double never = 1.0;
+	
 	// 迭代参数
 	static constexpr double startT = 100;
 	static constexpr double endT = 10;

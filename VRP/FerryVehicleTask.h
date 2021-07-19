@@ -1,17 +1,17 @@
 #pragma once
 #include <iostream>
 #include "Flight.h"
-#include "ALNS/BasicClass/ALNSNode.h"
 
 using namespace std;
-class FerryVehicleTask:public ALNSNode
+class FerryVehicleTask
 {
+
 private:
     int id;
     Flight flight;
     int serviceStartTime;
     int serviceEndTime;
-    int boardingTime;
+    int serviceTime;
 public:
     FerryVehicleTask();
     FerryVehicleTask(
@@ -39,11 +39,11 @@ public:
     }
     const int getServiceTime()
     {
-        return boardingTime;
+        return serviceTime;
     }
     void setServiceTime(int _serviceTime)
     {
-        boardingTime = _serviceTime;
+        serviceTime = _serviceTime;
     }
 };
 

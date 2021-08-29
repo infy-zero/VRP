@@ -73,14 +73,8 @@
     <Filter Include="头文件\ALNS">
       <UniqueIdentifier>{31565b24-9b74-480c-a382-65a6743eabbb}</UniqueIdentifier>
     </Filter>
-    <Filter Include="头文件\ALNS\Manager">
-      <UniqueIdentifier>{b81ae2a4-141f-46fe-ab14-3951ee274d62}</UniqueIdentifier>
-    </Filter>
     <Filter Include="头文件\ALNS\Component">
       <UniqueIdentifier>{dcfc643a-273b-4786-9d7f-32b692391c34}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="源文件\ALNS\Manager">
-      <UniqueIdentifier>{54330764-8670-4b9b-96d4-30968c0d077b}</UniqueIdentifier>
     </Filter>
     <Filter Include="源文件\ALNS\Component">
       <UniqueIdentifier>{542c1038-5e64-4662-abb0-54adc7629267}</UniqueIdentifier>
@@ -102,18 +96,6 @@
     </Filter>
     <Filter Include="源文件\ALNS\setting">
       <UniqueIdentifier>{cceaa8f4-1b96-4e0e-8b34-a97eab8a2316}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="头文件\ALNS\Component\Objective">
-      <UniqueIdentifier>{d776fc7e-4861-4c2d-9e27-a1e704f4cf78}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="源文件\ALNS\Component\Objective">
-      <UniqueIdentifier>{4c932a5c-7b08-4900-8cf2-fb92e2b9a62c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="头文件\ALNS\Component\Operator">
-      <UniqueIdentifier>{91a7618b-c12c-45e3-8fa0-7ac2acedc744}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="源文件\ALNS\Component\Operator">
-      <UniqueIdentifier>{1cc1e193-ff46-44d0-8119-a89f9b8328af}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -228,62 +210,44 @@
     <ClCompile Include="ALNS\BasicClass\ISolutionNode.cpp">
       <Filter>源文件\ALNS\BasicClass</Filter>
     </ClCompile>
-    <ClCompile Include="ALNS\Manager\IOperatorManager.cpp">
-      <Filter>源文件\ALNS\Manager</Filter>
-    </ClCompile>
-    <ClCompile Include="ALNS\Manager\ISolutionManager.cpp">
-      <Filter>源文件\ALNS\Manager</Filter>
-    </ClCompile>
-    <ClCompile Include="ALNS\Manager\IConstraintManager.cpp">
-      <Filter>源文件\ALNS\Manager</Filter>
-    </ClCompile>
-    <ClCompile Include="ALNS\Manager\IObjectiveManager.cpp">
-      <Filter>源文件\ALNS\Manager</Filter>
-    </ClCompile>
-    <ClCompile Include="ALNS\Component\IConstraint.cpp">
-      <Filter>源文件\ALNS\Component</Filter>
-    </ClCompile>
-    <ClCompile Include="ALNS\Component\IObject.ive.cpp">
-      <Filter>源文件\ALNS\Component</Filter>
-    </ClCompile>
-    <ClCompile Include="ALNS\Component\IOperator.cpp">
-      <Filter>源文件\ALNS\Component</Filter>
-    </ClCompile>
-    <ClCompile Include="ALNS\Component\IRemovedList.cpp">
-      <Filter>源文件\ALNS\Component</Filter>
-    </ClCompile>
-    <ClCompile Include="ALNS\Component\ISolution.cpp">
-      <Filter>源文件\ALNS\Component</Filter>
-    </ClCompile>
-    <ClCompile Include="ALNS\Component\ParetoFrontier.cpp">
-      <Filter>源文件\ALNS\Component</Filter>
-    </ClCompile>
-    <ClCompile Include="ALNS\ALNS.cpp">
-      <Filter>源文件\ALNS</Filter>
-    </ClCompile>
-    <ClCompile Include="ALNS\BasicClass\IInformation.cpp">
-      <Filter>源文件\ALNS\BasicClass</Filter>
-    </ClCompile>
     <ClCompile Include="ALNS\Util\Roulette.cpp">
       <Filter>源文件\ALNS\Util</Filter>
     </ClCompile>
     <ClCompile Include="ALNS\Util\ICriterion.cpp">
       <Filter>源文件\ALNS\Util</Filter>
     </ClCompile>
-    <ClCompile Include="ALNS\setting\ALNS_Setting.cpp">
-      <Filter>源文件\ALNS\setting</Filter>
-    </ClCompile>
     <ClCompile Include="ALNS\BasicClass\ValueRange.cpp">
       <Filter>源文件\ALNS\BasicClass</Filter>
     </ClCompile>
-    <ClCompile Include="ALNS\BasicClass\IVehicle.cpp">
+    <ClCompile Include="Nodes.cpp">
+      <Filter>源文件\ALNS\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="Vehicles.cpp">
+      <Filter>源文件\ALNS\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="VirtualFlight.cpp">
+      <Filter>源文件\ALNS\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="ALNS.cpp">
+      <Filter>源文件\ALNS</Filter>
+    </ClCompile>
+    <ClCompile Include="ALNS_Setting.cpp">
+      <Filter>源文件\ALNS\setting</Filter>
+    </ClCompile>
+    <ClCompile Include="IInformation.cpp">
       <Filter>源文件\ALNS\BasicClass</Filter>
     </ClCompile>
-    <ClCompile Include="ALNS\Component\Objective\VehicleCost.cpp">
-      <Filter>源文件\ALNS\Component\Objective</Filter>
+    <ClCompile Include="MyException.cpp">
+      <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="ALNS\Component\Objective\DistanceCost.cpp">
-      <Filter>源文件\ALNS\Component\Objective</Filter>
+    <ClCompile Include="Solution.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="RepairOperator.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="DestroyOperator.cpp">
+      <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -389,47 +353,8 @@
     <ClInclude Include="ALNS\BasicClass\ISolutionNode.h">
       <Filter>头文件\ALNS\BasicClass</Filter>
     </ClInclude>
-    <ClInclude Include="ALNS\Manager\IConstraintManager.h">
-      <Filter>头文件\ALNS\Manager</Filter>
-    </ClInclude>
-    <ClInclude Include="ALNS\Manager\IObjectiveManager.h">
-      <Filter>头文件\ALNS\Manager</Filter>
-    </ClInclude>
-    <ClInclude Include="ALNS\Manager\IOperatorManager.h">
-      <Filter>头文件\ALNS\Manager</Filter>
-    </ClInclude>
-    <ClInclude Include="ALNS\Manager\ISolutionManager.h">
-      <Filter>头文件\ALNS\Manager</Filter>
-    </ClInclude>
-    <ClInclude Include="ALNS\Component\IConstraint.h">
-      <Filter>头文件\ALNS\Component</Filter>
-    </ClInclude>
-    <ClInclude Include="ALNS\Component\IObjective.h">
-      <Filter>头文件\ALNS\Component</Filter>
-    </ClInclude>
-    <ClInclude Include="ALNS\Component\IOperator.h">
-      <Filter>头文件\ALNS\Component</Filter>
-    </ClInclude>
-    <ClInclude Include="ALNS\Component\IRemovedList.h">
-      <Filter>头文件\ALNS\Component</Filter>
-    </ClInclude>
-    <ClInclude Include="ALNS\Component\ISolution.h">
-      <Filter>头文件\ALNS\Component</Filter>
-    </ClInclude>
-    <ClInclude Include="ALNS\Component\ParetoFrontier.h">
-      <Filter>头文件\ALNS\Component</Filter>
-    </ClInclude>
-    <ClInclude Include="ALNS\ALNS.h">
-      <Filter>头文件\ALNS</Filter>
-    </ClInclude>
-    <ClInclude Include="ALNS\setting\ALNS_Setting.h">
-      <Filter>头文件\ALNS\Setting</Filter>
-    </ClInclude>
     <ClInclude Include="resource.h">
       <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="ALNS\BasicClass\IInformation.h">
-      <Filter>头文件\ALNS\BasicClass</Filter>
     </ClInclude>
     <ClInclude Include="ALNS\Util\Roulette.h">
       <Filter>头文件\ALNS\Util</Filter>
@@ -440,14 +365,26 @@
     <ClInclude Include="ALNS\BasicClass\ValueRange.h">
       <Filter>头文件\ALNS\BasicClass</Filter>
     </ClInclude>
-    <ClInclude Include="ALNS\BasicClass\IVehicle.h">
+    <ClInclude Include="Nodes.h">
+      <Filter>头文件\ALNS\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Vehicles.h">
+      <Filter>头文件\ALNS\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="VirtualFlight.h">
+      <Filter>头文件\ALNS\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="IInformation.h">
       <Filter>头文件\ALNS\BasicClass</Filter>
     </ClInclude>
-    <ClInclude Include="ALNS\Component\Objective\VehicleCost.h">
-      <Filter>头文件\ALNS\Component\Objective</Filter>
+    <ClInclude Include="ALNS.h">
+      <Filter>头文件\ALNS</Filter>
     </ClInclude>
-    <ClInclude Include="ALNS\Component\Objective\DistanceCost.h">
-      <Filter>头文件\ALNS\Component\Objective</Filter>
+    <ClInclude Include="ALNS_Setting.h">
+      <Filter>头文件\ALNS\Setting</Filter>
+    </ClInclude>
+    <ClInclude Include="MyException.h">
+      <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

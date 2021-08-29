@@ -6,10 +6,9 @@ using namespace std;
 
 class Flight: public IFlightNode
 {
-private:
-	int boardingTime[2];
 public:
-	Flight() {}
+	int aheadFirstTime; // 第一辆车提前到达时间 : 5
+	int delayOtherTime; // 除第一辆车推迟到达时间 : 2
 	Flight(int id, 
 		string flightcompany, 
 		string flighttype, 
@@ -23,15 +22,6 @@ public:
 		string terminal,
 		int terminalIndex);
 
-	int* getServiceTime()
-	{
-		return boardingTime;
-	}
-	void setServiceTime(int* _serviceTime)
-	{
-		boardingTime[0] = _serviceTime[0];
-		boardingTime[1] = _serviceTime[1];
-	}
 	friend ostream& operator<<(ostream& outs, Flight& flight);
 	string toString();
 };

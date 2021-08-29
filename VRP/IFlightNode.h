@@ -6,21 +6,6 @@ using namespace std;
 enum Direction { arrive, depart };
 class IFlightNode
 {
-private:
-	int		id;
-	string	flightType;
-	string  flightCompany;
-	char	flightClass;
-	int		ferryVehicles;
-	string  apron;
-	string	stand;
-	int		standIndex;
-	int		rdy;
-	int		serviceStartTime;
-	int		serviceEndTime;
-	enum Direction direction;
-	string  terminal;
-	int		terminalIndex;
 public:
 	IFlightNode() {}
 	IFlightNode(int _id,
@@ -34,20 +19,9 @@ public:
 		int _rdy,
 		enum Direction _direction,
 		string _terminal,
-		int _terminalIndex)
+		int _terminalIndex):id(_id),flightCompany(_flightCompany), flightType(_flightType),flightClass(_flightClass), ferryVehicles(_ferryVehicles), apron(_apron), stand(_stand), standIndex(_standIndex), rdy(_rdy), direction(_direction), terminal(_terminal), terminalIndex(_terminalIndex)
 	{
-		id = _id;
-		flightCompany = _flightCompany;
-		flightType = _flightType;
-		flightClass = _flightClass;
-		ferryVehicles = _ferryVehicles;
-		apron = _apron;
-		stand = _stand;
-		standIndex = _standIndex;
-		rdy = _rdy;
-		direction = _direction;
-		terminal = _terminal;
-		terminalIndex = _terminalIndex;
+		
 	}
 	const int getID()
 	{
@@ -125,5 +99,20 @@ public:
 	{
 		return terminalIndex;
 	}
+
+	int		id;							// 节点序号
+	string	flightType;					// 航班机型
+	string  flightCompany;				// 航班公司
+	char	flightClass;				// 航班级别
+	int		ferryVehicles;				// 航班所需摆渡车数量
+	string  apron;						// 机坪
+	string	stand;						// 远机位号
+	int		standIndex;					// 远机位角标
+	int		rdy;						// 准备时间
+	int		serviceStartTime;			// 服务开始时间
+	int		serviceEndTime;				// 服务结束时间（无用）
+	enum Direction direction;			// 航班方向（进港航班/离港航班）
+	string  terminal;					// 航站楼名称
+	int		terminalIndex;				// 航站楼角标
 };
 

@@ -1,33 +1,43 @@
 #include "ALNS/BasicClass/ValueRange.h"
-int ValueRange::getOperatorNum()
+
+double ValueRange::getMinVehicleTime()
 {
-	return operatorNum;
+	return minVehicleTime;
 }
-void ValueRange::setOperatorNum(int _operatorNum)
+void ValueRange::setMinVehicleTime(double _minTime)
 {
-	operatorNum = _operatorNum;
+	minVehicleTime = _minTime;
 }
-double ValueRange::getMinValue()
+double ValueRange::getCurTime()
 {
-	return minValue;
+	return curTime;
 }
-void ValueRange::setMinValue(double _minValue)
+void ValueRange::setCurTime(double _curTime)
 {
-	minValue = _minValue;
+	curTime = _curTime;
 }
-double ValueRange::getCurValue()
+double ValueRange::getMaxVehicleTime()
 {
-	return curValue;
+	return maxVehicleTime;
 }
-void ValueRange::setCurValue(double _curValue)
+void ValueRange::setMaxVehicleTime(double _maxTime)
 {
-	curValue = _curValue;
+	maxVehicleTime = _maxTime;
 }
-double ValueRange::getMaxValue()
+double ValueRange::getMinFlightTime()
 {
-	return maxValue;
+	return minFlightTime;
 }
-void ValueRange::setMaxValue(double _maxValue)
+void ValueRange::setMinFlightTime(double _minFlightTime)
 {
-	maxValue = _maxValue;
+	minFlightTime = _minFlightTime;
+}
+
+double ValueRange::getMaxFlightTime()
+{
+	return maxFlightTime;
+}
+void ValueRange::setMaxFlightTime(double _maxFlightTime)
+{
+	maxFlightTime = _maxFlightTime;
 }

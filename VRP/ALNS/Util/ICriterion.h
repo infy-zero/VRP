@@ -1,6 +1,6 @@
 #pragma once
 #include <iostream>
-#include "ALNS/setting/ALNS_Setting.h"
+#include "ALNS_Setting.h"
 using namespace std;
 class ICriterion
 {

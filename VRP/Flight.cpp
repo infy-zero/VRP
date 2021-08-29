@@ -20,19 +20,10 @@ Flight::Flight(int _id,
 		_stand, _standIndex, _rdy, _direction,_terminal, _terminalIndex)
 {
 	// parameter setting
-	FerryTaskSetting fts;
-	int t1 = fts.t1;
-	int t2 = fts.t2;
-	int t3 = fts.t3;
-	int t4 = fts.t4;
-	int t50 = fts.t50;
-	int t51 = fts.t51;
-	int t60 = fts.t60;
-	int t61 = fts.t61;
-	setServiceStartTime(getDirection() == arrive ? getRdy() - t1 : getRdy() - t3);
-	setServiceEndTime(getDirection() == arrive ? getRdy() - t2 : getRdy() - t4);
-	boardingTime[0] = getDirection() == arrive ? t50 : t60;
-	boardingTime[1] = getDirection() == arrive ? t51 : t61;
+	setServiceStartTime(getDirection() == arrive ? getRdy() - fts t1 : getRdy() - fts t3);
+	setServiceEndTime(getDirection() == arrive ? getRdy() - fts t2 : getRdy() - fts t4);
+	aheadFirstTime = getDirection() == arrive ? fts t50 : fts t60;
+	delayOtherTime = getDirection() == arrive ? fts maxDeltaTime : fts maxDeltaTime;
 }
 
 ostream& operator<<(ostream& outs, Flight& flight)
@@ -47,8 +38,8 @@ ostream& operator<<(ostream& outs, Flight& flight)
 		flight.getStand() << ", " <<
 		flight.getRdy() << ", " <<
 		flight.getDirection() << ", [" <<
-		flight.getServiceTime()[0] << ", " <<
-		flight.getServiceTime()[1] << "], " <<
+		flight.aheadFirstTime << ", " <<
+		flight.delayOtherTime << "], " <<
 		flight.getServiceStartTime() << ", " <<
 		flight.getServiceEndTime() << std::endl;
 	return outs;
@@ -69,8 +60,8 @@ string Flight::toString()
 		to_string(getStandIndex()) + ", " +
 		to_string(getRdy()) + ", " +
 		getDirectionString() + ", [" +
-		to_string(getServiceTime()[0]) + ", " +
-		to_string(getServiceTime()[1]) + "], " +
+		to_string(aheadFirstTime) + ", " +
+		to_string(delayOtherTime) + "], " +
 		to_string(getServiceStartTime()) + ", " +
 		to_string(getServiceEndTime()) + ", "  ;
 	return tmp;

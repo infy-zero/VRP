@@ -154,30 +154,18 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="ALNS\ALNS.cpp" />
+    <ClCompile Include="ALNS.cpp" />
     <ClCompile Include="ALNS\BasicClass\ISolutionNode.cpp" />
-    <ClCompile Include="ALNS\BasicClass\IInformation.cpp" />
-    <ClCompile Include="ALNS\BasicClass\IVehicle.cpp" />
     <ClCompile Include="ALNS\BasicClass\ValueRange.cpp" />
-    <ClCompile Include="ALNS\Component\IConstraint.cpp" />
-    <ClCompile Include="ALNS\Component\IObject.ive.cpp" />
-    <ClCompile Include="ALNS\Component\IOperator.cpp" />
-    <ClCompile Include="ALNS\Component\IRemovedList.cpp" />
-    <ClCompile Include="ALNS\Component\ISolution.cpp" />
-    <ClCompile Include="ALNS\Component\Objective\DistanceCost.cpp" />
-    <ClCompile Include="ALNS\Component\Objective\VehicleCost.cpp" />
-    <ClCompile Include="ALNS\Component\ParetoFrontier.cpp" />
-    <ClCompile Include="ALNS\Manager\IConstraintManager.cpp" />
-    <ClCompile Include="ALNS\Manager\IObjectiveManager.cpp" />
-    <ClCompile Include="ALNS\Manager\IOperatorManager.cpp" />
-    <ClCompile Include="ALNS\Manager\ISolutionManager.cpp" />
-    <ClCompile Include="ALNS\setting\ALNS_Setting.cpp" />
     <ClCompile Include="ALNS\Util\ICriterion.cpp" />
     <ClCompile Include="ALNS\Util\Roulette.cpp" />
+    <ClCompile Include="ALNS_Setting.cpp" />
     <ClCompile Include="Configuration.cpp" />
     <ClCompile Include="DeoptNode.cpp" />
+    <ClCompile Include="DestroyOperator.cpp" />
     <ClCompile Include="Entrance.cpp" />
     <ClCompile Include="FerryVehicleTask.cpp" />
+    <ClCompile Include="IInformation.cpp" />
     <ClCompile Include="ILocation.cpp" />
     <ClCompile Include="INode.cpp" />
     <ClCompile Include="lib\jsoncpp\json_reader.cpp" />
@@ -194,14 +182,18 @@
     <ClCompile Include="MultiDepot.cpp" />
     <ClCompile Include="MultiTrip.cpp" />
     <ClCompile Include="MultiVehicle.cpp" />
+    <ClCompile Include="MyException.cpp" />
     <ClCompile Include="MySQL.cpp" />
     <ClCompile Include="Flight.cpp" />
     <ClCompile Include="Node.cpp" />
+    <ClCompile Include="Nodes.cpp" />
     <ClCompile Include="Parallel.cpp" />
     <ClCompile Include="process.cpp" />
+    <ClCompile Include="RepairOperator.cpp" />
     <ClCompile Include="RollingCycle.cpp" />
     <ClCompile Include="Segment.cpp" />
     <ClCompile Include="SegmentNode.cpp" />
+    <ClCompile Include="Solution.cpp" />
     <ClCompile Include="StringUtil.cpp" />
     <ClCompile Include="test.cpp" />
     <ClCompile Include="TimeUtil.cpp" />
@@ -210,36 +202,27 @@
     <ClCompile Include="Vehicle.cpp" />
     <ClCompile Include="VehicleList.cpp" />
     <ClCompile Include="VehicleNode.cpp" />
+    <ClCompile Include="Vehicles.cpp" />
+    <ClCompile Include="VirtualFlight.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ALNS\ALNS.h" />
+    <ClInclude Include="ALNS.h" />
     <ClInclude Include="ALNS\BasicClass\ISolutionNode.h" />
-    <ClInclude Include="ALNS\BasicClass\IInformation.h" />
-    <ClInclude Include="ALNS\BasicClass\IVehicle.h" />
     <ClInclude Include="ALNS\BasicClass\ValueRange.h" />
-    <ClInclude Include="ALNS\Component\IConstraint.h" />
-    <ClInclude Include="ALNS\Component\IObjective.h" />
-    <ClInclude Include="ALNS\Component\IOperator.h" />
-    <ClInclude Include="ALNS\Component\IRemovedList.h" />
-    <ClInclude Include="ALNS\Component\ISolution.h" />
-    <ClInclude Include="ALNS\Component\Objective\DistanceCost.h" />
-    <ClInclude Include="ALNS\Component\Objective\VehicleCost.h" />
-    <ClInclude Include="ALNS\Component\ParetoFrontier.h" />
-    <ClInclude Include="ALNS\Manager\IConstraintManager.h" />
-    <ClInclude Include="ALNS\Manager\IObjectiveManager.h" />
-    <ClInclude Include="ALNS\Manager\IOperatorManager.h" />
-    <ClInclude Include="ALNS\Manager\ISolutionManager.h" />
-    <ClInclude Include="ALNS\setting\ALNS_Setting.h" />
     <ClInclude Include="ALNS\Util\ICriterion.h" />
     <ClInclude Include="ALNS\Util\Roulette.h" />
+    <ClInclude Include="ALNS_Setting.h" />
     <ClInclude Include="Configuration.h" />
     <ClInclude Include="DeoptNode.h" />
     <ClInclude Include="FerryTaskSetting.h" />
     <ClInclude Include="FerryVehicleTask.h" />
+    <ClInclude Include="IInformation.h" />
     <ClInclude Include="ILocation.h" />
     <ClInclude Include="IFlightNode.h" />
     <ClInclude Include="INode.h" />
+    <ClInclude Include="MyException.h" />
     <ClInclude Include="Node.h" />
+    <ClInclude Include="Nodes.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Segment.h" />
     <ClInclude Include="SegmentNode.h" />
@@ -266,6 +249,8 @@
     <ClInclude Include="Vehicle.h" />
     <ClInclude Include="VehicleList.h" />
     <ClInclude Include="VehicleNode.h" />
+    <ClInclude Include="Vehicles.h" />
+    <ClInclude Include="VirtualFlight.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="finalTasks80.csv" />

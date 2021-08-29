@@ -9,6 +9,9 @@
 #include "Flight.h"
 #include "FerryTaskSetting.h"
 #include "FerryVehicleTask.h"
+#include "ALNS_Setting.h"
+#include "IInformation.h"
+
 /**
  Date:    2021-06-25 20:20:00
  Author:  Lv Ning
@@ -17,20 +20,20 @@
 */
 using namespace std;
 
-void loadData(unordered_map<char, int>* flight2FerryVehcle, vector<string>* index2flightName, unordered_map<string, int>* flightName2index, vector<Flight>* flightTasks, vector<FerryVehicleTask>* ferryVehicleTasks, vector<vector<int>>* consequence, vector<vector<double>>* matrix);
+void loadData();
 string Trim(string& str);
 time_t strTime2unix(string timeStamp);
 void readF2FV(string filepath, unordered_map<char, int>* map);
-void LoadComparationTable(string filename, vector<string>* index2flight, unordered_map<string, int>* flight2index);
-void csv2task(string filename, unordered_map<char, int>& map, vector<Flight>*  flightTasks, unordered_map<string, int>* flight2index);
-void flight2FerryVehcleTasks(vector<FerryVehicleTask>* ferryVehicleTasks, vector<Flight>* flightTasks, vector<vector<int>>* consequence);
-void loadDisMatrix(string matrixPath, vector<vector<double>>* matrix, int size);
-void showDataInformation(unordered_map<char, int>* map, vector<Flight>* flightTasks, vector<FerryVehicleTask>* ferryVehicleTasks);
+void LoadComparationTable(string filename);
+void csv2task(string filename);
+void flight2FerryVehcleTasks();
+void loadDisMatrix(string matrixPath, int size);
+void showDataInformation();
 // 以下为函数区域
 // 读入各个场站、远机位、航站楼、临时停车位置距离
 
 // 读入航班需要的摆渡车数量表
-void readF2FV(string filepath, unordered_map<char, int>* map)
+void readF2FV(string filepath)
 {
 	ifstream fin(filepath, ios::in);
 	if (!fin.is_open())
@@ -49,11 +52,11 @@ void readF2FV(string filepath, unordered_map<char, int>* map)
 		}
 		char type= Trim(fields[0]).c_str()[0];
 		int needVehicle = atoi(Trim(fields[1]).c_str());
-		map->insert(pair<char, int>(type, needVehicle));
+		inf flight2FerryVehcle.insert(pair<char, int>(type, needVehicle));
 	}
 	cout << "Successful to load the flight-ferry vehicle number table." << endl;
 }
-void LoadComparationTable(string filename, vector<string>* index2flight, unordered_map<string, int>* flight2index)
+void LoadComparationTable(string filename)
 {
 	ifstream fin(filename, ios::in);
 	if (!fin.is_open())
@@ -68,14 +71,28 @@ void LoadComparationTable(string filename, vector<string>* index2flight, unorder
 			fields.push_back(field);
 		int index = atoi(Trim(fields[0]).c_str())-1;
 		string name = Trim(fields[1]);
-
-		index2flight->push_back(name);
-		flight2index->insert(pair<string,int> (name,index));
+		if (index != inf index2flightName.size())
+			throw "Index is not compatible.";
+		inf index2flightName.push_back(name);
+		inf flightName2index.insert(pair<string,int> (name,index));
+		// 读入两个场站
+		if (name._Equal("BGS"))
+		{
+			while (inf depots.size() < 1)
+				inf depots.push_back(nullptr);
+			inf depots[0] = new FerryVehicleTask(index, NULL, INT_MIN, INT_MAX, 0, DP);
+		}
+		else if (name._Equal("CA"))
+		{
+			while (inf depots.size() < 2)
+				inf depots.push_back(nullptr);
+			inf depots[1] = new FerryVehicleTask(index, NULL, INT_MIN, INT_MAX, 0, DP);
+		}
 	}
 	cout << "Successful to read the comparation table!" << endl;
 }
 // 读入航班数据
-void csv2task(string filename, unordered_map<char, int>* map, vector<Flight>* flightTasks, unordered_map<string, int>* flight2index)
+void csv2task(string filename)
 {
 	ifstream fin(filename, ios::in);
 	if (!fin.is_open())
@@ -102,7 +119,7 @@ void csv2task(string filename, unordered_map<char, int>* map, vector<Flight>* fl
 		string flighttype = Trim(fields[2]);
 		char flightclass = Trim(fields[3])[0];
 		string flightnumber = Trim(fields[4]);
-		int ferryVehicles = map->at(flightclass);
+		int ferryVehicles = inf flight2FerryVehcle.at(flightclass);
 		string apron = Trim(fields[5]);
 		string stand = Trim(fields[6]);
 		time_t rdy= strTime2unix(Trim(fields[7])+":00");
@@ -112,57 +129,70 @@ void csv2task(string filename, unordered_map<char, int>* map, vector<Flight>* fl
 			startTime = rdy;
 			//cout << "startTime=" << startTime << endl;
 		}
-		if (terminal.find("T3")==-1) 
+		// 判断抽取东/西/所有区
+		if (A_S range == EAST && terminal.find("T3") == -1)
+			continue;
+		else if (A_S range == WEST && terminal.find("T3") != -1)
 			continue;
 		rdy -= startTime - relaxingTime;
 		enum Direction direction = Trim(fields[8])._Equal("arrive")?arrive:depart;
-		Flight tmp(id, flightcompany, flighttype, flightclass, ferryVehicles, apron, stand,
-			flight2index->at(stand),static_cast<int>(rdy), direction, terminal, flight2index->at(terminal));
-		flightTasks->push_back(tmp);
+		Flight* tmp = new Flight(id, flightcompany, flighttype, flightclass, ferryVehicles, apron, stand,
+			inf flightName2index.at(stand),static_cast<int>(rdy), direction, terminal, inf flightName2index.at(terminal));
+		inf flightTasks.push_back(tmp);
 	}
 	
 	cout << "Successful to load the flight tasks!" << endl;
 }
 // 将航班转换为摆渡车任务
-void flight2FerryVehcleTasks(vector<FerryVehicleTask>* ferryVehicleTasks, vector<Flight>* flightTasks, vector<vector<int>>* consequence)
+void flight2FerryVehcleTasks()
 {
 	int num = 0;
-	FerryTaskSetting fts;
 	// transfer flightTasks to ferryVehicleTasks
-	for (auto flightTask : *flightTasks)
+	for (int j=0 ;j< inf flightTasks.size();j++)
 	{
+		auto flightTask = inf flightTasks.at(j);
 		vector<int> con;
-		for (int i = 0; i < flightTask.getFerryVehicles(); i++)
+		for (int i = 0; i < flightTask->ferryVehicles; i++)
 		{
+			// 按照顺序记录对应节点的位置 pair<组号，组内序号>?g
+			inf positions.push_back(make_pair(j,i));
 			con.push_back(num);
 			int serviceStartTime;
 			int serviceEndTime;
-			int boardingTime;
 			// 最早开始服务时间
-			if (i == 0)// 第一辆车最早提前8分钟到达
-				serviceStartTime = flightTask.getServiceStartTime() - fts.firstBefore - fts.timeWindow;
-			else// 剩下车辆按照服务时间增加
-				serviceStartTime = flightTask.getServiceStartTime() + fts.waitingTime + i * fts.boardingTime - fts.timeWindow;
+			if (i == 0)// 第一辆车最早提前5+timewindow(3)=8分钟到达
+				serviceStartTime = flightTask->getServiceStartTime() - FerryTaskSetting::firstBefore;
+			else if (i == 1) // 第二辆车最早提前
+				serviceStartTime = 0; 
+			else // 剩下车辆按照服务时间增加
+				serviceStartTime = flightTask->getServiceStartTime() + FerryTaskSetting::waitingTime + i * FerryTaskSetting::boardingTime;
 			// 最晚开始服务时间
 			if (i == 0)// 第一辆车最晚提前五分钟到达
-				serviceEndTime = flightTask.getServiceStartTime() - fts.firstBefore;
+				serviceEndTime = flightTask->getServiceStartTime() - FerryTaskSetting::firstBefore;
 			else// 剩下车辆按照服务时间增加
-				serviceEndTime = flightTask.getServiceStartTime() + i * (fts.boardingTime + fts.maxDeltaTime);
-			boardingTime = fts.boardingTime;
-			FerryVehicleTask
-				tmp(num++,
+				serviceEndTime = flightTask->getServiceStartTime() + i * (FerryTaskSetting::boardingTime + FerryTaskSetting::maxDeltaTime);
+
+			enum FVTType type; // 节点类型，前两个时间窗不可变UVF，后面节点动态时间窗可变VVF
+			if (i <= 2)				
+				type = UVF;
+			else                    
+				type = VVF;
+			FerryVehicleTask*
+				tmp = new FerryVehicleTask(num++,
 					flightTask,
 					serviceStartTime,
 					serviceEndTime,
-					boardingTime);
-			ferryVehicleTasks->push_back(tmp);
+					fts boardingTime,
+					type);
+			inf nodes.push_back(tmp);
 		}
-		consequence->push_back(con);
+		inf consequence.push_back(con);
+
 	}
 	cout << "Ferry vehicles tasks are loaded successfully!" << endl;
 }
 // 读入距离矩阵
-void loadDisMatrix(string filePath, vector<vector<double>>* matrix, int size)
+void loadDisMatrix(string filePath, int size)
 {
 	ifstream fin(filePath);
 	if (!fin.is_open())
@@ -180,54 +210,54 @@ void loadDisMatrix(string filePath, vector<vector<double>>* matrix, int size)
 		}
 		if (segments.size() != size)
 			cout << "Data Wrong" << endl;
-		matrix->push_back(segments);
+		inf matrix.push_back(segments);
 	}
 	cout << "Distance matrix is load successfully!" << endl;
 }
 // 显示数据
-void showDataInformation(unordered_map<char, int>* map, vector<Flight>* flightTasks, vector<FerryVehicleTask>* ferryVehicleTasks)
+void showDataInformation()
 {
 	cout << "The Data is loaded!" << endl;
 	cout << "**********************" << endl;
 	cout << "  Data Information:" << endl;
-	for (auto node : *map)
+	for (auto node : inf flight2FerryVehcle)
 		cout << "\t" << node.first << "\t" << node.second << endl;
-	cout << "\tflights:" << flightTasks->size() << endl;
-	cout << "\ttasks:" << ferryVehicleTasks->size() << endl;
-	for (auto ferryVehicleTask : *ferryVehicleTasks)
+	cout << "\tflights:" << inf flightTasks.size() << endl;
+	cout << "\ttasks:" << inf nodes.size() << endl;
+	for (auto ferryVehicleTask : inf nodes)
 		cout << ferryVehicleTask;
 	cout << "**********************" << endl;
 }
 
 // Load all the data needed
-void loadData(unordered_map<char, int>* flight2FerryVehcle, vector<string>* index2flightName, unordered_map<string, int>* flightName2index, vector<Flight>* flightTasks, vector<FerryVehicleTask>* ferryVehicleTasks, vector<vector<int>>* consequence, vector<vector<double>>* matrix)
+void loadData()
 {
 	/* 读取航班需要的摆渡车数量列表*/
 	string flight2ferry = "flight2ferry.csv";
 	// 航班需要的摆渡车数量列表
-	readF2FV(flight2ferry, flight2FerryVehcle);
+	readF2FV(flight2ferry);
 
 	/* 读取停机位对照表*/
 	string flightindex = "comparationTable2.txt";
 	// 序号到停机位名称列表
 	// 停机位到序号名称列表
-	LoadComparationTable(flightindex, index2flightName, flightName2index);
+	LoadComparationTable(flightindex);
 
 	/* 读取飞机列表*/
 	// 飞机列表
 	string flightCSV = "finalTasks80.csv";
-	csv2task(flightCSV,flight2FerryVehcle, flightTasks, flightName2index);
+	csv2task(flightCSV);
 
 	/* 生成摆渡车任务列表*/
 	// 同一飞机的摆渡车任务列表
 	// 摆渡车任务列表
-	flight2FerryVehcleTasks(ferryVehicleTasks, flightTasks, consequence);
+	flight2FerryVehcleTasks();
 
 	/*读取距离矩阵*/
 	string matrixPath = "distance.txt";
-	loadDisMatrix(matrixPath, matrix, index2flightName->size());
+	loadDisMatrix(matrixPath, inf index2flightName.size());
 
-
+	
 	/* 打印数据*/
-	showDataInformation(flight2FerryVehcle,flightTasks, ferryVehicleTasks);
+	showDataInformation();
 }

@@ -2,18 +2,26 @@
 class ValueRange
 {
 private:
-	int operatorNum;
-	double minValue;
-	double curValue;
-	double maxValue;
+	double curTime;
+	double minVehicleTime;
+	double maxVehicleTime;
+	double minFlightTime;
+	double maxFlightTime;
 public:
-	int getOperatorNum();
-	void setOperatorNum(int _operatorNum);
-	double getMinValue();
-	void setMinValue(double _minValue);
-	double getCurValue();
-	void setCurValue(double _curValue);
-	double getMaxValue();
-	void setMaxValue(double _maxValue);
+	double getCurTime();
+	void setCurTime(double _curVehicleTime); 
+
+	double getMinVehicleTime();
+	void setMinVehicleTime(double _minVehicleTime);
+
+	double getMaxVehicleTime();
+	void setMaxVehicleTime(double _maxVehicleTime);
+
+	double getMinFlightTime();
+	void setMinFlightTime(double _minFlightTime);
+
+	double getMaxFlightTime();
+	void setMaxFlightTime(double _maxFlightTime);
+
 };
 

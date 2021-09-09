@@ -26,7 +26,7 @@ int main() {
    
     // ¶ÁÈ¡Êý¾Ý
     loadData();
-    alns::ALNS alns_cur;
+    ALNS alns_cur;
     alns_cur.start();
     return 0;
 }

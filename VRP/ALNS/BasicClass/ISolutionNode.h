@@ -1,10 +1,12 @@
 #pragma once
+
+#include <memory>
 #include <vector>
+
 #include "FerryVehicleTask.h"
 #include "ALNS_Setting.h"
-namespace alns {
 
-enum NodeState { INSOLUTION, INREMOVELIST };   // 节点状态：在当前解、在回收列表
+enum NodeState { CHECKED, UNCHECKED, INREMOVELIST };   // 节点状态：在当前解、在回收列表
 
 using namespace std;
 /* 1、第一辆摆渡车提前5 - 8分钟到达，0分钟开始提供服务，0+1分钟结束服务；
@@ -17,7 +19,11 @@ using namespace std;
 class ISolutionNode
 {
 public:
-	FerryVehicleTask* task;		// 0、任务
+	ISolutionNode() = default;
+	ISolutionNode(const ISolutionNode& other) = default;
+	ISolutionNode(const shared_ptr<FerryVehicleTask>& _task);
+
+	shared_ptr<FerryVehicleTask> task;// 0、任务
 	bool isUpdate = true;		// 1、是否序号更新
 
 	double curTime;				// 2、本节点到达时间
@@ -33,7 +39,5 @@ public:
 
 	enum NodeState state;		// 10、当前节点状态
 
-	ISolutionNode(ISolutionNode& other);
-	ISolutionNode(FerryVehicleTask* _task);
+
 };
-} // alns

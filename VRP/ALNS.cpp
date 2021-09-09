@@ -1,93 +1,136 @@
 #include "ALNS.h"
-#include <algorithm>
 
-namespace alns {
+#include <algorithm>
+#include <ctime>
+#include <memory>
+
+#include "ALNS/Util/Util.h"
+#include "MyException.h"
 
 ALNS::ALNS():virtualFlight(inf consequence)
 {
 	cout << "启动 ALNS" << endl;
-	curSol.curVal = DBL_MAX;
+	// 确定摆渡车任务（车辆数）上限，超出此上限则认为订单或任务有问题
+	total_vehicle_num = inf nodes.nodes_.size();
 	// 生成初始解，注入information
-	if (ALNS_Setting::range == WEST)
-		curSol.depot = inf depots.at(1)->getID();
-	else if (ALNS_Setting::range == EAST)
-		curSol.depot = inf depots.at(0)->getID();
+	nodes_ = &inf nodes;
 	// 将所有任务压入RemovedList
-	for (int i = 0; i < inf nodes.size(); i++) {
-		FerryVehicleTask* fvt = inf nodes.at(i); // 摆渡车任务
-		ISolutionNode sn(fvt);// 扔到堆里，和解共生。
-		curSol.nodes.push_back(std::move(sn));
-		curSol.removedList.push_back(i);
+	for (int i = 0; i < nodes_->nodes_.size(); i++) {
+		int id = nodes_->nodes_.at(i).task->id;// 摆渡车任务
+		curSol.removedList.push_back(id);
 	}
-	// 将场站节点压入nodes末尾
-	for (int i = 0; i < inf depots.size(); i++) {
-		FerryVehicleTask* fvt = inf depots.at(i); // 摆渡车任务
-		ISolutionNode sn(fvt);// 扔到堆里，和解共生。
-		curSol.nodes.push_back(std::move(sn));
+	// 场站数据
+	if (A_S range == EAST) {
+		depot_ = -2;
 	}
+	else {
+		depot_ = -1;
+	}
+	// 将场站号、所有节点注入solution
+	curSol.depot_ = depot_;
+	curSol.nodes_ = nodes_;
 	cout << "ALNS就绪" << endl;
 }
 
 void ALNS::start()
 {
 	/*自适应大领域搜索在大领域搜索的基础上增加了更多的破坏和恢复算子，同时为这些算子赋予权重和增加了一个适应层，在适应层中需要控制迭代：更新比例r、segment number 更新周期，抽选算子准则，算子计分方法*/
-	std::cout << "    开始ALNS算法" << std::endl;
+	cout << "    开始ALNS算法" << std::endl;
+	clock_t time = clock();
 	/*生成初始解——利用恢复算子+约束条件*/
-	std::cout << "		生成初始解" << std::endl;
+	cout << "		生成初始解" << std::endl;
 	greedyInsertion();
-	std::cout << "		初始解生成完毕" << std::endl;
+	cout << "		初始解生成完毕" << std::endl;
 	cal_objectives();									// 计算当前目标函数值
 	push_solution_space();								// 加入解空间
 
 	/*开始迭代——达到停止标准之前*/
-	std::cout << criterion.toString() << std::endl;
-	enum SolutionFrequency sf = ALREADY;
+	cout << criterion.toString() << std::endl;
 	while (criterion.iter())
 	{
-		/*构建新解*/
+		// 构建新解
 		Solution newSol = curSol;
-		/*破坏当前解*/
+		// 破坏当前解
 		randomDestroy(&newSol);
-		/*恢复当前解*/
+		// 恢复当前解
 		greedyInsertion(&newSol);
-		// 更新新解
-		double grade = push_solution_space(&newSol);
-		/*利用模拟退火准则判断是否接受当前解*/
-		bool isAccept = accept(criterion.getCurT(), sol, newSol);
-		if (isAccept)
+		// 更新newSol信息
+		updateSolution(&newSol);
+		// 判断是否更新新解
+		SolutionFrequency sf = push_solution_space(&criterion, &newSol);
+		string solutionString = newSol.toString();
+		if (sf == BEST) // 最优解直接插入SP，更新当前解，全局最优解
 		{
-			string solutionString = newSol->toString();
-			if (newSol->cal_objectives() < bestVal)
-			{
-				solutionSpace.insert(solutionString);
-				sf = BEST;
-			}
-			else if (solutionSpace.count(solutionString))// 没找到则插入
-			{
-				solutionSpace.insert(solutionString);
-				sf = NEVER;
-			}
-			else
-				sf = ALREADY;
-			delete sol;
-			sol = newSol;
+			solutionSpace.insert(make_pair(solutionString, newSol.curVal));
+			curSol  = newSol;
+			bestSol = newSol;
+		} else if (sf == NEVER_BUT_BETTER) { // 比当前解更好，则插入SP
+			solutionSpace.insert(make_pair(solutionString, newSol.curVal));
+			curSol = newSol;
+		} else if (sf == SA_ACCEPT) {		// 没有当前解好，但是根据模拟退火准则接受
+			solutionSpace.insert(make_pair(solutionString, newSol.curVal));
+			curSol = newSol;
 		}
-		else
-			delete newSol;
-		// 将当前解放入解空间
-		sol->updateScores(sf, ond, onr);
-		/*更新 Adaptive layer 参数*/
-		if (criterion.isUpdateParamter())
-			sol->updateParameter(ALNS_Setting::segment);
+		else {								// 拒绝当前解
+			
+		}
+		// 更新当前解的分数
+		updateScores(sf);
+		// 更新当前状态
+		update();
+		// 更新 Adaptive layer 参数
+		if (criterion.isUpdateParamter()) {
+			updateParameters();
+		}
 	}
 	std::cout << "    迭代结束，共计迭代次数：" << criterion.getTotalTimes() << std::endl;
+	std::cout << "当前目标函数值 = " << curSol.curVal << "，当前车辆数 = " << curSol.vehicles.size() << "，当前解 = " << curSol.toString();
+	std::cout << "最优值 = " << bestSol.curVal << "，最优解 = " << bestSol.toString();
+	cout << "用时共计 = " << ((clock() - time) / CLOCKS_PER_SEC) << "秒" << endl;
 }
 // 恢复算子
+// 插入removedList中的所有节点
 void ALNS::greedyInsertion(Solution* solution) {
-	if (solution == nullptr) {
+	if (solution == nullptr) {											// solution为空，默认启用curSol
 		solution = &curSol;
 	}
 	std::cout << "贪婪插入" << std::endl;
+	while (!solution->removedList.empty()) { // 直到removedList清空
+		int node_left = solution->removedList.size();
+		greedyInsertionOnce(solution);
+		if (node_left == solution->removedList.size()) { // 节点没有发生变换，则新增车辆
+			solution->addVehicle();
+		}
+	}
+}
+// 插入一个节点
+void ALNS::greedyInsertionOnce(Solution* solution) {
+	if (solution->removedList.empty()) {								// 当removedList为空，禁止插入
+		throw MyException("The removedList is empty, no need for insertion!");
+	}
+	unique_ptr<Solution> local_best_solution = nullptr;					// 当前最优解
+	bool tag = true;
+	// 从最后一个节点往前遍历，减少删除时间复杂度
+	for (int i = 0; i< solution->removedList.size(); i++) {
+		// 遍历所有位置，确定是否能插入
+		for (int j = 0; j < solution->vehicles.size(); j++) {				// 遍历所有车
+			for (int k = 1; k < solution->vehicles.at(j).size(); k++) {		// 遍历车内所有位置
+				Solution localSol = *solution;							// 生成当前解的拷贝
+				localSol.insert(j, k, solution->removedList.at(i));		// 生成新的解
+				updateSolution(&localSol);								// 更新新的解目标函数等信息
+				if (check_solution_feasible(&localSol) && localSol.isBetter(local_best_solution)) {			// 当前解可行且更好则进行替换
+					local_best_solution.reset(new Solution(localSol));	
+					local_best_solution->removedList.erase(local_best_solution->removedList.begin() + i);
+				}
+			}
+		}
+	}
+	// 插入失败时，加入新车，将最后一个节点放入新车
+	if (local_best_solution == nullptr || !local_best_solution) {
+		return;
+	} else { // 否则将当前车辆变更为局部最优解
+		*solution = *(local_best_solution.get());
+	}
 }
 
 // 破坏算子
@@ -107,49 +150,85 @@ double ALNS::cal_objectives(Solution* solution) {
 	return solution->curVal;
 }
 // 将当前解送入解空间
-double ALNS::push_solution_space(Solution* solution) {
+SolutionFrequency ALNS::push_solution_space(ICriterion* criterion, Solution* solution) {
 	// 输入nullptr时，改用当前解
 	if (solution == nullptr) {
 		solution = &curSol;
 	}
+	// 当没有判断标准时，即为第一次，直接接受
+	double curT;
+	if (criterion == nullptr) { // curT = inf -> p = 1
+		curT = DBL_MAX;
+	} else {
+		curT = criterion->getCurT();
+	}
 	// 计算目标函数值
 	cal_objectives(solution);
 	// 计算字符串
-	string solution_str = toString(solution);
-	
-	if (solution->curVal < bestSol.curVal) { // 判断是否为最优解
-		solutionSpace.insert(make_pair(solution_str, solution->curVal));
-		return 1.2;
-	} else if ()
+	string solution_str = solution->toString();
 	auto tmp = solutionSpace.find(solution_str);
-	if (tmp == solutionSpace.end()) {
-
+	if (solution->curVal < bestSol.curVal) { // 判断是否为最优解，是最优解+1.5
+		return BEST;
+	} else if (tmp != solutionSpace.end() && solution->curVal > curSol.curVal) { // 判断是否为未出现过的解，比当前解更好则+1.2
+		return NEVER_BUT_BETTER;
+	} else { // 模拟退火
+		if (simulated_annealing(curT, solution->curVal)) { // 接受当前解
+			return SA_ACCEPT;
+		} else { // 拒绝当前解
+			return SA_REJECT;
+		}
 	}
-	return 0;
+	throw exception("You can not reach here!");
+	return BEST;
 }
 
-// 输出当前解
-std::string ALNS::toString(Solution* solution) {
+// 模拟退火准则
+bool ALNS::simulated_annealing(double curT, double curVal) {
+	double possibility = exp( - (curVal - bestSol.curVal) / curT);	// 系统接受新状态的概率
+	double random = Util::getRandom();							// 随机数（0，1）
+	if (random < possibility) {
+		return true;
+	} else {
+		return false;
+	}
+}
+
+// 更新参数信息
+void ALNS::updateParameters() {
+
+}
+
+// 更新得分情况
+void ALNS::updateScores(SolutionFrequency sf) {
+	// TODO: 更新当前追加得分
+}
+
+// 更新解的信息
+void ALNS::updateSolution(Solution* solution) {
+	// TODO: 更新费用
+	double total_cost = 0;								// 初始费用为0
+	for (int i = 0; i < solution->vehicles.size(); i++) { // 计算目标函数
+		total_cost += solution->cal_solution_cost();
+	}
+	solution->curVal = total_cost;
+
+}
+
+// 更新当前解信息，主要用事后/事前检测
+void ALNS::update() {
+	// TODO: 更新当前的状态-仅用于测试阶段调试，后期会移除
+
+}
+
+// 判断当前解是否可行
+bool ALNS::check_solution_feasible(Solution* solution) {
+	// TODO: 判断当前解是否可行
 	if (solution == nullptr) {
 		solution = &curSol;
 	}
-	// 删除空车
-	for (auto iter = solution->sol.end(); iter != solution->sol.begin(); iter--) {
-		if (iter->size() < 2) {
-			throw new exception("车辆节点小于2");
-		} else if (iter->size() == 2) {
-			iter = solution->sol.erase(iter);
-		}
-	}
-	// 先进行排序
-	sort(solution->sol.begin(), solution->sol.end());
-	std::string result;
-	for (int i = 0; i < solution->sol.size(); i++) {
-		for (int j = 0; j < solution->sol[i].size(); j++) {
-			result += std::to_string(solution->sol[i][j]) + ',';
-		}
-		result += '\n';
-	}
-	return result;
+	for (int i=0;i<solution->vehicles.size();i++)
+		if (solution->vehicles[i].size() > 10)
+			return false;
+	
+	return true;
 }
-} // alns

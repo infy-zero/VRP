@@ -1,9 +1,8 @@
 #include "ISolutionNode.h"
 #include "FerryTaskSetting.h"
 #include "MyException.h"
-namespace alns {
 
-ISolutionNode::ISolutionNode(FerryVehicleTask* _task) :
+ISolutionNode::ISolutionNode(const shared_ptr <FerryVehicleTask>& _task) :
 	task(_task),
 	isUpdate(true),
 	curTime(-DBL_MAX),
@@ -25,4 +24,3 @@ ISolutionNode::ISolutionNode(FerryVehicleTask* _task) :
 	}
 
 }
-} // alns

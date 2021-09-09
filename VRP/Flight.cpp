@@ -20,10 +20,18 @@ Flight::Flight(int _id,
 		_stand, _standIndex, _rdy, _direction,_terminal, _terminalIndex)
 {
 	// parameter setting
-	setServiceStartTime(getDirection() == arrive ? getRdy() - fts t1 : getRdy() - fts t3);
-	setServiceEndTime(getDirection() == arrive ? getRdy() - fts t2 : getRdy() - fts t4);
-	aheadFirstTime = getDirection() == arrive ? fts t50 : fts t60;
-	delayOtherTime = getDirection() == arrive ? fts maxDeltaTime : fts maxDeltaTime;
+	if (direction != unassign) { // 普通节点
+		setServiceStartTime(getDirection() == arrive ? getRdy() - fts t1 : getRdy() - fts t3);
+		setServiceEndTime(getDirection() == arrive ? getRdy() - fts t2 : getRdy() - fts t4);
+		aheadFirstTime = getDirection() == arrive ? fts t50 : fts t60;
+		delayOtherTime = getDirection() == arrive ? fts maxDeltaTime : fts maxDeltaTime;
+	} else { // 场站
+		serviceStartTime = INT_MIN;
+		serviceEndTime = INT_MAX;
+		aheadFirstTime = INT_MIN;
+		delayOtherTime = INT_MIN;
+	}
+	
 }
 
 ostream& operator<<(ostream& outs, Flight& flight)

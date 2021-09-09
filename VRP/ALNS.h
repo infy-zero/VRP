@@ -4,30 +4,33 @@
 #include <stdlib.h>
 #include <math.h>
 #include <unordered_map>
+
+#include "AllNodes.h"
 #include "IInformation.h"
 #include "BasicClass/ISolutionNode.h"
 #include "ALNS/Util/ICriterion.h"
+#include "Solution.h"
 
-namespace alns {
-struct Solution { // 解的结构
-	double											curVal = DBL_MAX;				// 4、当前目标函数值
-	vector<ISolutionNode>							nodes;							// 5、所有节点
-	std::vector<std::vector<int>>					sol;		  					// 6、车辆顺序检验
-	std::vector<int>								removedList; 					// 7、剩余节点
-	int												depot;		  					// 8、场站序号
-
+struct InsertPosition
+{
+	int inserted_pos = -1;
+	int vehicle_num  = -1;
+	int vheicle_pos  = -1;
 };
+
 class ALNS
 {
 private:
 	ICriterion										criterion;						// 1、迭代标准
 	std::unordered_map<std::string, double>			solutionSpace;					// 2、解空间
-	std::vector<std::vector<int>>					virtualFlight;					// 3、虚拟航班
-	Solution										bestSol;						// 4、最优解目标函数
+	AllNodes*										nodes_;							// 3、所有节点
+	int												depot_;							// 4、场站
+	std::vector<std::vector<int>>					virtualFlight;					// 5、虚拟航班
+	int												total_vehicle_num;				// 6、总的摆渡车任务数量
+	Solution										bestSol;						// 7、最优解目标函数
 
 	// 当前解
-	Solution										curSol;							// 5-8、当前解
-
+	Solution										curSol;							// 8、当前解
 	// 算子
 	std::vector<double>								repairGrades; 					// 9、恢复算子得分
 	std::vector<double>								repairAdd;	  					// 10、恢复算子当前回合得分
@@ -43,6 +46,8 @@ public:
 	// 恢复算子
 	void greedyInsertion(Solution* solution = nullptr);
 
+	void greedyInsertionOnce(Solution* solution);
+
 	// 破坏算子
 	void randomDestroy(Solution* solution = nullptr);
 
@@ -50,9 +55,24 @@ public:
 	double cal_objectives(Solution* solution = nullptr);
 
 	// 将当前解送入解空间
-	double push_solution_space(Solution* solution = nullptr);
+	SolutionFrequency push_solution_space(ICriterion* criterion = nullptr, Solution* solution = nullptr);
 
-	// 输出当前解
-	std::string toString(Solution* solution = nullptr);
+	// 模拟退火
+	bool simulated_annealing(double curT, double curVal);
+	
+	// 更新参数信息
+	void updateParameters();
+
+	// 更新得分情况
+	void updateScores(SolutionFrequency sf);
+
+	/*解的领域*/
+	// 更新解的信息
+	void updateSolution(Solution* solution = nullptr);
+
+	// 更新当前解信息
+	void update();
+
+	// 判断当前解是否可行
+	bool check_solution_feasible(Solution* solution = nullptr);
 };
-}// alns

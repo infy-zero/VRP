@@ -1,7 +1,6 @@
 #pragma once
 #include <string>
 #include <iostream>
-using namespace std;
 
 class MyLocation // 用来统计插入节点的位置 nodeNum、vehNum、pos、saveValue
 {
@@ -14,16 +13,16 @@ public:
 		saveValue = other.saveValue;
 		return *this;
 	};
-	friend ostream& operator<<(ostream& o, const MyLocation& ml)
+	friend std::ostream& operator<<(std::ostream& o, const MyLocation& ml)
 	{
-		o << ml.nodeNum << "," << ml.vehNum << "," << ml.pos << "," << ml.saveValue << endl;
+		o << ml.nodeNum << "," << ml.vehNum << "," << ml.pos << "," << ml.saveValue << std::endl;
 		return o;
 	};
-	MyLocation(int _nodeNum=-1, int _vehNum = -1, int _pos = -1, double _saveValue = -DBL_MAX) :nodeNum(_nodeNum),vehNum(_vehNum),pos(_pos),saveValue(_saveValue)
+	MyLocation(int _nodeNum = -1, int _vehNum = -1, int _pos = -1, double _saveValue = -DBL_MAX) :nodeNum(_nodeNum), vehNum(_vehNum), pos(_pos), saveValue(_saveValue)
 	{
 		// cout << "执行赋值" << this << endl;
 	};
-	MyLocation(const MyLocation& other) :nodeNum(other.nodeNum),vehNum(other.vehNum),pos(other.pos), saveValue(other.saveValue)
+	MyLocation(const MyLocation& other) :nodeNum(other.nodeNum), vehNum(other.vehNum), pos(other.pos), saveValue(other.saveValue)
 	{
 		// cout << "执行引用拷贝" << endl;
 	};
@@ -58,7 +57,7 @@ public:
 		return result;
 	}
 };
-enum SolutionFrequency { BEST, ALREADY, NEVER };
+enum SolutionFrequency { BEST, NEVER_BUT_BETTER, SA_ACCEPT, SA_REJECT };
 enum OperatorType { DESTROY, REPAIR };
 enum ScopeRange { WEST, EAST, MIX };
 enum RepairOperatorNum { GREEDYREPAIR };
@@ -70,7 +69,7 @@ public:
 	// 目标函数参数
 	static constexpr double vcost = 2000; // 车辆固定成本
 	static constexpr double pcost = 2; // 车辆行驶单位距离成本
-	
+
 
 	// 适应层参数
 	static constexpr double r = 0.2; // 更新速率
@@ -80,7 +79,7 @@ public:
 	static constexpr double already = 0.8;
 	static constexpr double never = 1.0;
 	static constexpr double ratio = 0.1;
-	
+
 	// 迭代参数
 	static constexpr double startT = 100;
 	static constexpr double endT = 10;
@@ -91,10 +90,10 @@ public:
 	// 约束参数
 	static constexpr double maxLength = 200000;     // 最大里程
 	static constexpr double speed = 30 / 3.6;       // 平均行驶速度
-	static string to_string(enum OperatorType ot);
+	static std::string to_string(enum OperatorType ot);
 
 	// 问题描述
-	static constexpr enum ScopeRange range	= EAST; // 范围-东区/西区/混合
-	static constexpr int startIndex			= 0;	// 起始坐标
-	static constexpr int counts				= 31;	// 终止坐标
+	static constexpr enum ScopeRange range = EAST; // 范围-东区/西区/混合
+	static constexpr int startIndex = 0;	// 起始坐标
+	static constexpr int counts = 31;	// 终止坐标
 };

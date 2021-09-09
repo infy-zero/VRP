@@ -6,11 +6,13 @@
 #include <ctime>
 #include <time.h>
 #include <unordered_map>
+
 #include "Flight.h"
 #include "FerryTaskSetting.h"
 #include "FerryVehicleTask.h"
 #include "ALNS_Setting.h"
 #include "IInformation.h"
+#include "ALNS/BasicClass/ISolutionNode.h"
 
 /**
  Date:    2021-06-25 20:20:00
@@ -18,7 +20,6 @@
  version: 0.1
  Description: This cpp file is used to load the Data.
 */
-using namespace std;
 
 void loadData();
 string Trim(string& str);
@@ -50,7 +51,7 @@ void readF2FV(string filepath)
 		{
 			fields.push_back(field);
 		}
-		char type= Trim(fields[0]).c_str()[0];
+		char type = Trim(fields[0]).c_str()[0];
 		int needVehicle = atoi(Trim(fields[1]).c_str());
 		inf flight2FerryVehcle.insert(pair<char, int>(type, needVehicle));
 	}
@@ -69,24 +70,25 @@ void LoadComparationTable(string filename)
 		string field;
 		while (getline(sin, field, ','))
 			fields.push_back(field);
-		int index = atoi(Trim(fields[0]).c_str())-1;
+		int index = atoi(Trim(fields[0]).c_str()) - 1;
 		string name = Trim(fields[1]);
 		if (index != inf index2flightName.size())
 			throw "Index is not compatible.";
 		inf index2flightName.push_back(name);
-		inf flightName2index.insert(pair<string,int> (name,index));
+		inf flightName2index.insert(pair<string, int>(name, index));
 		// 读入两个场站
 		if (name._Equal("BGS"))
 		{
-			while (inf depots.size() < 1)
-				inf depots.push_back(nullptr);
-			inf depots[0] = new FerryVehicleTask(index, NULL, INT_MIN, INT_MAX, 0, DP);
+			shared_ptr<FerryVehicleTask> task_bgs(new FerryVehicleTask(index, NULL, INT_MIN, INT_MAX, 0, DP));
+			ISolutionNode node_bgs(task_bgs);
+			inf nodes.push_depot(-1, node_bgs);
+
 		}
 		else if (name._Equal("CA"))
 		{
-			while (inf depots.size() < 2)
-				inf depots.push_back(nullptr);
-			inf depots[1] = new FerryVehicleTask(index, NULL, INT_MIN, INT_MAX, 0, DP);
+			shared_ptr<FerryVehicleTask> task_ca(new FerryVehicleTask(index, NULL, INT_MIN, INT_MAX, 0, DP));
+			ISolutionNode node_ca(task_ca);
+			inf nodes.push_depot(-2, node_ca);
 		}
 	}
 	cout << "Successful to read the comparation table!" << endl;
@@ -96,7 +98,7 @@ void csv2task(string filename)
 {
 	ifstream fin(filename, ios::in);
 	if (!fin.is_open())
-		throw  "Fail to open the file:"+filename;
+		throw  "Fail to open the file:" + filename;
 	string line;
 	int count = -2;
 	int relaxingTime = FerryTaskSetting::relaxingTime;
@@ -122,25 +124,25 @@ void csv2task(string filename)
 		int ferryVehicles = inf flight2FerryVehcle.at(flightclass);
 		string apron = Trim(fields[5]);
 		string stand = Trim(fields[6]);
-		time_t rdy= strTime2unix(Trim(fields[7])+":00");
+		time_t rdy = strTime2unix(Trim(fields[7]) + ":00");
 		string terminal = Trim(fields[10]);
 		if (count == 0)
 		{
 			startTime = rdy;
 			//cout << "startTime=" << startTime << endl;
 		}
-		// 判断抽取东/西/所有区
+		// 判断抽取东/西/所有区——目前抽取东区数据
 		if (A_S range == EAST && terminal.find("T3") == -1)
 			continue;
 		else if (A_S range == WEST && terminal.find("T3") != -1)
 			continue;
 		rdy -= startTime - relaxingTime;
-		enum Direction direction = Trim(fields[8])._Equal("arrive")?arrive:depart;
+		enum Direction direction = Trim(fields[8])._Equal("arrive") ? arrive : depart;
 		Flight* tmp = new Flight(id, flightcompany, flighttype, flightclass, ferryVehicles, apron, stand,
-			inf flightName2index.at(stand),static_cast<int>(rdy), direction, terminal, inf flightName2index.at(terminal));
+			inf flightName2index.at(stand), static_cast<int>(rdy), direction, terminal, inf flightName2index.at(terminal));
 		inf flightTasks.push_back(tmp);
 	}
-	
+
 	cout << "Successful to load the flight tasks!" << endl;
 }
 // 将航班转换为摆渡车任务
@@ -148,14 +150,14 @@ void flight2FerryVehcleTasks()
 {
 	int num = 0;
 	// transfer flightTasks to ferryVehicleTasks
-	for (int j=0 ;j< inf flightTasks.size();j++)
+	for (int j = 0; j < inf flightTasks.size(); j++)
 	{
 		auto flightTask = inf flightTasks.at(j);
 		vector<int> con;
 		for (int i = 0; i < flightTask->ferryVehicles; i++)
 		{
 			// 按照顺序记录对应节点的位置 pair<组号，组内序号>?g
-			inf positions.push_back(make_pair(j,i));
+			inf positions.push_back(make_pair(j, i));
 			con.push_back(num);
 			int serviceStartTime;
 			int serviceEndTime;
@@ -163,7 +165,7 @@ void flight2FerryVehcleTasks()
 			if (i == 0)// 第一辆车最早提前5+timewindow(3)=8分钟到达
 				serviceStartTime = flightTask->getServiceStartTime() - FerryTaskSetting::firstBefore;
 			else if (i == 1) // 第二辆车最早提前
-				serviceStartTime = 0; 
+				serviceStartTime = flightTask->getServiceStartTime();
 			else // 剩下车辆按照服务时间增加
 				serviceStartTime = flightTask->getServiceStartTime() + FerryTaskSetting::waitingTime + i * FerryTaskSetting::boardingTime;
 			// 最晚开始服务时间
@@ -173,18 +175,19 @@ void flight2FerryVehcleTasks()
 				serviceEndTime = flightTask->getServiceStartTime() + i * (FerryTaskSetting::boardingTime + FerryTaskSetting::maxDeltaTime);
 
 			enum FVTType type; // 节点类型，前两个时间窗不可变UVF，后面节点动态时间窗可变VVF
-			if (i <= 2)				
+			if (i <= 2)
 				type = UVF;
-			else                    
+			else
 				type = VVF;
-			FerryVehicleTask*
-				tmp = new FerryVehicleTask(num++,
+			shared_ptr<FerryVehicleTask>
+				tmp_task(new FerryVehicleTask(num++,
 					flightTask,
 					serviceStartTime,
 					serviceEndTime,
 					fts boardingTime,
-					type);
-			inf nodes.push_back(tmp);
+					type));
+			ISolutionNode tmp_node(tmp_task);
+			inf nodes.push_node(tmp_node.task->id, tmp_node);
 		}
 		inf consequence.push_back(con);
 
@@ -223,9 +226,14 @@ void showDataInformation()
 	for (auto node : inf flight2FerryVehcle)
 		cout << "\t" << node.first << "\t" << node.second << endl;
 	cout << "\tflights:" << inf flightTasks.size() << endl;
-	cout << "\ttasks:" << inf nodes.size() << endl;
-	for (auto ferryVehicleTask : inf nodes)
-		cout << ferryVehicleTask;
+	cout << "\ttasks:" << inf nodes.nodes_.size() << endl;
+	for (auto node_entry : inf nodes.nodes_) {
+		cout << *(node_entry.second.task);
+	}
+	cout << "\tdepots:" << inf nodes.depots_.size() << endl;
+	/*for (auto depot_entry : inf nodes.depots_) {
+		cout << *(depot_entry.second.task);
+	}*/
 	cout << "**********************" << endl;
 }
 
@@ -257,7 +265,6 @@ void loadData()
 	string matrixPath = "distance.txt";
 	loadDisMatrix(matrixPath, inf index2flightName.size());
 
-	
 	/* 打印数据*/
 	showDataInformation();
 }

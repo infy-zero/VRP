@@ -1,5 +1,6 @@
 #include "ALNS_Setting.h"
-string ALNS_Setting::to_string(enum OperatorType ot)
+
+std::string ALNS_Setting::to_string(enum OperatorType ot)
 {
 	if (ot == REPAIR)
 		return "repair";

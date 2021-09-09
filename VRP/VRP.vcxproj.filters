@@ -210,10 +210,7 @@
     <ClCompile Include="ALNS\BasicClass\ISolutionNode.cpp">
       <Filter>源文件\ALNS\BasicClass</Filter>
     </ClCompile>
-    <ClCompile Include="ALNS\Util\Roulette.cpp">
-      <Filter>源文件\ALNS\Util</Filter>
-    </ClCompile>
-    <ClCompile Include="ALNS\Util\ICriterion.cpp">
+    <ClCompile Include="ALNS\Util\Util.cpp">
       <Filter>源文件\ALNS\Util</Filter>
     </ClCompile>
     <ClCompile Include="ALNS\BasicClass\ValueRange.cpp">
@@ -240,14 +237,23 @@
     <ClCompile Include="MyException.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="Solution.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="RepairOperator.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="DestroyOperator.cpp">
       <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="ALNS\Util\ICriterion.cpp">
+      <Filter>源文件\ALNS\setting</Filter>
+    </ClCompile>
+    <ClCompile Include="Solution.cpp">
+      <Filter>源文件\ALNS\BasicClass</Filter>
+    </ClCompile>
+    <ClCompile Include="IVehicle.cpp">
+      <Filter>源文件\ALNS\BasicClass</Filter>
+    </ClCompile>
+    <ClCompile Include="AllNodes.cpp">
+      <Filter>源文件\ALNS\BasicClass</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -356,7 +362,7 @@
     <ClInclude Include="resource.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="ALNS\Util\Roulette.h">
+    <ClInclude Include="ALNS\Util\Util.h">
       <Filter>头文件\ALNS\Util</Filter>
     </ClInclude>
     <ClInclude Include="ALNS\Util\ICriterion.h">
@@ -385,6 +391,15 @@
     </ClInclude>
     <ClInclude Include="MyException.h">
       <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Solution.h">
+      <Filter>头文件\ALNS\BasicClass</Filter>
+    </ClInclude>
+    <ClInclude Include="IVehicle.h">
+      <Filter>头文件\ALNS\BasicClass</Filter>
+    </ClInclude>
+    <ClInclude Include="AllNodes.h">
+      <Filter>头文件\ALNS\BasicClass</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -154,11 +154,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AllNodes.cpp" />
     <ClCompile Include="ALNS.cpp" />
     <ClCompile Include="ALNS\BasicClass\ISolutionNode.cpp" />
     <ClCompile Include="ALNS\BasicClass\ValueRange.cpp" />
     <ClCompile Include="ALNS\Util\ICriterion.cpp" />
-    <ClCompile Include="ALNS\Util\Roulette.cpp" />
+    <ClCompile Include="ALNS\Util\Util.cpp" />
     <ClCompile Include="ALNS_Setting.cpp" />
     <ClCompile Include="Configuration.cpp" />
     <ClCompile Include="DeoptNode.cpp" />
@@ -168,6 +169,7 @@
     <ClCompile Include="IInformation.cpp" />
     <ClCompile Include="ILocation.cpp" />
     <ClCompile Include="INode.cpp" />
+    <ClCompile Include="IVehicle.cpp" />
     <ClCompile Include="lib\jsoncpp\json_reader.cpp" />
     <ClCompile Include="lib\jsoncpp\json_value.cpp" />
     <ClCompile Include="lib\jsoncpp\json_writer.cpp" />
@@ -206,11 +208,12 @@
     <ClCompile Include="VirtualFlight.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AllNodes.h" />
     <ClInclude Include="ALNS.h" />
     <ClInclude Include="ALNS\BasicClass\ISolutionNode.h" />
     <ClInclude Include="ALNS\BasicClass\ValueRange.h" />
     <ClInclude Include="ALNS\Util\ICriterion.h" />
-    <ClInclude Include="ALNS\Util\Roulette.h" />
+    <ClInclude Include="ALNS\Util\Util.h" />
     <ClInclude Include="ALNS_Setting.h" />
     <ClInclude Include="Configuration.h" />
     <ClInclude Include="DeoptNode.h" />
@@ -220,12 +223,14 @@
     <ClInclude Include="ILocation.h" />
     <ClInclude Include="IFlightNode.h" />
     <ClInclude Include="INode.h" />
+    <ClInclude Include="IVehicle.h" />
     <ClInclude Include="MyException.h" />
     <ClInclude Include="Node.h" />
     <ClInclude Include="Nodes.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Segment.h" />
     <ClInclude Include="SegmentNode.h" />
+    <ClInclude Include="Solution.h" />
     <ClInclude Include="Trip.h" />
     <ClInclude Include="TripNode.h" />
     <ClInclude Include="lib\jsoncpp\autolink.h" />

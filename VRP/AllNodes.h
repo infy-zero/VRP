@@ -8,7 +8,7 @@ using namespace std;
 class AllNodes
 {
 public:
-
+	int get_max_node_num();   // 获取当前节点最大数
 	void remove_node(int node_id);
 	void remove_depot(int depot_id);
 	int push_node(ISolutionNode& node);
@@ -25,5 +25,6 @@ private:
 	int												depot_num_unused = -1;
 	vector<int>										node_unused;
 	vector<int>										depot_unused;
+	int												node_max_num = 0;
 };
 

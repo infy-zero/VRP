@@ -8,10 +8,9 @@
 #include "FerryVehicleTask.h"
 #include "Flight.h"
 #include "MyException.h"
+#include "Util/Util.h"
 
 #define inf IInformation::
-
-enum VehicleType { LARGE }; // 车辆类型
 
 static class IInformation
 {
@@ -20,13 +19,11 @@ public:
 
 	static vector<vector<double>> matrix;		// 3、距离矩阵
 
-	static unordered_map<char, int> flight2FerryVehcle;
-	// 4、类型-数量哈希表
+	static unordered_map<char, int> flight2FerryVehcle;  // 4、类型-数量哈希表
 
 	static vector<string> index2flightName;		// 5、角标-名称数组
 
-	static unordered_map<string, int> flightName2index;
-	// 6、名称-角标哈希表
+	static unordered_map<string, int> flightName2index;  // 6、名称-角标哈希表
 
 	static vector<Flight*> flightTasks;			// 7、飞机
 
@@ -42,13 +39,23 @@ public:
 		return matrix[from][to] / A_S speed;
 	}
 
+	/*计算从from到to的旅行距离*/
+	static double cal_travel_distance(int pre, int next)
+	{
+		int from = nodes.get(pre)->task->id;
+		int to = nodes.get(next)->task->id;
+		return matrix[from][to];
+	}
+
 	// 获得车辆成本
 	static double get_vehicle_cost(enum VehicleType vehicle_type) {
-		if (vehicle_type == LARGE) {
-			return 100;
+		switch (vehicle_type) {
+		case LARGE:
+			return 1000;
+		default:
+			throw MyException("No vehicle type found!");
+			return INT_MAX;
 		}
-		throw MyException("No vehicle type found!");
-		return INT_MIN;
 	}
 	// 获得车辆行驶成本
 	static double get_vehicle_per_cost(enum VehicleType vehicle_type) {
@@ -58,5 +65,14 @@ public:
 		throw MyException("No vehicle type found!");
 		return INT_MIN;
 	}
-
+	// 最大行驶距离
+	static double get_vehicle_max_length(enum VehicleType vehicle_type) {
+		switch (vehicle_type) {
+		case LARGE:
+			return 200000; // 最大行驶里程200km
+		default:
+			throw MyException("No vehicle type found!");
+			return INT_MAX;
+		}
+	}
 };

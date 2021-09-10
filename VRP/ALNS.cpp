@@ -220,15 +220,72 @@ void ALNS::update() {
 
 }
 
-// 判断当前解是否可行
+// 判断当前解是否可行——和updateSolution配套（逻辑一致，但不涉及复杂数学计算，某种程度上说互补），主要为了加速运行
 bool ALNS::check_solution_feasible(Solution* solution) {
 	// TODO: 判断当前解是否可行
 	if (solution == nullptr) {
 		solution = &curSol;
 	}
-	for (int i=0;i<solution->vehicles.size();i++)
-		if (solution->vehicles[i].size() > 10)
+
+	// 最大行驶距离限制
+	for (IVehicle vehicle : solution->vehicles) {
+		if (vehicle.beyond_max_length()) {
 			return false;
-	
+		}
+	}
+
+	// 要求从两个方向均有可达性
+	auto& vehicles = solution->vehicles;
+	vector<int> vehicle_index(vehicles.size());
+	auto& virtual_flight_consequence = inf consequence;
+	vector<int> flight_index(virtual_flight_consequence.size());
+
+	// TODO(Lvning):将角标做相应转换，虽然map和vector角标号一致（>0），但是为了方便起见，以map为基准
+	// 两个unordered_map实现，内容为<节点角标，[组序号, 组内角标, 组长度]>
+	unordered_map<int, NodeLocation> vehicle_front;
+	for (int i = 0; i < vehicles.size(); i++) {
+		NodeLocation int_tmp{i, 1, vehicles.at(i).size()};
+		vehicle_front.insert(make_pair(vehicles.at(i).at(1), int_tmp));
+	}
+	unordered_map<int, NodeLocation> flight_front;
+	for (int i = 0; i < virtual_flight_consequence.size(); i++) {
+		NodeLocation int_tmp{ i, 1, virtual_flight_consequence.at(i).size() };
+		flight_front.insert(make_pair(virtual_flight_consequence.at(i).at(1), int_tmp));
+	}
+	// TODO(Lvning): 更换标准，两个map不为零
+	int left_node = nodes_->get_max_node_num();
+	while (left_node) {
+		bool is_find = false;
+		for (auto vehicle_iter: vehicle_front) {
+			int cur_index = vehicle_iter.first;
+			auto flight_iter = flight_front.find(cur_index);
+			if (flight_iter != flight_front.end()) { // 找到了
+				left_node--;
+				is_find = true;
+				
+				// TODO(Lvning): 先声明变量，在一步一步计算
+				// 插入新的车辆队列信息
+				auto vehicle_new_tmp = vehicle_iter.second;
+				if (vehicle_new_tmp.cur_pos != vehicle_new_tmp.max_pos - 1) {
+					int vehicle_new_index = vehicles.at(vehicle_new_tmp.group_index).at(vehicle_new_tmp.cur_pos + 1);
+					vehicle_new_tmp.cur_pos++;
+					vehicle_front.insert(make_pair(vehicle_new_index, vehicle_new_tmp));
+				}
+				vehicle_front.erase(vehicle_front.find(vehicle_iter.first));
+				// 插入新的飞机队列信息
+				auto flight_new_tmp = flight_iter->second;
+				if (flight_new_tmp.cur_pos != flight_new_tmp.max_pos - 1) {
+					int flight_new_index = virtual_flight_consequence.at(flight_new_tmp.group_index).at(flight_new_tmp.cur_pos + 1);
+					flight_new_tmp.cur_pos++;
+					flight_front.insert(make_pair(flight_new_index, flight_new_tmp));
+				}
+				flight_front.erase(flight_front.find(flight_iter->first));
+
+			}
+		}
+		if (is_find == false) { // 如果直到最后都没找到，则返回false
+			return false;
+		}
+	}
 	return true;
 }

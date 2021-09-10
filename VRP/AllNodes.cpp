@@ -2,7 +2,12 @@
 
 #include "MyException.h"
 
+int AllNodes::get_max_node_num() {
+	return node_max_num;
+}
+
 void AllNodes::remove_node(int node_id) {
+	node_max_num--;
 	auto iter = nodes_.find(node_id);
 	// 如果没有找到该点，直接报错
 	if (iter == nodes_.end()) {
@@ -26,6 +31,7 @@ void AllNodes::remove_depot(int depot_id) {
 }
 
 int AllNodes::push_node(ISolutionNode& node) {
+	node_max_num++;
 	// unused为空，则使用cur_num_unused
 	if (node_unused.empty()) {
 		nodes_.insert(make_pair(node_num_unused, node));

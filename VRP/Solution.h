@@ -1,6 +1,7 @@
 #pragma once
 
 #include <memory>
+#include <sstream>
 #include <unordered_map>
 #include <vector>
 
@@ -18,10 +19,16 @@ public:
 	Solution(int depot, AllNodes* nodes);
 	Solution(const Solution&) = default;
 	double cal_solution_cost();														// 计算成本
+	void update_value();															// 更新成本
+	bool has_empty_vehicle();														// 是否有空车
+	void clear_empty_vehicle();														// 清除空车
+	void random_delete_without_update();											// 随机删除节点
+	void delete_without_update(int vehicle_pos, int node_pos);						// 删除指定节点
 	void addVehicle();																// function: 插入空车
 	void insert(int vehicle_number, int pos, int node);								// function: 在指定位置插入节点
-	bool isBetter(unique_ptr<Solution>& other);										// 比较优劣
+	bool isBetter(shared_ptr<Solution>& other);										// 比较优劣
 	string toString();																// 生成解的字符串
+	string to_string_without_update();												// 生成解的字符串，但不更新
 
 	double											curVal = DBL_MAX;				// 1、当前目标函数值
 	AllNodes*										nodes_;							// 2、所有节点

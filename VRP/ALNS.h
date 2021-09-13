@@ -28,10 +28,10 @@ private:
 	int												depot_;							// 4、场站
 	std::vector<std::vector<int>>					virtualFlight;					// 5、虚拟航班
 	int												total_vehicle_num;				// 6、总的摆渡车任务数量
-	Solution										bestSol;						// 7、最优解目标函数
+	shared_ptr<Solution>							bestSol;						// 7、最优解目标函数
 
 	// 当前解
-	Solution										curSol;							// 8、当前解
+	shared_ptr<Solution>							curSol;							// 8、当前解
 	// 算子
 	std::vector<double>								repairGrades; 					// 9、恢复算子得分
 	std::vector<double>								repairAdd;	  					// 10、恢复算子当前回合得分
@@ -44,19 +44,23 @@ public:
 	void start();
 	void generateInitialSolution();
 	
-	// 恢复算子
-	void greedyInsertion(Solution* solution = nullptr);
+	/* 恢复算子 */
+	// 随机插入
+	void randomInsertion(shared_ptr<Solution>& solution);
+	void randomInsertionOnce(shared_ptr<Solution>& solution);
 
-	void greedyInsertionOnce(Solution* solution);
+	// 贪婪插入
+	void greedyInsertion(shared_ptr<Solution>& solution);
+	void greedyInsertionOnce(shared_ptr<Solution>& solution);
 
 	// 破坏算子
-	void randomDestroy(Solution* solution = nullptr);
+	void randomDestroy(shared_ptr<Solution>& solution);
 
 	// 计算目标函数
-	double cal_objectives(Solution* solution = nullptr);
+	double cal_objectives(shared_ptr<Solution>& solution);
 
 	// 将当前解送入解空间
-	SolutionFrequency push_solution_space(ICriterion* criterion = nullptr, Solution* solution = nullptr);
+	SolutionFrequency push_solution_space(ICriterion* criterion, shared_ptr<Solution>& solution);
 
 	// 模拟退火
 	bool simulated_annealing(double curT, double curVal);
@@ -68,12 +72,10 @@ public:
 	void updateScores(SolutionFrequency sf);
 
 	/*解的领域*/
-	// 更新解的信息
-	void updateSolution(Solution* solution = nullptr);
 
 	// 更新当前解信息
 	void update();
 
 	// 判断当前解是否可行
-	bool check_solution_feasible(Solution* solution = nullptr);
+	bool check_solution_feasible(shared_ptr<Solution>& solution);
 };

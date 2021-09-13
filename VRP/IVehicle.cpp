@@ -55,6 +55,25 @@ void IVehicle::insert(int pos, int node) {
 	}
 	vehicle_nodes.insert(vehicle_nodes.begin() + pos, node);
 }
+
+int IVehicle::delete_node(int pos) {
+	int node_index = vehicle_nodes.at(pos);
+	if (node_index < 0) {	// 不能删除场站节点
+		throw MyException("You can not delete depot");
+	}
+	vehicle_nodes.erase(vehicle_nodes.begin() + pos);
+	return node_index;
+}
+
 int IVehicle::size() {
 	return vehicle_nodes.size();
+}
+bool IVehicle::is_empty() {
+	if (size() < 2) {
+		throw MyException("Illegal vehicle!");
+	} else if (size() == 2) {
+		return true;
+	} else {
+		return false;
+	}
 }

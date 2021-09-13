@@ -7,6 +7,7 @@
 #include "ALNS_Setting.h"
 
 enum NodeState { CHECKED, UNCHECKED, INREMOVELIST };   // 节点状态：在当前解、在回收列表
+enum NodeType {DEPOT, NODE};
 
 using namespace std;
 /* 1、第一辆摆渡车提前5 - 8分钟到达，0分钟开始提供服务，0+1分钟结束服务；
@@ -21,7 +22,7 @@ class ISolutionNode
 public:
 	ISolutionNode() = default;
 	ISolutionNode(const ISolutionNode& other) = default;
-	ISolutionNode(const shared_ptr<FerryVehicleTask>& _task);
+	ISolutionNode(const shared_ptr<FerryVehicleTask>& _task, enum NodeType type);
 
 	shared_ptr<FerryVehicleTask> task;// 0、任务
 	bool isUpdate = true;		// 1、是否序号更新
@@ -38,6 +39,6 @@ public:
 	double maxFlightTime;		// 9、本节点最晚到达时间（虚拟航班）
 
 	enum NodeState state;		// 10、当前节点状态
-
+	enum NodeType  type_;       // 11、当前节点类型
 
 };

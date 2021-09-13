@@ -80,14 +80,14 @@ void LoadComparationTable(string filename)
 		if (name._Equal("BGS"))
 		{
 			shared_ptr<FerryVehicleTask> task_bgs(new FerryVehicleTask(index, NULL, INT_MIN, INT_MAX, 0, DP));
-			ISolutionNode node_bgs(task_bgs);
+			ISolutionNode node_bgs(task_bgs, DEPOT);
 			inf nodes.push_depot(-1, node_bgs);
 
 		}
 		else if (name._Equal("CA"))
 		{
 			shared_ptr<FerryVehicleTask> task_ca(new FerryVehicleTask(index, NULL, INT_MIN, INT_MAX, 0, DP));
-			ISolutionNode node_ca(task_ca);
+			ISolutionNode node_ca(task_ca, DEPOT);
 			inf nodes.push_depot(-2, node_ca);
 		}
 	}
@@ -103,7 +103,8 @@ void csv2task(string filename)
 	int count = -2;
 	int relaxingTime = FerryTaskSetting::relaxingTime;
 	time_t startTime;
-	while (getline(fin, line))
+	int max_count = 20;
+	while (getline(fin, line) && max_count--)
 	{
 		count++;
 		if (count == -1)
@@ -186,7 +187,7 @@ void flight2FerryVehcleTasks()
 					serviceEndTime,
 					fts boardingTime,
 					type));
-			ISolutionNode tmp_node(tmp_task);
+			ISolutionNode tmp_node(tmp_task, NODE);
 			inf nodes.push_node(tmp_node.task->id, tmp_node);
 		}
 		inf consequence.push_back(con);

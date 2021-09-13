@@ -2,7 +2,7 @@
 #include "FerryTaskSetting.h"
 #include "MyException.h"
 
-ISolutionNode::ISolutionNode(const shared_ptr <FerryVehicleTask>& _task) :
+ISolutionNode::ISolutionNode(const shared_ptr <FerryVehicleTask>& _task, enum NodeType type) :
 	task(_task),
 	isUpdate(true),
 	curTime(-DBL_MAX),
@@ -12,7 +12,8 @@ ISolutionNode::ISolutionNode(const shared_ptr <FerryVehicleTask>& _task) :
 	maxVehicleTime(DBL_MAX),
 	minFlightTime(-DBL_MAX),
 	maxFlightTime(DBL_MAX),
-	state(INREMOVELIST)
+	state(INREMOVELIST),
+	type_(type)
 {
 	if (_task->type != DP) // 满足此条件为场站节点
 	{

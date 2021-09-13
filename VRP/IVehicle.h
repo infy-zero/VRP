@@ -22,7 +22,9 @@ public:
 	double cal_cost();
 	bool beyond_max_length();
 	void insert(int pos, int node);
+	int delete_node(int pos);
 	int size();
+	bool is_empty();
 
 
 	vector<int> vehicle_nodes;

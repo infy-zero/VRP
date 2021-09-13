@@ -63,8 +63,9 @@ public:
 			return 1;
 		}
 		throw MyException("No vehicle type found!");
-		return INT_MIN;
+		return -DBL_MAX;
 	}
+
 	// ◊Ó¥Û–– ªæ‡¿Î
 	static double get_vehicle_max_length(enum VehicleType vehicle_type) {
 		switch (vehicle_type) {

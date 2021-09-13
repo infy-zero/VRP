@@ -311,15 +311,20 @@ bool ALNS::check_solution_feasible(shared_ptr<Solution>& solution) {
 	if (solution == nullptr) {
 		throw MyException("You can check non-exist solution.");
 	}
-	// TODO(Lvning): 每辆车服务节点数限制，这个只是前期用来测试的条件
-	for (IVehicle vehicle : solution->vehicles) {
-		if (vehicle.size() > 7) {
-			return false;
-		}
+
+	/*初始化*/
+	// 将所有节点置为未检查节点
+	for (auto iter = solution->nodes_->nodes_.begin(); iter != solution->nodes_->nodes_.end(); iter++) {
+		iter->second.state = UNCHECKED;
 	}
+
+	/*限制条件*/
 	// 最大行驶距离限制
 	for (IVehicle vehicle : solution->vehicles) {
 		if (vehicle.beyond_max_length()) {
+			if (vehicle.size() <= 3) {
+				throw MyException("The task's length is more than max length of a vehicle.");
+			}
 			cout << "当前解超过长度，max=" << vehicle.vehicle_max_length << "，cur=" << vehicle.cal_length() << endl;
 			return false;
 		}
@@ -342,12 +347,14 @@ bool ALNS::check_solution_feasible(shared_ptr<Solution>& solution) {
 		NodeLocation int_tmp{i, 1, vehicles.at(i).size()-1};
 		vehicle_front.insert(make_pair(vehicles.at(i).at(1), int_tmp));
 	}
+
 	// 航班前沿节点
 	unordered_map<int, NodeLocation> flight_front;
 	for (int i = 0; i < virtual_flight_consequence.size(); i++) {
 		NodeLocation int_tmp{ i, 0, virtual_flight_consequence.at(i).size()-1};
 		flight_front.insert(make_pair(virtual_flight_consequence.at(i).at(0), int_tmp));
 	}
+
 	// 统计当前安排任务的节点的数量和编号
 	unordered_set<int> node_in_queue;
 	for (IVehicle& veh : solution->vehicles) { // 遍历车辆，加入节点序号
@@ -358,27 +365,13 @@ bool ALNS::check_solution_feasible(shared_ptr<Solution>& solution) {
 		 }
 	}
 	// 更新航班前沿的信息（防止开始节点卡死）---TODO(Lvning): 这里应该封装为函数！！
-	
 	for (auto flight_iter = flight_front.begin(); flight_iter != flight_front.end();) {
 		if (node_in_queue.count(flight_iter->first)) { // 如果有则直接跳过
 			flight_iter++;
 			continue;
 		}
-		const NodeLocation& flight_old_tmp = flight_iter->second;
-		vector<int>& flight_order = virtual_flight_consequence.at(flight_old_tmp.group_index);
-		if (flight_old_tmp.max_pos != flight_order.size() - 1) { // 检验两个飞机序列是否相同
-			throw MyException("These two sequence of flight are not same.");
-		}
-		int flight_new_pos = flight_old_tmp.cur_pos + 1;
-		while (flight_new_pos <= flight_old_tmp.max_pos &&
-			node_in_queue.find(flight_order.at(flight_new_pos)) == node_in_queue.end()) { // 跳过不在当前解中的任务
-			flight_new_pos++;
-		}
-		if (flight_new_pos <= flight_old_tmp.max_pos) { // 插入新的飞机队列信息
-			int flight_new_index = flight_order.at(flight_new_pos);
-			NodeLocation flight_new_tmp = { flight_old_tmp.group_index, flight_new_pos, flight_old_tmp.max_pos };
-			flight_front.insert(make_pair(flight_new_index, flight_new_tmp));
-		}
+
+		skip_flight_node_not_in_queue(flight_iter, virtual_flight_consequence, &node_in_queue, &flight_front);
 		flight_iter = flight_front.erase(flight_front.find(flight_iter->first));
 	}
 	/*
@@ -413,8 +406,8 @@ bool ALNS::check_solution_feasible(shared_ptr<Solution>& solution) {
 
 		for (auto vehicle_iter = vehicle_front.begin(); vehicle_iter != vehicle_front.end();) {
 			int cur_index = vehicle_iter->first;
-			auto flight_iter = flight_front.find(cur_index);
-			if (flight_iter != flight_front.end()) { // 找到了
+			unordered_map<int, NodeLocation>::iterator flight_iter = flight_front.find(cur_index);
+			if (flight_iter != flight_front.end()) { // 找到了能够匹配的节点
 				// cout << "find = " << flight_iter->first << endl;
 				node_in_queue.erase(vehicle_iter->first);
 
@@ -429,21 +422,7 @@ bool ALNS::check_solution_feasible(shared_ptr<Solution>& solution) {
 				vehicle_iter = vehicle_front.erase(vehicle_front.find(vehicle_iter->first));
 				
 				// 插入新的飞机队列信息
-				const NodeLocation& flight_old_tmp = flight_iter->second;
-				vector<int>& flight_order = virtual_flight_consequence.at(flight_old_tmp.group_index);
-				if (flight_old_tmp.max_pos != flight_order.size() - 1) { // 检验两个飞机序列是否相同
-					throw MyException("These two sequence of flight are not same.");
-				}
-				int flight_new_pos = flight_old_tmp.cur_pos+1;
-				while (flight_new_pos <= flight_old_tmp.max_pos &&
-						node_in_queue.find(flight_order.at(flight_new_pos)) == node_in_queue.end()) { // 跳过不在当前解中的任务
-					flight_new_pos++;
-				}
-				if (flight_new_pos <= flight_old_tmp.max_pos) { // 插入新的飞机队列信息
-					int flight_new_index = flight_order.at(flight_new_pos);
-					NodeLocation flight_new_tmp = {flight_old_tmp.group_index, flight_new_pos, flight_old_tmp.max_pos};
-					flight_front.insert(make_pair(flight_new_index, flight_new_tmp));
-				}
+				skip_flight_node_not_in_queue(flight_iter, virtual_flight_consequence, &node_in_queue, &flight_front);
 				flight_front.erase(flight_front.find(flight_iter->first));
 			} else {
 				vehicle_iter++;
@@ -459,4 +438,28 @@ bool ALNS::check_solution_feasible(shared_ptr<Solution>& solution) {
 		}
 	}
 	return true;
+}
+
+/*辅助函数*/
+// 跳过不在node_in_queue的节点
+void ALNS::skip_flight_node_not_in_queue(const unordered_map<int, NodeLocation>::iterator& flight_iter, 
+								   vector<vector<int>>& virtual_flight_consequence,
+								   unordered_set<int>* node_in_queue,
+								   unordered_map<int, NodeLocation>* flight_front) {
+	const NodeLocation& flight_old_tmp = flight_iter->second;
+	vector<int>& flight_order = virtual_flight_consequence.at(flight_old_tmp.group_index);
+	if (flight_old_tmp.max_pos != flight_order.size() - 1) { // 检验两个飞机序列是否相同
+		throw MyException("These two sequence of flight are not same.");
+	}
+	int flight_new_pos = flight_old_tmp.cur_pos + 1;
+	while (flight_new_pos <= flight_old_tmp.max_pos &&
+		node_in_queue->find(flight_order.at(flight_new_pos)) == node_in_queue->end()) { // 跳过不在当前解中的任务
+		flight_new_pos++;
+	}
+	if (flight_new_pos <= flight_old_tmp.max_pos) { // 插入新的飞机队列信息
+		int flight_new_index = flight_order.at(flight_new_pos);
+		NodeLocation flight_new_tmp = { flight_old_tmp.group_index, flight_new_pos, flight_old_tmp.max_pos };
+		flight_front->insert(make_pair(flight_new_index, flight_new_tmp));
+	}
+	// flight_front->erase(flight_front->find(flight_iter->first));
 }

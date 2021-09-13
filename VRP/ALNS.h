@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <math.h>
 #include <unordered_map>
+#include <unordered_set>
 
 #include "AllNodes.h"
 #include "ALNS/Util/Util.h"
@@ -78,4 +79,10 @@ public:
 
 	// 判断当前解是否可行
 	bool check_solution_feasible(shared_ptr<Solution>& solution);
+
+	/*辅助函数*/
+	void skip_flight_node_not_in_queue(const unordered_map<int, NodeLocation>::iterator& flight_iter,
+		vector<vector<int>>& virtual_flight_consequence,
+		unordered_set<int>* node_in_queue,
+		unordered_map<int, NodeLocation>* flight_front);
 };

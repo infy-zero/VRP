@@ -2,6 +2,30 @@
 
 #include "MyException.h"
 
+// 将所有节点设置为unknown	
+void AllNodes::set_state_all_unknown() {
+	for (auto& node_iter : nodes_) {
+		node_iter.second.state = UNKNOWN;
+	}
+	for (auto& depot_iter : depots_) {
+		depot_iter.second.state = UNKNOWN;
+	}
+}
+
+// 将所有node节点设置为unchecked
+void AllNodes::set_nodes_unchecked() {
+	for (auto& node_iter : nodes_) {
+		node_iter.second.state = UNCHECKED_NODE;
+	}
+}
+
+// 将所有depot节点设置为unchecked
+void AllNodes::set_depot_unchecked() {
+	for (auto& node_iter : nodes_) {
+		node_iter.second.state = UNCHECKED_DEPOT;
+	}
+}
+
 void AllNodes::remove_node(int node_id) {
 	auto iter = nodes_.find(node_id);
 	// 如果没有找到该点，直接报错
@@ -87,4 +111,15 @@ int AllNodes::count(int id) {
 	} else {
 		return depots_.count(id);
 	}
+}
+
+enum NodeType AllNodes::get_node_type(int node_index) {
+	if (nodes_.count(node_index)) {
+		return NodeType::TYPE_NODE;
+	}
+	if (depots_.count(node_index)) {
+		return NodeType::TYPE_DEPOT;
+	}
+	throw MyException("Unknwon node is required.");
+	return NodeType::ERROR_TYPE;
 }

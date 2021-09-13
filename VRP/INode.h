@@ -2,7 +2,7 @@
 #include <vector>
 
 using namespace std;
-enum NodeType {DEPOT,VEHICLE,TRIP,SEGMENT,NODE};
+enum NodeType {TYPE_DEPOT,VEHICLE,TRIP,SEGMENT,TYPE_NODE};
 class INode
 {
 private:

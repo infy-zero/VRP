@@ -9,16 +9,16 @@ FerryVehicleTask::FerryVehicleTask(
 	int _serviceStartTime,
 	int _serviceEndTime,
 	int _serviceTime,
-	enum FVTType _type):id(_id),flight(_flight),serviceStartTime(_serviceStartTime),serviceEndTime(_serviceEndTime),serviceTime(_serviceTime),type(_type)
+	enum FVTType _type):id(_id),flight(_flight),predefined_earliest_service_start_time(_serviceStartTime),predefined_service_latest_start_time(_serviceEndTime),serviceTime(_serviceTime),type(_type)
 {
-	earliestArrivalTime = serviceStartTime - FerryTaskSetting::timeWindow;
+	predefined_earliest_arrival_time = predefined_earliest_service_start_time - FerryTaskSetting::FTS_TIMEWINDOW_BEFORE_START;
 }
 ostream& operator<<(ostream& outs, FerryVehicleTask& ferryVehicleTask)
 {
 	outs <<
 		ferryVehicleTask.getFlight()->toString() << ", " <<
 		ferryVehicleTask.getID() << ", " << 
-		ferryVehicleTask.earliestArrivalTime << ", " <<
+		ferryVehicleTask.predefined_earliest_arrival_time << ", " <<
 		ferryVehicleTask.getServiceTime() << ", " <<
 		ferryVehicleTask.getServiceStartTime() << ", " <<
 		ferryVehicleTask.getServiceEndTime() << std::endl;

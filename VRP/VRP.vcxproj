@@ -188,7 +188,6 @@
     <ClCompile Include="MySQL.cpp" />
     <ClCompile Include="Flight.cpp" />
     <ClCompile Include="Node.cpp" />
-    <ClCompile Include="Nodes.cpp" />
     <ClCompile Include="Parallel.cpp" />
     <ClCompile Include="process.cpp" />
     <ClCompile Include="RepairOperator.cpp" />
@@ -204,8 +203,6 @@
     <ClCompile Include="Vehicle.cpp" />
     <ClCompile Include="VehicleList.cpp" />
     <ClCompile Include="VehicleNode.cpp" />
-    <ClCompile Include="Vehicles.cpp" />
-    <ClCompile Include="VirtualFlight.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AllNodes.h" />
@@ -226,7 +223,6 @@
     <ClInclude Include="IVehicle.h" />
     <ClInclude Include="MyException.h" />
     <ClInclude Include="Node.h" />
-    <ClInclude Include="Nodes.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Segment.h" />
     <ClInclude Include="SegmentNode.h" />
@@ -254,8 +250,6 @@
     <ClInclude Include="Vehicle.h" />
     <ClInclude Include="VehicleList.h" />
     <ClInclude Include="VehicleNode.h" />
-    <ClInclude Include="Vehicles.h" />
-    <ClInclude Include="VirtualFlight.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="finalTasks80.csv" />

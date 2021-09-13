@@ -2,6 +2,6 @@
 #include "INode.h"
 class DepotNode :public INode
 {
-	enum NodeType nodeType = DEPOT;
+	enum NodeType nodeType = TYPE_DEPOT;
 };
 

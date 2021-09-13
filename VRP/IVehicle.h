@@ -26,7 +26,6 @@ public:
 	int size();
 	bool is_empty();
 
-
 	vector<int> vehicle_nodes;
 	AllNodes* nodes;
 	int depot_;

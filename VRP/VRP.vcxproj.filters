@@ -73,12 +73,6 @@
     <Filter Include="头文件\ALNS">
       <UniqueIdentifier>{31565b24-9b74-480c-a382-65a6743eabbb}</UniqueIdentifier>
     </Filter>
-    <Filter Include="头文件\ALNS\Component">
-      <UniqueIdentifier>{dcfc643a-273b-4786-9d7f-32b692391c34}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="源文件\ALNS\Component">
-      <UniqueIdentifier>{542c1038-5e64-4662-abb0-54adc7629267}</UniqueIdentifier>
-    </Filter>
     <Filter Include="头文件\ALNS\BasicClass">
       <UniqueIdentifier>{962ff842-9e19-4884-9c9e-d6b7d2011370}</UniqueIdentifier>
     </Filter>
@@ -215,15 +209,6 @@
     </ClCompile>
     <ClCompile Include="ALNS\BasicClass\ValueRange.cpp">
       <Filter>源文件\ALNS\BasicClass</Filter>
-    </ClCompile>
-    <ClCompile Include="Nodes.cpp">
-      <Filter>源文件\ALNS\Component</Filter>
-    </ClCompile>
-    <ClCompile Include="Vehicles.cpp">
-      <Filter>源文件\ALNS\Component</Filter>
-    </ClCompile>
-    <ClCompile Include="VirtualFlight.cpp">
-      <Filter>源文件\ALNS\Component</Filter>
     </ClCompile>
     <ClCompile Include="ALNS.cpp">
       <Filter>源文件\ALNS</Filter>
@@ -370,15 +355,6 @@
     </ClInclude>
     <ClInclude Include="ALNS\BasicClass\ValueRange.h">
       <Filter>头文件\ALNS\BasicClass</Filter>
-    </ClInclude>
-    <ClInclude Include="Nodes.h">
-      <Filter>头文件\ALNS\Component</Filter>
-    </ClInclude>
-    <ClInclude Include="Vehicles.h">
-      <Filter>头文件\ALNS\Component</Filter>
-    </ClInclude>
-    <ClInclude Include="VirtualFlight.h">
-      <Filter>头文件\ALNS\Component</Filter>
     </ClInclude>
     <ClInclude Include="IInformation.h">
       <Filter>头文件\ALNS\BasicClass</Filter>

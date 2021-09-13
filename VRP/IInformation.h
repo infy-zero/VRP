@@ -31,7 +31,7 @@ public:
 
 	static vector<pair<int, int>> positions;	// 9、每个节点对应的虚拟航班任务
 
-	/*计算从from到to的旅行时间*/
+	/*计算从from到to的旅行时间，单位：秒*/
 	static double cal_travel_time(int pre, int next, double fromTime = 0)
 	{
 		int from = nodes.get(pre)->task->id;

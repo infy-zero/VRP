@@ -18,7 +18,7 @@ struct EnumClassHash //Ã¶¾ÙÀà¹şÏ£»¯
 
 struct NodeLocation
 {
-    int group_index;
+    int vehicle_index;
     int cur_pos;
     int max_pos;
 };

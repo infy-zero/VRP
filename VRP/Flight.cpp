@@ -21,10 +21,10 @@ Flight::Flight(int _id,
 {
 	// parameter setting
 	if (direction != unassign) { // 普通节点
-		setServiceStartTime(getDirection() == arrive ? getRdy() - fts t1 : getRdy() - fts t3);
-		setServiceEndTime(getDirection() == arrive ? getRdy() - fts t2 : getRdy() - fts t4);
-		aheadFirstTime = getDirection() == arrive ? fts t50 : fts t60;
-		delayOtherTime = getDirection() == arrive ? fts maxDeltaTime : fts maxDeltaTime;
+		setServiceStartTime(getDirection() == arrive ? getRdy() - fts FTS_t1 : getRdy() - fts FTS_t3);
+		setServiceEndTime(getDirection() == arrive ? getRdy() - fts FTS_t2 : getRdy() - fts FTS_t4);
+		aheadFirstTime = getDirection() == arrive ? fts FTS_t50 : fts FTS_t60;
+		delayOtherTime = getDirection() == arrive ? fts FTS_maxDeltaTime : fts FTS_maxDeltaTime;
 	} else { // 场站
 		serviceStartTime = INT_MIN;
 		serviceEndTime = INT_MAX;

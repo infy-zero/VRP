@@ -6,8 +6,10 @@
 #include "FerryVehicleTask.h"
 #include "ALNS_Setting.h"
 
-enum NodeState { CHECKED, UNCHECKED, INREMOVELIST };   // 节点状态：在当前解、在回收列表
-enum NodeType {DEPOT, NODE};
+// 节点状态：未知、已被检查node、已被检查depot、未被检查、在回收列表
+enum NodeState { UNKNOWN, CHECKED_NODE, CHECKED_DEPOT, UNCHECKED_NODE, UNCHECKED_DEPOT, INREMOVELIST };
+// 节点类型：场站、普通节点
+enum NodeType { TYPE_DEPOT, TYPE_NODE, ERROR_TYPE };
 
 using namespace std;
 /* 1、第一辆摆渡车提前5 - 8分钟到达，0分钟开始提供服务，0+1分钟结束服务；
@@ -23,22 +25,26 @@ public:
 	ISolutionNode() = default;
 	ISolutionNode(const ISolutionNode& other) = default;
 	ISolutionNode(const shared_ptr<FerryVehicleTask>& _task, enum NodeType type);
+	void reset_infeasible();
+	void reset_feasible();
 
-	shared_ptr<FerryVehicleTask> task;// 0、任务
-	bool isUpdate = true;		// 1、是否序号更新
+	/*私有域*/
+	shared_ptr<FerryVehicleTask> task;				// 0、任务
 
-	double curTime;				// 2、本节点到达时间
-	double minTime;				// 3、实际最早到达时间
-	double maxTime;				// 4、实际最晚到达时间
+	/*针对vehicle序列*/
+	double curTime;									// 1、本节点到达时间
+	double arrive_earliest_time;					// 2、是否序号更新
+	double serive_earliest_start_time;				// 3、实际最早到达时间
+	double servie_latest_end_time;					// 4、实际最晚到达时间
 
-	double minVehicleTime;		// 5、本节点最早到达时间（车辆）
-	double maxVehicleTime;		// 6、本节点最晚到达时间（车辆）
+	double minVehicleTime;							// 5、本节点最早到达时间（车辆）
+	double maxVehicleTime;							// 6、本节点最晚到达时间（车辆）
 
-	vector<pair<double, double>> vft; // 7、和虚拟航班对应的摆渡车时间窗
-	double minFlightTime;		// 8、本节点最早到达时间（虚拟航班）
-	double maxFlightTime;		// 9、本节点最晚到达时间（虚拟航班）
+	vector<pair<double, double>> vft;				// 7、和虚拟航班对应的摆渡车时间窗
+	double minFlightTime;							// 8、本节点最早到达时间（虚拟航班）
+	double maxFlightTime;							// 9、本节点最晚到达时间（虚拟航班）
 
-	enum NodeState state;		// 10、当前节点状态
-	enum NodeType  type_;       // 11、当前节点类型
+	enum NodeState state;							// 10、当前节点状态
+	enum NodeType  type_;							 // 11、当前节点类型
 
 };

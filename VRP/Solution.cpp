@@ -281,26 +281,44 @@ void Solution::skip_flight_node_not_in_queue(const unordered_map<int, NodeLocati
 	while (flight_new_pos <= flight_old_tmp.max_pos &&
 		node_in_queue->find(flight_order.at(flight_new_pos)) == node_in_queue->end()) { // 跳过不在当前解中的任务
 		// 更新时间窗
-		int flght_node_index = flight_order.at(flight_new_pos);
-		ISolutionNode& flight_node = *(all_nodes_->get(flght_node_index));
-
+		int node_index = flight_order.at(flight_new_pos);
+		ISolutionNode& node = *(all_nodes_->get(node_index));
+		//ISolutionNode&;
 		// 不可变节点，不进行处理
-		if (flight_node.task->type == FVTType::UNVARIABLE_FLIGHT) {
-
+		if (node.task->type == FVTType::UNVARIABLE_FLIGHT) {
+			node.service_earliest_start_time = node.task->predefined_earliest_arrival_time;
+			node.arrive_earliest_time = node.service_earliest_start_time - node.task->predefined_service_max_before_;
+			node.service_latest_end_time = node.task->predefined_service_latest_start_time;
 		}
-		if (flight_node.task->type == FVTType::VARIABLE_FLIGHT) { // 可变节点——一定不是第一、二个
+		if (node.task->type == FVTType::VARIABLE_FLIGHT) { // 可变节点 —— 一定不是第一、二个
 			int pre_flight_node_index = flight_order.at(flight_new_pos - 1);
 			ISolutionNode& pre_flight_node = *(all_nodes_->get(pre_flight_node_index));
-			// 当前航班节点时间窗——上一飞机节点加延时
-			double flight_earliest_service_start_time = pre_flight_node.task->predefined_earliest_service_start_time + fts FTS_maxDeltaTime;
-			double filght_earliest_arrive_time = pre_flight_node.task->predefined_earliest_arrival_time + fts FTS_maxDeltaTime;
-			double flight_latest_service_start_time = pre_flight_node.task->predefined_service_latest_start_time + fts FTS_maxDeltaTime;
+			// 当前航班节点时间窗 —— 上一飞机节点加延时
+			double flight_earliest_service_start_time = pre_flight_node.task->predefined_earliest_service_start_time + fts FTS_max_delta_time;
+			double filght_earliest_arrive_time = pre_flight_node.task->predefined_earliest_arrival_time + fts FTS_max_delta_time;
+			double flight_latest_service_start_time = pre_flight_node.task->predefined_service_latest_start_time + fts FTS_max_delta_time;
 
-			double task_earliest_service_start_time = flight_node.task->predefined_earliest_service_start_time;
-			double task_earliest_arrive_time = flight_node.task->predefined_earliest_arrival_time;
-			double task_latest_service_start_time = flight_node.task->predefined_service_latest_start_time;
+			// 当前车辆节点时间窗 —— 上一车辆节点加旅行时间 + 上车时间 + 下车时间
+			double vehicle_earliest_service_start_time = pre_flight_node.task->predefined_earliest_service_start_time + fts FTS_max_delta_time;
+			double vehicle_earliest_arrive_time = pre_flight_node.task->predefined_earliest_arrival_time + fts FTS_max_delta_time;
+			double vehicle_latest_service_start_time = pre_flight_node.task->predefined_service_latest_start_time + fts FTS_max_delta_time;
 
-			if ( !cal_timewindow_intersection(flight_earliest_service_start_time, flight_latest_service_start_time, task_earliest_service_start_time, task_latest_service_start_time, &(flight_node.serive_earliest_start_time), &(flight_node.servie_latest_end_time)) || flight_earliest_service_start_time < task_earliest_service_start_time || flight_latest_service_start_time > task_latest_service_start_time) {
+			// 当前航班的时间窗上下限
+			double kEarliest_service_start_time = node.task->predefined_earliest_service_start_time;
+			double kEarliest_arrive_time = node.task->predefined_earliest_arrival_time;
+			double kLatest_service_start_time = node.task->predefined_service_latest_start_time;
+
+			// 更新当前节点时间窗
+			if ( !cal_timewindow_intersection(flight_earliest_service_start_time, flight_latest_service_start_time, vehicle_earliest_service_start_time, vehicle_latest_service_start_time, &(node.service_earliest_start_time), &(node.service_latest_end_time))) {
+				cout << "[" << flight_earliest_service_start_time << "," << flight_latest_service_start_time << "]" << endl;
+				cout << "[" << kEarliest_service_start_time << "," << kLatest_service_start_time << "]" << endl;
+				throw MyException("The intersection of flight and task can not be less than flight.");
+			}
+
+			// 判断是否满足最大时间窗要求
+			if (flight_earliest_service_start_time < kEarliest_service_start_time || flight_latest_service_start_time > kLatest_service_start_time) {
+				cout << "[" << flight_earliest_service_start_time << "," << flight_latest_service_start_time << "]" << endl;
+				cout << "[" << kEarliest_service_start_time << "," << kLatest_service_start_time << "]" << endl;
 				throw MyException("The intersection of flight and task can not be less than flight.");
 			}
 		}	
@@ -332,22 +350,22 @@ bool Solution::update_node_timewindow(const NodeLocation& vehicle_location, cons
 	// 当当前节点为时间窗不可变节点（针对前两个flight任务和depot）时，只需要先计算vehicle方向的时间窗，然后和flight方向时间窗取交集即可
 	if (node.task->type == FVTType::UNVARIABLE_FLIGHT) {		
 		// 前一车辆节点时间
-		double pre_earliest_service_start_time = pre_node.serive_earliest_start_time;
+		double pre_earliest_service_start_time = pre_node.service_earliest_start_time;
 		double pre_earliest_arrive_time		   = pre_node.arrive_earliest_time;
-		double pre_latest_service_start_time   = pre_node.servie_latest_end_time;
+		double pre_latest_service_start_time   = pre_node.service_latest_end_time;
 
 		// 根据前一车辆节点时间计算所得的当前节点时间
 		double travel_time = inf cal_travel_time(node_index, pre_node_index);
 		double node_earliest_service_start_time = pre_earliest_service_start_time + travel_time;
 		double node_earliest_arrive_time        = pre_node.arrive_earliest_time + travel_time;
-		double node_latest_service_start_time   = pre_node.servie_latest_end_time + travel_time;
+		double node_latest_service_start_time   = pre_node.service_latest_end_time + travel_time;
 
 		// 当前航班节点时间窗
 		double flight_earliest_service_start_time = node.task->predefined_earliest_service_start_time;
 		double filght_earliest_arrive_time		  = node.task->predefined_earliest_arrival_time;
 		double flight_latest_service_start_time = node.task->predefined_service_latest_start_time;
 
-		if (!cal_timewindow_intersection(node_earliest_service_start_time, node_latest_service_start_time, flight_earliest_service_start_time, flight_latest_service_start_time, &(node.serive_earliest_start_time), &(node.servie_latest_end_time))) {
+		if (!cal_timewindow_intersection(node_earliest_service_start_time, node_latest_service_start_time, flight_earliest_service_start_time, flight_latest_service_start_time, &(node.service_earliest_start_time), &(node.service_latest_end_time))) {
 			return false;
 		} else{
 			return true;
@@ -360,22 +378,22 @@ bool Solution::update_node_timewindow(const NodeLocation& vehicle_location, cons
 		int pre_flight_node_index = vehicles.at(flight_location.vehicle_index).at(flight_location.cur_pos - 1);// 获取前一飞机节点序号
 		ISolutionNode& pre_flight_node = all_nodes_->nodes_.at(pre_flight_node_index);    // 获取前一车辆节点
 		// 前一车辆节点时间
-		double pre_earliest_service_start_time = pre_node.serive_earliest_start_time;
+		double pre_earliest_service_start_time = pre_node.service_earliest_start_time;
 		double pre_earliest_arrive_time = pre_node.arrive_earliest_time;
-		double pre_latest_service_start_time = pre_node.servie_latest_end_time;
+		double pre_latest_service_start_time = pre_node.service_latest_end_time;
 
 		// 根据前一车辆节点时间计算所得的当前节点时间
 		double travel_time = inf cal_travel_time(node_index, pre_node_index);
 		double node_earliest_service_start_time = pre_earliest_service_start_time + travel_time;
 		double node_earliest_arrive_time = pre_node.arrive_earliest_time + travel_time;
-		double node_latest_service_start_time = pre_node.servie_latest_end_time + travel_time;
+		double node_latest_service_start_time = pre_node.service_latest_end_time + travel_time;
 
 		// 当前航班节点时间窗——上一飞机节点加延时
-		double flight_earliest_service_start_time = pre_flight_node.task->predefined_earliest_service_start_time + fts FTS_maxDeltaTime;
-		double filght_earliest_arrive_time = pre_flight_node.task->predefined_earliest_arrival_time + fts FTS_maxDeltaTime;
-		double flight_latest_service_start_time = pre_flight_node.task->predefined_service_latest_start_time + fts FTS_maxDeltaTime;
+		double flight_earliest_service_start_time = pre_flight_node.task->predefined_earliest_service_start_time + fts FTS_max_delta_time;
+		double filght_earliest_arrive_time = pre_flight_node.task->predefined_earliest_arrival_time + fts FTS_max_delta_time;
+		double flight_latest_service_start_time = pre_flight_node.task->predefined_service_latest_start_time + fts FTS_max_delta_time;
 
-		if (!cal_timewindow_intersection(node_earliest_service_start_time, node_latest_service_start_time, flight_earliest_service_start_time, flight_latest_service_start_time, &node.serive_earliest_start_time, &node.servie_latest_end_time)) {
+		if (!cal_timewindow_intersection(node_earliest_service_start_time, node_latest_service_start_time, flight_earliest_service_start_time, flight_latest_service_start_time, &node.service_earliest_start_time, &node.service_latest_end_time)) {
 			return false;
 		}
 		else {

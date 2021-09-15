@@ -7,8 +7,8 @@ ISolutionNode::ISolutionNode(const shared_ptr <FerryVehicleTask>& _task, enum No
 	task(_task),
 	curTime(DBL_MAX),
 	arrive_earliest_time(DBL_MAX),
-	serive_earliest_start_time(DBL_MAX),
-	servie_latest_end_time(-DBL_MAX),
+	service_earliest_start_time(DBL_MAX),
+	service_latest_end_time(-DBL_MAX),
 	minVehicleTime(DBL_MAX),
 	maxVehicleTime(-DBL_MAX),
 	minFlightTime(DBL_MAX),
@@ -31,8 +31,8 @@ ISolutionNode::ISolutionNode(const shared_ptr <FerryVehicleTask>& _task, enum No
 void ISolutionNode::reset_feasible() {
 	curTime = -DBL_MAX;
 	arrive_earliest_time = -DBL_MAX;
-	serive_earliest_start_time = -DBL_MAX;
-	servie_latest_end_time = DBL_MAX;
+	service_earliest_start_time = -DBL_MAX;
+	service_latest_end_time = DBL_MAX;
 
 	minVehicleTime = -DBL_MAX;
 	maxVehicleTime = DBL_MAX;
@@ -43,11 +43,15 @@ void ISolutionNode::reset_feasible() {
 	state = NodeState::UNKNOWN;
 }
 
+double ISolutionNode::cal_arrive_earliest_time() {
+	return service_earliest_start_time - task->predefined_service_max_before_;
+}
+
 void ISolutionNode::reset_infeasible() {
 	curTime = DBL_MAX;
 	arrive_earliest_time = DBL_MAX;
-	serive_earliest_start_time = DBL_MAX;
-	servie_latest_end_time = -DBL_MAX;
+	service_earliest_start_time = DBL_MAX;
+	service_latest_end_time = -DBL_MAX;
 
 	minVehicleTime = DBL_MAX;
 	maxVehicleTime = -DBL_MAX;

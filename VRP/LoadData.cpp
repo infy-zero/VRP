@@ -79,7 +79,7 @@ void LoadComparationTable(string filename)
 		// 读入两个场站
 		if (name._Equal("BGS"))
 		{
-			shared_ptr<FerryVehicleTask> task_bgs(new FerryVehicleTask(index, nullptr, INT_MIN, INT_MAX, 0, FVTType::FVT_TYPE_DEPOT));
+			shared_ptr<FerryVehicleTask> task_bgs(new FerryVehicleTask(index, nullptr, INT_MIN, INT_MAX, 0, 0, FVTType::FVT_TYPE_DEPOT));
 			ISolutionNode node_bgs(task_bgs, NodeType::TYPE_DEPOT);
 			//node_bgs.
 			inf nodes.push_depot(-1, node_bgs);
@@ -87,7 +87,7 @@ void LoadComparationTable(string filename)
 		}
 		else if (name._Equal("CA"))
 		{
-			shared_ptr<FerryVehicleTask> task_ca(new FerryVehicleTask(index, nullptr, INT_MIN, INT_MAX, 0, FVTType::FVT_TYPE_DEPOT));
+			shared_ptr<FerryVehicleTask> task_ca(new FerryVehicleTask(index, nullptr, INT_MIN, INT_MAX, 0, 0, FVTType::FVT_TYPE_DEPOT));
 			ISolutionNode node_ca(task_ca, NodeType::TYPE_DEPOT);
 			inf nodes.push_depot(-2, node_ca);
 		}
@@ -102,7 +102,6 @@ void csv2task(string filename)
 		throw  "Fail to open the file:" + filename;
 	string line;
 	int count = -2;
-	int relaxingTime = FerryTaskSetting::FTS_relaxingTime;
 	time_t startTime;
 	int max_count = 20;
 	while (getline(fin, line) && max_count--)
@@ -138,8 +137,8 @@ void csv2task(string filename)
 			continue;
 		else if (A_S range == WEST && terminal.find("T3") != -1)
 			continue;
-		rdy -= startTime - relaxingTime;
-		enum Direction direction = Trim(fields[8])._Equal("arrive") ? arrive : depart;
+		rdy -= startTime;
+		enum Direction direction = Trim(fields[8])._Equal("arrive") ? DIRECTION_ARRIVE : DIRECTION_DEPART;
 		Flight* tmp = new Flight(id, flightcompany, flighttype, flightclass, ferryVehicles, apron, stand,
 			inf flightName2index.at(stand), static_cast<int>(rdy), direction, terminal, inf flightName2index.at(terminal));
 		inf flightTasks.push_back(tmp);
@@ -161,22 +160,34 @@ void flight2FerryVehcleTasks()
 			// 按照顺序记录对应节点的位置 pair<组号，组内序号>?g
 			inf positions.push_back(make_pair(j, i));
 			con.push_back(num);
-			int serviceStartTime;
-			int serviceEndTime;
+			int service_start_time	= INT_MAX;	// 服务开始时间
+			int service_end_time		= INT_MIN;	// 服务结束时间
+			int boarding_time		= INT_MAX;  // 上车时间
+			int alighting_time		= INT_MAX;  // 下车时间
+			// 服务时间
+			if (flight->direction == DIRECTION_ARRIVE || flight->direction == DIRECTION_DEPART) {
+				boarding_time = fts FTS_boardingTime;
+				alighting_time = fts FTS_alightingTime;
+			}
+			else {
+				throw MyException("Direction type is wrong.");
+			}
 			// 最早开始服务时间
-			if (i == 0)// 第一辆车最早提前5+timewindow(3)=8分钟到达
-				serviceStartTime = flight->getServiceStartTime() - FerryTaskSetting::FTS_firstBefore;
-			else if (i == 1) // 第二辆车最早提前
-				serviceStartTime = flight->getServiceStartTime();
-			else // 剩下车辆按照服务时间增加
-				serviceStartTime = flight->getServiceStartTime() + FerryTaskSetting::FTS_waitingTime + i * FerryTaskSetting::FTS_boardingTime;
+			if (i == 0) { // 第一辆车最早提前5+timewindow(3)=8分钟到达
+				service_start_time = flight->getServiceStartTime() - fts FTS_firstBefore - fts FTS_timewindow;
+			}
+			else { // 剩下车辆按照服务时间增加 开始时间最小值 = 车辆开始时间 + 上车时间 * ( i - 1 )
+				service_start_time = flight->getServiceStartTime() + (i - 1) * FerryTaskSetting::FTS_boardingTime;
+			}
 			// 最晚开始服务时间
-			if (i == 0)// 第一辆车最晚提前五分钟到达
-				serviceEndTime = flight->getServiceStartTime() - FerryTaskSetting::FTS_firstBefore;
-			else// 剩下车辆按照服务时间增加
-				serviceEndTime = flight->getServiceStartTime() + i * (FerryTaskSetting::FTS_boardingTime + FerryTaskSetting::FTS_maxDeltaTime);
-
-			enum FVTType type; // 节点类型，前两个时间窗不可变UVF，后面节点动态时间窗可变VVF
+			if (i == 0) { // 第一辆车最晚提前五分钟到达
+				service_end_time = flight->getServiceStartTime() - FerryTaskSetting::FTS_firstBefore;
+			}
+			else { // 剩下车辆按照服务时间增加：超过这个时间一定错误（这个时间是底线）
+				service_end_time = flight->getServiceStartTime() + (i - 1) * (FerryTaskSetting::FTS_boardingTime + FerryTaskSetting::FTS_max_delta_time);
+			}
+	 
+			enum FVTType type = FVT_UNKNOWN; // 节点类型，前两个时间窗不可变UVF，后面节点动态时间窗可变VVF
 			if (i < 2)
 				type = UNVARIABLE_FLIGHT;
 			else
@@ -184,9 +195,11 @@ void flight2FerryVehcleTasks()
 			shared_ptr<FerryVehicleTask>
 				tmp_task(new FerryVehicleTask(num++,
 					flight,
-					serviceStartTime,
-					serviceEndTime,
-					fts FTS_boardingTime,
+					service_start_time,
+					service_end_time,
+					fts FTS_arrive_before_start_timewindow,
+					boarding_time,
+					alighting_time,
 					type));
 			ISolutionNode tmp_node(tmp_task, TYPE_NODE);
 			inf nodes.push_node(tmp_node.task->id, tmp_node);

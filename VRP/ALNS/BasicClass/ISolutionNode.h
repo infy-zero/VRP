@@ -27,6 +27,7 @@ public:
 	ISolutionNode(const shared_ptr<FerryVehicleTask>& _task, enum NodeType type);
 	void reset_infeasible();
 	void reset_feasible();
+	double cal_arrive_earliest_time();				// 计算最早到达时间
 
 	/*私有域*/
 	shared_ptr<FerryVehicleTask> task;				// 0、任务
@@ -34,8 +35,8 @@ public:
 	/*针对vehicle序列*/
 	double curTime;									// 1、本节点到达时间
 	double arrive_earliest_time;					// 2、是否序号更新
-	double serive_earliest_start_time;				// 3、实际最早到达时间
-	double servie_latest_end_time;					// 4、实际最晚到达时间
+	double service_earliest_start_time;				// 3、实际最早到达时间
+	double service_latest_end_time;					// 4、实际最晚到达时间
 
 	double minVehicleTime;							// 5、本节点最早到达时间（车辆）
 	double maxVehicleTime;							// 6、本节点最晚到达时间（车辆）
@@ -45,6 +46,6 @@ public:
 	double maxFlightTime;							// 9、本节点最晚到达时间（虚拟航班）
 
 	enum NodeState state;							// 10、当前节点状态
-	enum NodeType  type_;							 // 11、当前节点类型
+	enum NodeType  type_;							// 11、当前节点类型
 
 };

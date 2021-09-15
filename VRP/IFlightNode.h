@@ -3,7 +3,7 @@
 #include <vector>
 
 using namespace std;
-enum Direction { arrive, depart, unassign };
+enum Direction { DIRECTION_ARRIVE, DIRECTION_DEPART, unassign };
 class IFlightNode
 {
 public:
@@ -81,7 +81,7 @@ public:
 	}
 	const string getDirectionString()
 	{
-		return direction==arrive?"arrive":"depart";
+		return direction==DIRECTION_ARRIVE?"arrive":"depart";
 	}
 	const enum Direction getDirection()
 	{

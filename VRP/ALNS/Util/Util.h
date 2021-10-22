@@ -1,9 +1,10 @@
 #pragma once
-#include <vector>
+
 #include <random>
+#include <vector>
 
+using namespace std;
 // 枚举类
-
 enum VehicleType { LARGE }; // 车辆类型
 
 // struct
@@ -28,5 +29,8 @@ struct NodeLocation
 static class Util
 {
 public:
+    // 获得[0, 1]的随机数
 	static double getRandom();
+    // 输入得分，获得被选择的角标
+    static const int roulette(vector<double> grades);
 };

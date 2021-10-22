@@ -281,7 +281,7 @@ namespace Json {
       const Value &operator[]( UInt index ) const;
       /// If the array contains at least index+1 elements, returns the element value, 
       /// otherwise returns defaultValue.
-      Value get( UInt index, 
+      Value get_node( UInt index, 
                  const Value &defaultValue ) const;
       /// Return true if index < size().
       bool isValidIndex( UInt index ) const;
@@ -317,10 +317,10 @@ namespace Json {
       const Value &operator[]( const CppTL::ConstString &key ) const;
 # endif
       /// Return the member named key if it exist, defaultValue otherwise.
-      Value get( const char *key, 
+      Value get_node( const char *key, 
                  const Value &defaultValue ) const;
       /// Return the member named key if it exist, defaultValue otherwise.
-      Value get( const std::string &key,
+      Value get_node( const std::string &key,
                  const Value &defaultValue ) const;
 # ifdef JSON_USE_CPPTL
       /// Return the member named key if it exist, defaultValue otherwise.

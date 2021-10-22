@@ -8,6 +8,9 @@ bool ICriterion::iter()
 	curSegment--;
 	curTimes--;
 	totalTimes++;
+	if (totalTimes > A_S max_iteration) {
+		return false;
+	}
 	if (curTimes < 0)
 	{
 		if (curT < endT)

@@ -91,6 +91,18 @@
     <Filter Include="源文件\ALNS\setting">
       <UniqueIdentifier>{cceaa8f4-1b96-4e0e-8b34-a97eab8a2316}</UniqueIdentifier>
     </Filter>
+    <Filter Include="头文件\Gurobi">
+      <UniqueIdentifier>{8566de01-2d54-4d0d-be5c-a382da8c5c3f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\Gurobi">
+      <UniqueIdentifier>{5dd53faf-5787-4100-be5d-0b53ab9489a2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\GUI">
+      <UniqueIdentifier>{c4ceb842-b41c-4d55-b2eb-3a22336c315e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\GUI">
+      <UniqueIdentifier>{4c226353-226b-4311-a161-5fad68332038}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Entrance.cpp">
@@ -392,6 +404,12 @@
     </None>
     <None Include="finalTasks80.csv">
       <Filter>资源文件</Filter>
+    </None>
+    <None Include="resource\finalTasks1000.csv">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="Widget.ui">
+      <Filter>源文件\GUI</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

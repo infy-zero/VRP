@@ -19,7 +19,7 @@ public:
 		int _rdy,
 		enum Direction _direction,
 		string _terminal,
-		int _terminalIndex):id(_id),flightCompany(_flightCompany), flightType(_flightType),flightClass(_flightClass), ferryVehicles(_ferryVehicles), apron(_apron), stand(_stand), standIndex(_standIndex), rdy(_rdy), direction(_direction), terminal(_terminal), terminalIndex(_terminalIndex)
+		int _terminalIndex):id(_id),flightCompany(_flightCompany), flightType(_flightType),flightClass(_flightClass), ferryVehicles(_ferryVehicles), apron(_apron), stand(_stand), stand_index(_standIndex), rdy(_rdy), direction(_direction), terminal(_terminal), terminal_index(_terminalIndex)
 	{
 		
 	}
@@ -57,25 +57,25 @@ public:
 	}
 	const int	getStandIndex()
 	{
-		return standIndex;
+		return stand_index;
 	}
-	const int	getRdy()
+	const double	getRdy()
 	{
 		return rdy;
 	}
-	const int getServiceStartTime()
+	const double getServiceStartTime()
 	{
 		return serviceStartTime;
 	}
-	void setServiceStartTime(int _serviceStartTime)
+	void setServiceStartTime(double _serviceStartTime)
 	{
 		serviceStartTime = _serviceStartTime;
 	}
-	const int getServiceEndTime()
+	const double getServiceEndTime()
 	{
 		return serviceEndTime;
 	}
-	void setServiceEndTime(int _serviceEndTime)
+	void setServiceEndTime(double _serviceEndTime)
 	{
 		serviceEndTime = _serviceEndTime;
 	}
@@ -97,7 +97,7 @@ public:
 	}
 	int getTerminalIndex()
 	{
-		return terminalIndex;
+		return terminal_index;
 	}
 
 	int		id					= INT_MIN;   // 节点序号
@@ -107,12 +107,12 @@ public:
 	int		ferryVehicles		= INT_MIN;	 // 航班所需摆渡车数量
 	string  apron				= NULL;		 // 机坪
 	string	stand				= NULL;		 // 远机位号
-	int		standIndex			= INT_MIN;	 // 远机位角标
-	int		rdy					= INT_MIN;	 // 准备时间
-	int		serviceStartTime	= INT_MIN;	 // 服务开始时间
-	int		serviceEndTime		= INT_MIN;	 // 服务结束时间（无用）
+	int		stand_index			= INT_MIN;	 // 远机位角标
+	double	rdy					= INT_MIN;	 // 准备时间
+	double  serviceStartTime	= INT_MIN;	 // 服务开始时间
+	double  serviceEndTime		= INT_MIN;	 // 服务结束时间（无用）
 	enum Direction direction    = unassign;	 // 航班方向（进港航班/离港航班）
 	string  terminal			= NULL;		 // 航站楼名称
-	int		terminalIndex		= INT_MIN;	 // 航站楼角标
+	int		terminal_index		= INT_MIN;	 // 航站楼角标
 };
 

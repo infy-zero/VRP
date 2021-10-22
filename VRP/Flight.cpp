@@ -55,22 +55,33 @@ ostream& operator<<(ostream& outs, Flight& flight)
 string Flight::toString()
 {
 	string comma = ", ";
-	string tmp =
-		to_string(getID())+", "+
-		getFlightCompany() + ", " +
-		getFlightType() + ", " +
-		getFlightClass() + ", " +
-		to_string(getFerryVehicles()) + ", " +
-		getApron() + ", " +
-		getTerminal() + ", " +
-		to_string(getTerminalIndex()) + ", " +
-		getStand() + ", " +
-		to_string(getStandIndex()) + ", " +
-		to_string(getRdy()) + ", " +
-		getDirectionString() + ", [" +
-		to_string(aheadFirstTime) + ", " +
-		to_string(delayOtherTime) + "], " +
-		to_string(getServiceStartTime()) + ", " +
-		to_string(getServiceEndTime()) + ", "  ;
+	string tmp;
+	if (direction == DIRECTION_DEPART)
+	{
+		tmp =
+			to_string(getID()) + ", " +
+			getFlightCompany() + ", " +
+			getFlightType() + ", " +
+			getFlightClass() + ", " +
+			to_string(getFerryVehicles()) + ", " +
+			getApron() + ", " +
+			getTerminal() + ", " +
+			to_string(getTerminalIndex()) + ", " +
+			getStand() + ", " +
+			to_string(getStandIndex());
+	}
+	else {
+		tmp =
+			to_string(getID()) + ", " +
+			getFlightCompany() + ", " +
+			getFlightType() + ", " +
+			getFlightClass() + ", " +
+			to_string(getFerryVehicles()) + ", " +
+			getApron() + ", " +
+			getStand() + ", " +
+			to_string(getStandIndex()) + ", " +
+			getTerminal() + ", " +
+			to_string(getTerminalIndex());
+	}
 	return tmp;
 }

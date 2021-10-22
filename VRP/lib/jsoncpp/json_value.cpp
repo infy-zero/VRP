@@ -1044,7 +1044,7 @@ Value::resolveReference( const char *key,
 
 
 Value 
-Value::get( UInt index, 
+Value::get_node( UInt index, 
             const Value &defaultValue ) const
 {
    const Value *value = &((*this)[index]);
@@ -1123,7 +1123,7 @@ Value::append( const Value &value )
 
 
 Value 
-Value::get( const char *key, 
+Value::get_node( const char *key, 
             const Value &defaultValue ) const
 {
    const Value *value = &((*this)[key]);
@@ -1132,10 +1132,10 @@ Value::get( const char *key,
 
 
 Value 
-Value::get( const std::string &key,
+Value::get_node( const std::string &key,
             const Value &defaultValue ) const
 {
-   return get( key.c_str(), defaultValue );
+   return get_node( key.c_str(), defaultValue );
 }
 
 Value

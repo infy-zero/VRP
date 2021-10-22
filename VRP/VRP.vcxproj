@@ -258,6 +258,8 @@
     <None Include="lib\jsoncpp\json_valueiterator.inl" />
     <None Include="lib\MySQL\lib\libmysql.dll" />
     <None Include="lib\tinyXML\tinyxml.sln" />
+    <None Include="resource\finalTasks1000.csv" />
+    <None Include="Widget.ui" />
   </ItemGroup>
   <ItemGroup>
     <Xml Include="database.xml" />

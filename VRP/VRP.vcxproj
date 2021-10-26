@@ -72,9 +72,10 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <LibraryPath>$(LibraryPath)</LibraryPath>
+    <LibraryPath>D:\SoftWare\C++\install\glog\lib;$(LibraryPath)</LibraryPath>
     <ExecutablePath>$(ExecutablePath)</ExecutablePath>
     <ReferencePath>$(ReferencePath)</ReferencePath>
+    <IncludePath>D:\SoftWare\C++\install\glog\include\glog;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -91,15 +92,15 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;GOOGLE_GLOG_DLL_DECL=;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Users\ln\source\repos\VRP\VRP;C:\Users\ln\source\repos\VRP\VRP\ALNS;C:\Users\ln\source\repos\VRP\VRP\lib\jsoncpp;C:\Users\ln\source\repos\VRP\VRP\lib\tinyXML;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\SoftWare\C++\install\glog\include;C:\Users\ln\source\repos\VRP\VRP;C:\Users\ln\source\repos\VRP\VRP\ALNS;C:\Users\ln\source\repos\VRP\VRP\lib\jsoncpp;C:\Users\ln\source\repos\VRP\VRP\lib\tinyXML;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>C:\Users\ln\source\repos\VRP\VRP\ALNS\Manager;C:\Users\ln\source\repos\VRP\VRP\lib\jsoncpp;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glogd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>D:\SoftWare\C++\install\glog\lib;C:\Users\ln\source\repos\VRP\VRP\ALNS\Manager;C:\Users\ln\source\repos\VRP\VRP\lib\jsoncpp;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -166,6 +167,7 @@
     <ClCompile Include="DestroyOperator.cpp" />
     <ClCompile Include="Entrance.cpp" />
     <ClCompile Include="FerryVehicleTask.cpp" />
+    <ClCompile Include="Header.cpp" />
     <ClCompile Include="IInformation.cpp" />
     <ClCompile Include="ILocation.cpp" />
     <ClCompile Include="INode.cpp" />
@@ -216,6 +218,7 @@
     <ClInclude Include="DeoptNode.h" />
     <ClInclude Include="FerryTaskSetting.h" />
     <ClInclude Include="FerryVehicleTask.h" />
+    <ClInclude Include="Header.h" />
     <ClInclude Include="IInformation.h" />
     <ClInclude Include="ILocation.h" />
     <ClInclude Include="IFlightNode.h" />
@@ -253,6 +256,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="finalTasks80.csv" />
+    <None Include="glog.dll" />
+    <None Include="glogd.dll" />
     <None Include="lib\jsoncpp\json_internalarray.inl" />
     <None Include="lib\jsoncpp\json_internalmap.inl" />
     <None Include="lib\jsoncpp\json_valueiterator.inl" />

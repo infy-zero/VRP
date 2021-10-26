@@ -103,6 +103,9 @@
     <Filter Include="头文件\GUI">
       <UniqueIdentifier>{4c226353-226b-4311-a161-5fad68332038}</UniqueIdentifier>
     </Filter>
+    <Filter Include="lib">
+      <UniqueIdentifier>{babba3db-4a3b-42b0-aa7d-a7b7d9df501f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Entrance.cpp">
@@ -252,6 +255,9 @@
     <ClCompile Include="AllNodes.cpp">
       <Filter>源文件\ALNS\BasicClass</Filter>
     </ClCompile>
+    <ClCompile Include="Header.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="unistd.h">
@@ -389,6 +395,9 @@
     <ClInclude Include="AllNodes.h">
       <Filter>头文件\ALNS\BasicClass</Filter>
     </ClInclude>
+    <ClInclude Include="Header.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="lib\tinyXML\tinyxml.sln" />
@@ -411,6 +420,8 @@
     <None Include="Widget.ui">
       <Filter>源文件\GUI</Filter>
     </None>
+    <None Include="glogd.dll" />
+    <None Include="glog.dll" />
   </ItemGroup>
   <ItemGroup>
     <Xml Include="database.xml">

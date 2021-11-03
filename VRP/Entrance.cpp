@@ -30,17 +30,6 @@ void ALNS_Entrance();
 void qt_environment();
 
 int main() {
-    google::InitGoogleLogging("VRP");
-    FLAGS_alsologtostderr = true;
-    FLAGS_colorlogtostderr = true;
-
-    google::SetLogDestination(google::GLOG_INFO, "D:\\学习资料\\研究进度\\研二\\数据分析\\LOG\\INFO_");
-    google::SetLogDestination(google::GLOG_WARNING, "D:\\学习资料\\研究进度\\研二\\数据分析\\LOG\\WARNING_");
-    google::SetLogDestination(google::GLOG_ERROR, "D:\\学习资料\\研究进度\\研二\\数据分析\\LOG\\ERROR_");
-    google::SetLogDestination(google::GLOG_FATAL, "D:\\学习资料\\研究进度\\研二\\数据分析\\LOG\\FATAL_");
-
-    LOG(INFO) << "Welcome to use the Vehicle Routing Problem procedure!";
-
     welcomeInterface();
     Configuration configuration = loadConfiguration();
    

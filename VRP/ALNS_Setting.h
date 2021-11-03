@@ -140,19 +140,19 @@ public:
 	static constexpr int PRINT_FRQ = 50;	// 打印频率
 
 	// 输出解的结构
-	static constexpr bool multi_trip = 1;
+	static constexpr bool multi_trip = 2;
 	static constexpr bool multi_vehicle_type = false;
 	static constexpr bool forward_insert = true;
 
 	// 目标函数参数
-	static constexpr double vcost = 1000; // 车辆固定成本 , 在information中
-	static constexpr double pcost = 0.005; // 车辆行驶单位距离成本 , 在information中
-	static constexpr int max_count = 100; // 最大服务节点数数
-	static constexpr int max_iteration = 1000; // 最大迭代次数
+	static constexpr double vcost = 1000;							// 车辆固定成本 , 在information中
+	static constexpr double pcost = 0.005;							// 车辆行驶单位距离成本 , 在information中
+	static constexpr int max_count = 1000;							// 最大服务节点数数
+	static constexpr int max_iteration = 5000;						// 最大迭代次数
 
 	static constexpr double dbl_max_value = 10000000.0;				// 目标函数值上下界
 	static constexpr double time_max_value = 1000000.0;				// 时间上下界（[-10h, 10h]）
-	static constexpr double time_minimum_delta = 0.00000001;				// 最小时间精度
+	static constexpr double time_minimum_delta = 0.00000001;		// 最小时间精度
 
 	// 算子初始权重
 	static constexpr double greedy_insertion_weight = 1.0;
